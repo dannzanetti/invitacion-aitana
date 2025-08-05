@@ -1,226 +1,215 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Baby Shower de Aitana</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Montserrat', sans-serif;
-      background: linear-gradient(120deg, #fde8f3 0%, #e6d0fa 100%);
-      min-height: 100vh;
-      overflow-x: hidden;
-      position: relative;
-    }
-    .glass-card {
-      backdrop-filter: blur(14px);
-      background: rgba(255,255,255,0.6);
-      border-radius: 38px;
-      box-shadow: 0 4px 32px rgba(183,149,252,0.24);
-      border: 1.5px solid rgba(245,206,250,0.30);
-      position: relative;
-      z-index: 2;
-    }
-    .neon-title {
-      font-family: 'Dancing Script', cursive;
-      font-size: 3.2rem;
-      background: linear-gradient(90deg, #ffb6e6 20%, #ffe8ae 60%, #b795fc 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 18px #ffb6e6, 0 0 30px #ffe8ae;
-      animation: glow 2s infinite alternate;
-      position: relative;
-      z-index: 2;
-    }
-    .neon-title-halo {
-      content: '';
-      position: absolute;
-      left: 50%; top: 0;
-      transform: translateX(-50%);
-      width: 430px; height: 120px;
-      background: radial-gradient(circle, #ffe8ae66 0%, transparent 80%);
-      z-index: 1;
-      pointer-events: none;
-      filter: blur(12px);
-    }
-    @keyframes glow {
-      0% { text-shadow: 0 0 18px #ffb6e6, 0 0 30px #ffe8ae; }
-      100% { text-shadow: 0 0 28px #ffe8ae, 0 0 48px #ffb6e6; }
-    }
-    .btn-mono {
-      background: linear-gradient(90deg, #feb0d6 0%, #d5c1ff 100%);
-      color: #fff;
-      border: none;
-      border-radius: 999px;
-      padding: 16px 38px;
-      font-weight: bold;
-      font-size: 1.12rem;
-      box-shadow: 0 4px 24px rgba(255,182,230,0.18);
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.2s, box-shadow 0.2s;
-      z-index: 2;
-    }
-    .btn-mono:hover {
-      background: linear-gradient(90deg, #e6d0fa 0%, #ffb6e6 100%);
-      transform: translateY(-3px) scale(1.03);
-      box-shadow: 0 8px 32px rgba(183,149,252,0.22);
-    }
-    .btn-mono .sparkle-btn {
-      position: absolute;
-      pointer-events: none;
-      width: 8px;
-      height: 8px;
-      background: radial-gradient(circle, #fff 80%, rgba(255,255,255,0.13) 100%);
-      border-radius: 50%;
-      opacity: .8;
-      animation: sparkle-btn 1.2s infinite alternate;
-    }
-    @keyframes sparkle-btn {
-      0% { opacity: 0.6; transform: scale(1);}
-      100% { opacity: 1; transform: scale(1.3);}
-    }
-    /* Sparkles fondo */
-    .sparkle {
-      position: absolute;
-      pointer-events: none;
-      width: 7px;
-      height: 7px;
-      background: radial-gradient(circle, #fff 70%, rgba(255,255,255,0.13) 100%);
-      border-radius: 50%;
-      opacity: .7;
-      animation: sparkle 1.4s infinite alternate;
-      z-index: 1;
-    }
-    @keyframes sparkle {
-      0% { opacity: 0.7; transform: scale(1);}
-      100% { opacity: 1; transform: scale(1.4);}
-    }
-    /* Globos animados */
-    .balloon {
-      position: absolute;
-      width: 70px;
-      height: 90px;
-      border-radius: 60% 60% 60% 60% / 60% 60% 80% 80%;
-      opacity: .95;
-      z-index: 0;
-      animation: float 3.7s ease-in-out infinite;
-    }
-    .balloon1 { left: 6vw; top: 69vh; background: linear-gradient(120deg,#ffb6e6, #ffe8ae); animation-delay: 0s;}
-    .balloon2 { left: 80vw; top: 75vh; background: linear-gradient(120deg,#b795fc, #ffb6e6); animation-delay: 0.7s;}
-    .balloon3 { left: 18vw; top: 88vh; background: linear-gradient(120deg,#ffe8ae, #b795fc); animation-delay: 1.1s;}
-    .balloon4 { left: 74vw; top: 93vh; background: linear-gradient(120deg,#ffb6e6, #b795fc); animation-delay: 1.3s;}
-    .balloon5 { left: 53vw; top: 67vh; background: linear-gradient(120deg,#fff, #ffb6e6); animation-delay: 2.2s;}
-    @keyframes float {
-      0% { transform: translateY(0) scale(1);}
-      50% { transform: translateY(-54px) scale(1.04);}
-      100% { transform: translateY(0) scale(1);}
-    }
-    .balloon-string {
-      width: 2px;
-      height: 38px;
-      background: #e6d0fa;
-      position: absolute;
-      left: 50%;
-      bottom: -38px;
-      transform: translateX(-50%);
-      border-radius: 2px;
-      opacity: 0.72;
-    }
-    /* Imagen ilustrativa */
-    .baby-photo {
-      width: 148px;
-      height: 148px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 5px solid #fff;
-      box-shadow: 0 2px 8px rgba(183,149,252,0.13);
-      margin-bottom: 18px;
-      background: #fff6f9;
-      z-index: 2;
-      position: relative;
-    }
-    /* Responsive */
-    @media (max-width: 700px) {
-      .neon-title { font-size: 2.2rem;}
-      .glass-card { padding: 1.2rem;}
-      .baby-photo { width: 100px; height: 100px;}
-      .neon-title-halo { width: 250px; height: 55px;}
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Baby Shower de Aitana</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(270deg, #fde8f3, #e6d0fa, #ffe8ae);
+    background-size: 600% 600%;
+    animation: gradientMove 12s ease infinite;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
+  @keyframes gradientMove {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+  }
+  .glass-card {
+    backdrop-filter: blur(16px);
+    background: rgba(255,255,255,0.75);
+    border-radius: 40px;
+    box-shadow: 0 4px 36px rgba(183,149,252,0.24);
+    border: 1.5px solid rgba(245,206,250,0.3);
+    animation: fadeIn 1.5s ease;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9);}
+    to { opacity: 1; transform: scale(1);}
+  }
+  .main-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 3.4rem;
+    color: #000;
+    display: inline-block;
+    animation: bounce 1.8s infinite alternate;
+  }
+  @keyframes bounce {
+    0% {transform: translateY(0);}
+    100% {transform: translateY(-10px);}
+  }
+  .baby-photo {
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 6px solid #fff;
+    box-shadow: 0 0 20px rgba(255,182,230,0.6), 0 0 35px rgba(183,149,252,0.5);
+    margin-bottom: 18px;
+    animation: zoomIn 1.6s ease;
+  }
+  @keyframes zoomIn {
+    0% {transform: scale(0.8); opacity: 0;}
+    100% {transform: scale(1); opacity: 1;}
+  }
+  .btn-3d {
+    background: linear-gradient(145deg, #f3d3f9, #e4b8ff);
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    padding: 16px 36px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    box-shadow: 0 6px 14px rgba(183,149,252,0.3);
+    position: relative;
+    transition: all 0.3s ease;
+    overflow: hidden;
+  }
+  .btn-3d:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 0 20px #ffb6e6, 0 0 35px #b795fc;
+  }
+  /* Glow animado */
+  .btn-3d::after {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.4), transparent 70%);
+    animation: glow 3s infinite linear;
+    opacity: 0.6;
+  }
+  @keyframes glow {
+    0% {transform: rotate(0deg);}
+    100% {transform: rotate(360deg);}
+  }
+  /* Globos */
+  .balloon {
+    position: absolute;
+    width: 70px; height: 90px;
+    border-radius: 50%;
+    opacity: 0.9;
+    animation: float 6s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0);}
+    50% { transform: translateY(-80px);}
+  }
+  .balloon::after {
+    content: '';
+    position: absolute;
+    width: 2px; height: 50px;
+    background: #ccc;
+    left: 50%; transform: translateX(-50%);
+    top: 90px;
+  }
+  .balloon:nth-child(1){left:10%; background:#ffb6e6; animation-delay:0s;}
+  .balloon:nth-child(2){left:70%; background:#ffe8ae; animation-delay:1s;}
+  .balloon:nth-child(3){left:40%; background:#b795fc; animation-delay:2s;}
+  .balloon:nth-child(4){left:85%; background:#fddde6; animation-delay:1.5s;}
+  .balloon:nth-child(5){left:25%; background:#f3d3f9; animation-delay:0.5s;}
+  /* Confeti */
+  .confetti {
+    position: fixed;
+    width: 10px; height: 10px;
+    background: #ffb6e6;
+    animation: fall linear infinite;
+    opacity: 0.8;
+  }
+  @keyframes fall {
+    0% {transform: translateY(-10px) rotate(0deg);}
+    100% {transform: translateY(100vh) rotate(360deg);}
+  }
+  .confetti:nth-child(odd) {background:#b795fc;}
+  .confetti:nth-child(3n){background:#ffe8ae;}
+  #countdown {
+    font-size: 1.3rem;
+    color: #ff69b4;
+    font-weight: bold;
+    margin-bottom: 16px;
+  }
+</style>
 </head>
 <body>
-  <!-- Globos animados -->
-  <div class="balloon balloon1"><div class="balloon-string"></div></div>
-  <div class="balloon balloon2"><div class="balloon-string"></div></div>
-  <div class="balloon balloon3"><div class="balloon-string"></div></div>
-  <div class="balloon balloon4"><div class="balloon-string"></div></div>
-  <div class="balloon balloon5"><div class="balloon-string"></div></div>
+<!-- Globos -->
+<div class="balloon"></div>
+<div class="balloon"></div>
+<div class="balloon"></div>
+<div class="balloon"></div>
+<div class="balloon"></div>
 
-  <!-- Sparkles fondo -->
-  <script>
-    function createSparkles() {
-      for (let i = 0; i < 38; i++) {
-        const s = document.createElement('div');
-        s.className = 'sparkle';
-        s.style.top = Math.random()*93 + "%";
-        s.style.left = Math.random()*100 + "%";
-        s.style.animationDelay = (Math.random()*2) + "s";
-        s.style.width = Math.random()*10+3 + "px";
-        s.style.height = s.style.width;
-        document.body.appendChild(s);
-      }
-    }
-    // Sparkles sobre los botones
-    function addButtonSparkles() {
-      document.querySelectorAll('.btn-mono').forEach(btn => {
-        for (let i = 0; i < 3; i++) {
-          const spark = document.createElement('span');
-          spark.className = 'sparkle-btn';
-          spark.style.top = Math.random()*70 + "%";
-          spark.style.left = Math.random()*90 + "%";
-          spark.style.animationDelay = (Math.random()*1) + "s";
-          btn.appendChild(spark);
-        }
-      });
-    }
-    window.onload = function() {
-      createSparkles();
-      setTimeout(addButtonSparkles, 800);
-    }
-  </script>
+<!-- Confeti con JS -->
+<script>
+  for(let i=0;i<60;i++){
+    const confetti=document.createElement('div');
+    confetti.className='confetti';
+    confetti.style.left=Math.random()*100+'vw';
+    confetti.style.animationDuration=(3+Math.random()*3)+'s';
+    confetti.style.animationDelay=(Math.random()*5)+'s';
+    document.body.appendChild(confetti);
+  }
+</script>
 
-  <main class="flex flex-col items-center justify-center min-h-screen px-4 py-8 relative z-10">
-    <section class="glass-card w-full max-w-2xl py-8 px-6 shadow-lg text-center relative">
-      <div class="neon-title-halo"></div>
-      <img src="https://cdn.pixabay.com/photo/2016/04/01/09/29/baby-1294243_1280.png" alt="Ilustración Bebé" class="baby-photo" />
-      <h1 class="neon-title mb-2">¡Aitana está en camino!</h1>
-      <h2 class="text-xl mb-7" style="color:#b795fc; font-family: 'Dancing Script',cursive;">A celebrar el Baby Shower de Fer & Dann</h2>
-      <div class="bg-white/70 rounded-2xl p-5 mb-5 shadow-md" style="backdrop-filter: blur(6px);">
-        <p class="font-bold text-lg mb-2" style="color:#b795fc">Sábado 20 de Septiembre</p>
-        <p class="font-semibold mb-2">2:00 PM a 11:00 PM</p>
-        <p class="font-semibold mb-2">Residencial Sendero Santa Fe</p>
-        <p class="text-sm">Lista en la entrada – confirma antes del 14 de septiembre</p>
-      </div>
-      <div class="bg-white/70 rounded-2xl p-5 mb-6 shadow-md" style="backdrop-filter: blur(6px);">
-        <p class="text-xl font-semibold mb-2" style="color:#ffb6e6;">¡Te esperamos con!</p>
-        <ul class="space-y-2 text-md">
-          <li>🌮 Tacos de guisado deliciosos</li>
-          <li>🍸 Barra libre: cervezas, tequila, ron, whisky</li>
-          <li>🎲 Juegos, rifas y baile 💃🕺</li>
-        </ul>
-      </div>
-      <div class="flex flex-col gap-4 mb-6">
-        <a href="https://waze.com/ul/h9g3qhubmq" target="_blank" class="btn-mono">📍 Cómo llegar con Waze</a>
-        <a href="https://maps.app.goo.gl/aJot9z4Qja81DHsw8?g_st=aw" target="_blank" class="btn-mono">📍 Cómo llegar con Google Maps</a>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSd-vY-AAhe7GGVQdxJmZvxr-5m6rQh7PgrfKwXY0Dn1-ksgRw/viewform" target="_blank" class="btn-mono">✅ Confirmar asistencia</a>
-        <a href="https://mesaderegalos.liverpool.com.mx/milistaderegalos/51734815" target="_blank" class="btn-mono">🎁 Mesa de regalos Liverpool</a>
-        <a href="https://www.amazon.com.mx/baby-reg/waldodanielalvarez-martinez-diciembre-2025-ciudaddemexico/187ABTMWV8E8D?ref_=cm_sw_r_apin_dp_333WJQWW4TG06KPZBM91&language=en-US" target="_blank" class="btn-mono">📦 Mesa de regalos Amazon</a>
-      </div>
-      <p class="mt-4 text-lg" style="color:#b795fc;">¡Será un día mágico para celebrar juntos! ✨</p>
-    </section>
-  </main>
+<main class="flex flex-col items-center justify-center min-h-screen px-4 py-8 relative z-10">
+<section class="glass-card w-full max-w-2xl py-8 px-6 text-center">
+  <img src="https://raw.githubusercontent.com/TU_USUARIO/TU_REPO/main/Baby.png" alt="Baby" class="baby-photo" />
+  <h1 class="main-title mb-2">👶 ¡Aitana está en camino! 💕</h1>
+  <div id="countdown">🎈 Faltan X días para el gran día 🎈</div>
+  <h2 class="text-xl mb-6" style="color:#b795fc; font-family:'Dancing Script',cursive;">🎉 A celebrar el Baby Shower de Fer & Dann 🎉</h2>
+  <div class="bg-white/80 rounded-2xl p-5 mb-5 shadow-md">
+    <p class="font-bold text-lg mb-2" style="color:#b795fc">📅 Sábado 20 de Septiembre 📅 </p>
+    <p class="font-semibold mb-2">⏰ 2:00 PM – 11:00 PM ⏰ </p>
+    <p class="font-semibold mb-2">🏘️ Residencial Sendero Santa Fe 🏘️</p>
+    <p class="text-sm">⚠️ Confirma antes del 14 de septiembre ⚠️</p>
+  </div>
+  <div class="bg-white/80 rounded-2xl p-5 mb-6 shadow-md">
+    <p class="text-xl font-semibold mb-2" style="color:#ffb6e6;">¡Te esperamos con!</p>
+    <ul class="space-y-2 text-md">
+      <li>🌮 Tacos de guisado deliciosos 🌮</li>
+      <li>🍸 Barra libre: cervezas 🍻, tequila 🍸, ron 🍹, whisky 🥃</li>
+      <li>🎲 Juegos, rifas 🎖️ y baile 💃🕺</li>
+    </ul>
+  </div>
+  <div class="flex flex-col gap-4 mb-6">
+    <a href="https://waze.com/ul/h9g3qhubmq" target="_blank" class="btn-3d">📍 Cómo llegar con Waze 📍</a>
+    <a href="https://maps.app.goo.gl/aJot9z4Qja81DHsw8?g_st=aw" target="_blank" class="btn-3d">📍 Cómo llegar con Google Maps 📍</a>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSd-vY-AAhe7GGVQdxJmZvxr-5m6rQh7PgrfKwXY0Dn1-ksgRw/viewform" target="_blank" class="btn-3d">✅ Confirmar asistencia ✅</a>
+    <a href="https://mesaderegalos.liverpool.com.mx/milistaderegalos/51734815" target="_blank" class="btn-3d">🎁 Mesa de regalos Liverpool 🎁</a>
+    <a href="https://www.amazon.com.mx/baby-reg/waldodanielalvarez-martinez-diciembre-2025-ciudaddemexico/187ABTMWV8E8D" target="_blank" class="btn-3d">📦 Mesa de regalos Amazon 📦</a>
+  </div>
+  <p class="mt-4 text-lg" style="color:#b795fc;">✨ ¡Será un día mágico para celebrar juntos! ✨</p>
+
+  <!-- Botón Música -->
+  <button onclick="toggleMusic()" class="btn-3d mt-4">🎵 Música ON/OFF</button>
+  <audio id="music" loop>
+    <source src="https://github.com/TU_USUARIO/TU_REPO/raw/main/Love%20Fast%20-%20Ryan%20Stasik%2C%20Kanika%20Moore.mp3" type="audio/mpeg">
+  </audio>
+</section>
+</main>
+
+<script>
+// Función Música
+function toggleMusic(){
+  const audio=document.getElementById('music');
+  if(audio.paused){ audio.play(); } else { audio.pause(); }
+}
+
+// Contador dinámico
+const countdownEl=document.getElementById('countdown');
+const eventDate=new Date('2025-09-20T00:00:00');
+function updateCountdown(){
+  const now=new Date();
+  const diff=eventDate-now;
+  const days=Math.floor(diff/(1000*60*60*24));
+  countdownEl.textContent=`🎈 ¡Faltan ${days} días para el gran día! 🎈`;
+}
+updateCountdown();
+setInterval(updateCountdown,1000*60*60); // actualiza cada hora
+</script>
 </body>
 </html>
