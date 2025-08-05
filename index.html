@@ -9,24 +9,19 @@
   <style>
     body {
       font-family: 'Montserrat', sans-serif;
-      background: linear-gradient(120deg, #fde8f3, #ffe8ae, #f7d9f7);
-      background-size: 300% 300%;
-      animation: gradient 10s ease infinite;
+      background: linear-gradient(120deg, #fde8f3 0%, #e6d0fa 100%);
       min-height: 100vh;
       overflow-x: hidden;
       position: relative;
     }
-    @keyframes gradient {
-      0% {background-position: 0% 50%;}
-      50% {background-position: 100% 50%;}
-      100% {background-position: 0% 50%;}
-    }
     .glass-card {
-      backdrop-filter: blur(16px);
-      background: rgba(255,255,255,0.5);
-      border-radius: 32px;
-      box-shadow: 0 4px 32px rgba(255, 182, 230, 0.4);
-      border: 1.5px solid rgba(255,255,255,0.3);
+      backdrop-filter: blur(14px);
+      background: rgba(255,255,255,0.6);
+      border-radius: 38px;
+      box-shadow: 0 4px 32px rgba(183,149,252,0.24);
+      border: 1.5px solid rgba(245,206,250,0.30);
+      position: relative;
+      z-index: 2;
     }
     .neon-title {
       font-family: 'Dancing Script', cursive;
@@ -36,38 +31,72 @@
       -webkit-text-fill-color: transparent;
       text-shadow: 0 0 18px #ffb6e6, 0 0 30px #ffe8ae;
       animation: glow 2s infinite alternate;
+      position: relative;
+      z-index: 2;
+    }
+    .neon-title-halo {
+      content: '';
+      position: absolute;
+      left: 50%; top: 0;
+      transform: translateX(-50%);
+      width: 430px; height: 120px;
+      background: radial-gradient(circle, #ffe8ae66 0%, transparent 80%);
+      z-index: 1;
+      pointer-events: none;
+      filter: blur(12px);
     }
     @keyframes glow {
       0% { text-shadow: 0 0 18px #ffb6e6, 0 0 30px #ffe8ae; }
       100% { text-shadow: 0 0 28px #ffe8ae, 0 0 48px #ffb6e6; }
     }
-    .btn-premium {
-      background: linear-gradient(90deg, #ffb6e6, #ffd700, #b795fc);
-      background-size: 200% auto;
+    .btn-mono {
+      background: linear-gradient(90deg, #feb0d6 0%, #d5c1ff 100%);
       color: #fff;
       border: none;
       border-radius: 999px;
       padding: 16px 38px;
       font-weight: bold;
-      font-size: 1.2rem;
+      font-size: 1.12rem;
+      box-shadow: 0 4px 24px rgba(255,182,230,0.18);
       position: relative;
       overflow: hidden;
-      transition: transform 0.3s, background-position 0.4s;
+      transition: transform 0.2s, box-shadow 0.2s;
+      z-index: 2;
     }
-    .btn-premium:hover {
-      background-position: right center;
-      transform: scale(1.05);
-      box-shadow: 0 8px 32px rgba(255,215,0,0.3);
+    .btn-mono:hover {
+      background: linear-gradient(90deg, #e6d0fa 0%, #ffb6e6 100%);
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 8px 32px rgba(183,149,252,0.22);
     }
-    /* Imagen circular */
-    .baby-photo {
-      width: 200px;
-      height: 200px;
+    .btn-mono .sparkle-btn {
+      position: absolute;
+      pointer-events: none;
+      width: 8px;
+      height: 8px;
+      background: radial-gradient(circle, #fff 80%, rgba(255,255,255,0.13) 100%);
       border-radius: 50%;
-      object-fit: cover;
-      border: 6px solid #fff;
-      box-shadow: 0 4px 18px rgba(183,149,252,0.5);
-      margin-bottom: 20px;
+      opacity: .8;
+      animation: sparkle-btn 1.2s infinite alternate;
+    }
+    @keyframes sparkle-btn {
+      0% { opacity: 0.6; transform: scale(1);}
+      100% { opacity: 1; transform: scale(1.3);}
+    }
+    /* Sparkles fondo */
+    .sparkle {
+      position: absolute;
+      pointer-events: none;
+      width: 7px;
+      height: 7px;
+      background: radial-gradient(circle, #fff 70%, rgba(255,255,255,0.13) 100%);
+      border-radius: 50%;
+      opacity: .7;
+      animation: sparkle 1.4s infinite alternate;
+      z-index: 1;
+    }
+    @keyframes sparkle {
+      0% { opacity: 0.7; transform: scale(1);}
+      100% { opacity: 1; transform: scale(1.4);}
     }
     /* Globos animados */
     .balloon {
@@ -75,92 +104,120 @@
       width: 70px;
       height: 90px;
       border-radius: 60% 60% 60% 60% / 60% 60% 80% 80%;
-      opacity: .9;
-      animation: float 6s ease-in-out infinite;
+      opacity: .95;
       z-index: 0;
+      animation: float 3.7s ease-in-out infinite;
     }
-    .balloon::after {
-      content: '';
-      position: absolute;
-      width: 2px;
-      height: 50px;
-      background: #e6d0fa;
-      bottom: -50px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-    .balloon1 { left: 5%; top: 70%; background: linear-gradient(120deg,#ffb6e6,#ffe8ae); animation-delay: 0s;}
-    .balloon2 { left: 80%; top: 75%; background: linear-gradient(120deg,#b795fc,#ffb6e6); animation-delay: 2s;}
-    .balloon3 { left: 20%; top: 80%; background: linear-gradient(120deg,#ffe8ae,#b795fc); animation-delay: 4s;}
+    .balloon1 { left: 6vw; top: 69vh; background: linear-gradient(120deg,#ffb6e6, #ffe8ae); animation-delay: 0s;}
+    .balloon2 { left: 80vw; top: 75vh; background: linear-gradient(120deg,#b795fc, #ffb6e6); animation-delay: 0.7s;}
+    .balloon3 { left: 18vw; top: 88vh; background: linear-gradient(120deg,#ffe8ae, #b795fc); animation-delay: 1.1s;}
+    .balloon4 { left: 74vw; top: 93vh; background: linear-gradient(120deg,#ffb6e6, #b795fc); animation-delay: 1.3s;}
+    .balloon5 { left: 53vw; top: 67vh; background: linear-gradient(120deg,#fff, #ffb6e6); animation-delay: 2.2s;}
     @keyframes float {
-      0% { transform: translateY(0);}
-      50% { transform: translateY(-50px);}
-      100% { transform: translateY(0);}
+      0% { transform: translateY(0) scale(1);}
+      50% { transform: translateY(-54px) scale(1.04);}
+      100% { transform: translateY(0) scale(1);}
     }
-    /* Sparkles */
-    .sparkle {
+    .balloon-string {
+      width: 2px;
+      height: 38px;
+      background: #e6d0fa;
       position: absolute;
-      width: 8px;
-      height: 8px;
-      background: radial-gradient(circle, #fff 70%, transparent 100%);
-      border-radius: 50%;
-      animation: sparkle 1.5s infinite;
+      left: 50%;
+      bottom: -38px;
+      transform: translateX(-50%);
+      border-radius: 2px;
+      opacity: 0.72;
     }
-    @keyframes sparkle {
-      0%, 100% { opacity: 0.3; transform: scale(0.5);}
-      50% { opacity: 1; transform: scale(1);}
+    /* Imagen ilustrativa */
+    .baby-photo {
+      width: 148px;
+      height: 148px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 5px solid #fff;
+      box-shadow: 0 2px 8px rgba(183,149,252,0.13);
+      margin-bottom: 18px;
+      background: #fff6f9;
+      z-index: 2;
+      position: relative;
+    }
+    /* Responsive */
+    @media (max-width: 700px) {
+      .neon-title { font-size: 2.2rem;}
+      .glass-card { padding: 1.2rem;}
+      .baby-photo { width: 100px; height: 100px;}
+      .neon-title-halo { width: 250px; height: 55px;}
     }
   </style>
 </head>
 <body>
-  <!-- Globos -->
-  <div class="balloon balloon1"></div>
-  <div class="balloon balloon2"></div>
-  <div class="balloon balloon3"></div>
+  <!-- Globos animados -->
+  <div class="balloon balloon1"><div class="balloon-string"></div></div>
+  <div class="balloon balloon2"><div class="balloon-string"></div></div>
+  <div class="balloon balloon3"><div class="balloon-string"></div></div>
+  <div class="balloon balloon4"><div class="balloon-string"></div></div>
+  <div class="balloon balloon5"><div class="balloon-string"></div></div>
 
-  <!-- Sparkles -->
+  <!-- Sparkles fondo -->
   <script>
     function createSparkles() {
-      for (let i = 0; i < 30; i++) {
+      for (let i = 0; i < 38; i++) {
         const s = document.createElement('div');
         s.className = 'sparkle';
-        s.style.top = Math.random()*90 + "%";
+        s.style.top = Math.random()*93 + "%";
         s.style.left = Math.random()*100 + "%";
         s.style.animationDelay = (Math.random()*2) + "s";
+        s.style.width = Math.random()*10+3 + "px";
+        s.style.height = s.style.width;
         document.body.appendChild(s);
       }
     }
-    window.onload = createSparkles;
+    // Sparkles sobre los botones
+    function addButtonSparkles() {
+      document.querySelectorAll('.btn-mono').forEach(btn => {
+        for (let i = 0; i < 3; i++) {
+          const spark = document.createElement('span');
+          spark.className = 'sparkle-btn';
+          spark.style.top = Math.random()*70 + "%";
+          spark.style.left = Math.random()*90 + "%";
+          spark.style.animationDelay = (Math.random()*1) + "s";
+          btn.appendChild(spark);
+        }
+      });
+    }
+    window.onload = function() {
+      createSparkles();
+      setTimeout(addButtonSparkles, 800);
+    }
   </script>
 
-  <main class="flex flex-col items-center justify-center min-h-screen px-5 py-10 relative z-10">
-    <section class="glass-card w-full max-w-2xl p-8 shadow-lg text-center">
-      <img src="Baby.png" alt="Foto Baby Shower" class="baby-photo">
-      <h1 class="neon-title mb-4">¡Aitana está en camino!</h1>
-      <h2 class="text-xl mb-7" style="color:#b795fc; font-family: 'Dancing Script',cursive;">Acompáñanos a celebrar el Baby Shower de Fer & Dann</h2>
-      
-      <div class="bg-white/70 rounded-2xl p-5 mb-5 shadow-md">
+  <main class="flex flex-col items-center justify-center min-h-screen px-4 py-8 relative z-10">
+    <section class="glass-card w-full max-w-2xl py-8 px-6 shadow-lg text-center relative">
+      <div class="neon-title-halo"></div>
+      <img src="https://cdn.pixabay.com/photo/2016/04/01/09/29/baby-1294243_1280.png" alt="Ilustración Bebé" class="baby-photo" />
+      <h1 class="neon-title mb-2">¡Aitana está en camino!</h1>
+      <h2 class="text-xl mb-7" style="color:#b795fc; font-family: 'Dancing Script',cursive;">A celebrar el Baby Shower de Fer & Dann</h2>
+      <div class="bg-white/70 rounded-2xl p-5 mb-5 shadow-md" style="backdrop-filter: blur(6px);">
         <p class="font-bold text-lg mb-2" style="color:#b795fc">Sábado 20 de Septiembre</p>
         <p class="font-semibold mb-2">2:00 PM a 11:00 PM</p>
         <p class="font-semibold mb-2">Residencial Sendero Santa Fe</p>
         <p class="text-sm">Lista en la entrada – confirma antes del 14 de septiembre</p>
       </div>
-
-      <div class="bg-white/70 rounded-2xl p-5 mb-6 shadow-md">
+      <div class="bg-white/70 rounded-2xl p-5 mb-6 shadow-md" style="backdrop-filter: blur(6px);">
         <p class="text-xl font-semibold mb-2" style="color:#ffb6e6;">¡Te esperamos con!</p>
         <ul class="space-y-2 text-md">
-          <li>🌮 Tacos de guisado deliciosos 🌮</li>
-          <li>🍸 Barra libre: cervezas 🍻, tequila, ron, whisky 🥃</li>
+          <li>🌮 Tacos de guisado deliciosos</li>
+          <li>🍸 Barra libre: cervezas, tequila, ron, whisky</li>
           <li>🎲 Juegos, rifas y baile 💃🕺</li>
         </ul>
       </div>
-
       <div class="flex flex-col gap-4 mb-6">
-        <a href="https://waze.com/ul/h9g3qhubmq" target="_blank" class="btn-premium">📍 Cómo llegar con Waze</a>
-        <a href="https://maps.app.goo.gl/aJot9z4Qja81DHsw8?g_st=aw" target="_blank" class="btn-premium">📍 Cómo llegar conmigo Google Maps</a>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSd-vY-AAhe7GGVQdxJmZvxr-5m6rQh7PgrfKwXY0Dn1-ksgRw/viewform" target="_blank" class="btn-premium">✅ Confirmar asistencia</a>
-        <a href="https://mesaderegalos.liverpool.com.mx/milistaderegalos/51734815" target="_blank" class="btn-premium">🎁 Mesa de regalos Liverpool</a>
-        <a href="https://www.amazon.com.mx/baby-reg/waldodanielalvarez-martinez-diciembre-2025-ciudaddemexico/187ABTMWV8E8D?ref_=cm_sw_r_apin_dp_333WJQWW4TG06KPZBM91&language=en-US" target="_blank" class="btn-premium">📦 Mesa de regalos Amazon</a>
+        <a href="https://waze.com/ul/h9g3qhubmq" target="_blank" class="btn-mono">📍 Cómo llegar con Waze</a>
+        <a href="https://maps.app.goo.gl/aJot9z4Qja81DHsw8?g_st=aw" target="_blank" class="btn-mono">📍 Cómo llegar con Google Maps</a>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSd-vY-AAhe7GGVQdxJmZvxr-5m6rQh7PgrfKwXY0Dn1-ksgRw/viewform" target="_blank" class="btn-mono">✅ Confirmar asistencia</a>
+        <a href="https://mesaderegalos.liverpool.com.mx/milistaderegalos/51734815" target="_blank" class="btn-mono">🎁 Mesa de regalos Liverpool</a>
+        <a href="https://www.amazon.com.mx/baby-reg/waldodanielalvarez-martinez-diciembre-2025-ciudaddemexico/187ABTMWV8E8D?ref_=cm_sw_r_apin_dp_333WJQWW4TG06KPZBM91&language=en-US" target="_blank" class="btn-mono">📦 Mesa de regalos Amazon</a>
       </div>
       <p class="mt-4 text-lg" style="color:#b795fc;">¡Será un día mágico para celebrar juntos! ✨</p>
     </section>
