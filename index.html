@@ -1,162 +1,167 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Baby Shower de Aitana</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #fdf6f0, #fadadd, #f7a9a8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 450px;
-            padding: 20px;
-            text-align: center;
-            position: relative;
-        }
-
-        h1 {
-            font-family: 'Great Vibes', cursive;
-            font-size: 3rem;
-            color: #d97791;
-            text-shadow: 0 2px 6px rgba(0,0,0,0.15);
-            margin-bottom: 10px;
-        }
-
-        h2 {
-            font-size: 1.2rem;
-            color: #444;
-            margin-bottom: 20px;
-        }
-
-        .card {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(12px);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            color: #333;
-        }
-
-        .card h3 {
-            margin: 10px 0;
-            font-size: 1rem;
-        }
-
-        .emoji {
-            font-size: 1.5rem;
-            margin-right: 8px;
-        }
-
-        .highlight {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #d97791;
-        }
-
-        .btn {
-            display: block;
-            background: linear-gradient(90deg, #f7a9a8, #ffd700);
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            border-radius: 50px;
-            padding: 12px;
-            margin: 12px 0;
-            font-size: 1rem;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .btn:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 18px rgba(0,0,0,0.2);
-        }
-
-        /* Animaciones globos */
-        .balloon {
-            position: absolute;
-            width: 40px;
-            height: 55px;
-            background-color: #f7a9a8;
-            border-radius: 50% 50% 45% 45%;
-            animation: float 6s ease-in-out infinite;
-            box-shadow: inset -5px -5px 10px rgba(255,255,255,0.5), inset 5px 5px 10px rgba(0,0,0,0.1);
-        }
-
-        .balloon::after {
-            content: "";
-            position: absolute;
-            width: 2px;
-            height: 50px;
-            background: #ccc;
-            top: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .balloon:nth-child(1) { left: 10%; background-color: #fadadd; animation-delay: 0s; }
-        .balloon:nth-child(2) { left: 70%; background-color: #ffd700; animation-delay: 2s; }
-        .balloon:nth-child(3) { left: 85%; background-color: #f7a9a8; animation-delay: 4s; }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Baby Shower de Aitana</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(120deg, #fde8f3, #ffe8ae, #f7d9f7);
+      background-size: 300% 300%;
+      animation: gradient 10s ease infinite;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+    @keyframes gradient {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+    .glass-card {
+      backdrop-filter: blur(16px);
+      background: rgba(255,255,255,0.5);
+      border-radius: 32px;
+      box-shadow: 0 4px 32px rgba(255, 182, 230, 0.4);
+      border: 1.5px solid rgba(255,255,255,0.3);
+    }
+    .neon-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: 3.2rem;
+      background: linear-gradient(90deg, #ffb6e6 20%, #ffe8ae 60%, #b795fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 18px #ffb6e6, 0 0 30px #ffe8ae;
+      animation: glow 2s infinite alternate;
+    }
+    @keyframes glow {
+      0% { text-shadow: 0 0 18px #ffb6e6, 0 0 30px #ffe8ae; }
+      100% { text-shadow: 0 0 28px #ffe8ae, 0 0 48px #ffb6e6; }
+    }
+    .btn-premium {
+      background: linear-gradient(90deg, #ffb6e6, #ffd700, #b795fc);
+      background-size: 200% auto;
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      padding: 16px 38px;
+      font-weight: bold;
+      font-size: 1.2rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s, background-position 0.4s;
+    }
+    .btn-premium:hover {
+      background-position: right center;
+      transform: scale(1.05);
+      box-shadow: 0 8px 32px rgba(255,215,0,0.3);
+    }
+    /* Imagen circular */
+    .baby-photo {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 6px solid #fff;
+      box-shadow: 0 4px 18px rgba(183,149,252,0.5);
+      margin-bottom: 20px;
+    }
+    /* Globos animados */
+    .balloon {
+      position: absolute;
+      width: 70px;
+      height: 90px;
+      border-radius: 60% 60% 60% 60% / 60% 60% 80% 80%;
+      opacity: .9;
+      animation: float 6s ease-in-out infinite;
+      z-index: 0;
+    }
+    .balloon::after {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 50px;
+      background: #e6d0fa;
+      bottom: -50px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .balloon1 { left: 5%; top: 70%; background: linear-gradient(120deg,#ffb6e6,#ffe8ae); animation-delay: 0s;}
+    .balloon2 { left: 80%; top: 75%; background: linear-gradient(120deg,#b795fc,#ffb6e6); animation-delay: 2s;}
+    .balloon3 { left: 20%; top: 80%; background: linear-gradient(120deg,#ffe8ae,#b795fc); animation-delay: 4s;}
+    @keyframes float {
+      0% { transform: translateY(0);}
+      50% { transform: translateY(-50px);}
+      100% { transform: translateY(0);}
+    }
+    /* Sparkles */
+    .sparkle {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: radial-gradient(circle, #fff 70%, transparent 100%);
+      border-radius: 50%;
+      animation: sparkle 1.5s infinite;
+    }
+    @keyframes sparkle {
+      0%, 100% { opacity: 0.3; transform: scale(0.5);}
+      50% { opacity: 1; transform: scale(1);}
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Globos animados -->
-        <div class="balloon"></div>
-        <div class="balloon"></div>
-        <div class="balloon"></div>
+  <!-- Globos -->
+  <div class="balloon balloon1"></div>
+  <div class="balloon balloon2"></div>
+  <div class="balloon balloon3"></div>
 
-        <h1>¡Aitana está en camino!</h1>
-        <h2>Acompáñanos a celebrar el Baby Shower de Fer & Dann</h2>
+  <!-- Sparkles -->
+  <script>
+    function createSparkles() {
+      for (let i = 0; i < 30; i++) {
+        const s = document.createElement('div');
+        s.className = 'sparkle';
+        s.style.top = Math.random()*90 + "%";
+        s.style.left = Math.random()*100 + "%";
+        s.style.animationDelay = (Math.random()*2) + "s";
+        document.body.appendChild(s);
+      }
+    }
+    window.onload = createSparkles;
+  </script>
 
-        <!-- Info principal -->
-        <div class="card">
-            <h3><span class="emoji">📅</span> <span class="highlight">Sábado 6 de septiembre</span></h3>
-            <h3><span class="emoji">🕐</span> 2:00 PM a 11:00 PM</h3>
-            <h3><span class="emoji">📍</span> Residencial Sendero Santa Fe</h3>
-            <h3><span class="emoji">🔒</span> Lista en la entrada – Confirma antes del 30 de agosto</h3>
-        </div>
+  <main class="flex flex-col items-center justify-center min-h-screen px-5 py-10 relative z-10">
+    <section class="glass-card w-full max-w-2xl p-8 shadow-lg text-center">
+      <img src="Baby.png" alt="Foto Baby Shower" class="baby-photo">
+      <h1 class="neon-title mb-4">¡Aitana está en camino!</h1>
+      <h2 class="text-xl mb-7" style="color:#b795fc; font-family: 'Dancing Script',cursive;">Acompáñanos a celebrar el Baby Shower de Fer & Dann</h2>
+      
+      <div class="bg-white/70 rounded-2xl p-5 mb-5 shadow-md">
+        <p class="font-bold text-lg mb-2" style="color:#b795fc">Sábado 20 de Septiembre</p>
+        <p class="font-semibold mb-2">2:00 PM a 11:00 PM</p>
+        <p class="font-semibold mb-2">Residencial Sendero Santa Fe</p>
+        <p class="text-sm">Lista en la entrada – confirma antes del 14 de septiembre</p>
+      </div>
 
-        <!-- Frase emotiva -->
-        <div class="card">
-            <p class="highlight">“💕Un día especial para recibir a Aitana con amor 💕”</p>
-        </div>
+      <div class="bg-white/70 rounded-2xl p-5 mb-6 shadow-md">
+        <p class="text-xl font-semibold mb-2" style="color:#ffb6e6;">¡Te esperamos con!</p>
+        <ul class="space-y-2 text-md">
+          <li>🌮 Tacos de guisado deliciosos</li>
+          <li>🍸 Barra libre: cervezas, tequila, ron, whisky</li>
+          <li>🎲 Juegos, rifas y baile 💃🕺</li>
+        </ul>
+      </div>
 
-        <!-- Comida y diversión -->
-        <div class="card">
-            <h3><span class="emoji">🌮</span> Tacos de guisado deliciosos 🌮</h3>
-            <h3><span class="emoji">🍸</span> Cervezas 🍻, tequila, ron y whisky 🥃</h3>
-            <h3><span class="emoji">🎲</span> Juegos, rifas y baile 💃🕺</h3>
-        </div>
-
-        <!-- Estacionamiento -->
-        <div class="card">
-            <h3><span class="emoji">🅿</span> Estacionamiento: Hotel Sleep Inn ($100 tiempo libre) a 50 m del condominio</h3>
-        </div>
-
-        <!-- Botones -->
-        <a href="https://waze.com/ul/h9g3qhubmq" class="btn">📍 Cómo llegar con Waze</a>
-        <a href="https://maps.app.goo.gl/aJot9z4Qja81DHsw8?g_st=aw" class="btn">📍 Cómo llegar con Google Maps</a>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSd-vY-AAhe7GGVQdxJmZvxr-5m6rQh7PgrfKwXY0Dn1-ksgRw/viewform" class="btn">✅ Confirmar asistencia</a>
-        <a href="https://mesaderegalos.liverpool.com.mx/milistaderegalos/51734815" class="btn">🎁 Mesa de regalos Liverpool</a>
-        <a href="https://www.amazon.com.mx/baby-reg/waldodanielalvarez-martinez-diciembre-2025-ciudaddemexico/187ABTMWV8E8D?ref_=cm_sw_r_apin_dp_HBBBCN752Y2CSANQX0MN_1&language=en-US" class="btn">📦 Mesa de regalos Amazon</a>
-    </div>
+      <div class="flex flex-col gap-4 mb-6">
+        <a href="https://waze.com/ul/h9g3qhubmq" target="_blank" class="btn-premium">📍 Cómo llegar</a>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSd-vY-AAhe7GGVQdxJmZvxr-5m6rQh7PgrfKwXY0Dn1-ksgRw/viewform" target="_blank" class="btn-premium">✅ Confirmar asistencia</a>
+        <a href="https://mesaderegalos.liverpool.com.mx/milistaderegalos/51734815" target="_blank" class="btn-premium">🎁 Mesa de regalos</a>
+      </div>
+      <p class="mt-4 text-lg" style="color:#b795fc;">¡Será un día mágico para celebrar juntos! ✨</p>
+    </section>
+  </main>
 </body>
 </html>
