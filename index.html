@@ -350,22 +350,22 @@ body.dark .music-float {
 </div>
 
 <script>
-// Lluvia animada de emojis
+// Lluvia animada de emojis (menos cantidad y más lento)
 const emojiRain = document.getElementById('emojiRain');
-const emojis = ['💖','✨','🦋','⭐','💫','💜','🌈','🎉'];
+const emojis = ['💖','✨','🦋','⭐','🥳','🐝','🐶','🎉'];
 function rainEmojis() {
-  for(let i=0;i<15;i++){
+  for(let i=0; i<7; i++){ // MENOS EMOJIS POR CICLO
     const e = document.createElement('span');
     e.className='rain-emoji';
     e.textContent=emojis[Math.floor(Math.random()*emojis.length)];
     e.style.left=Math.random()*98+'vw';
-    e.style.animationDuration=(2.5+Math.random()*2.5)+'s';
+    e.style.animationDuration=(4.5+Math.random()*2.5)+'s'; // MÁS LENTO
     e.style.animationDelay=(Math.random()*2)+'s';
     emojiRain.appendChild(e);
-    setTimeout(()=>e.remove(),5000);
+    setTimeout(()=>e.remove(),7000);
   }
 }
-setInterval(rainEmojis,1800);
+setInterval(rainEmojis, 3200); // MÁS LENTO
 rainEmojis();
 
 // Traducción completa
@@ -584,10 +584,10 @@ document.addEventListener('DOMContentLoaded', () => {
           e.style.left=Math.random()*98+'vw';
           e.style.fontSize = (2+Math.random()*2)+'rem';
           e.style.zIndex = 9999;
-          e.style.animationDuration=(2.5+Math.random()*2.5)+'s';
+          e.style.animationDuration=(4.5+Math.random()*2.5)+'s';
           e.style.animationDelay=(Math.random()*1)+'s';
           document.body.appendChild(e);
-          setTimeout(()=>e.remove(),4500);
+          setTimeout(()=>e.remove(),7000);
         }
       }
     });
