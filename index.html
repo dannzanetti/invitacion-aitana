@@ -1,275 +1,213 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Baby Shower de Aitana</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-<style>
-  body {
-    font-family: 'Montserrat', sans-serif;
-    background: linear-gradient(270deg, #fde8f3, #e6d0fa, #ffe8ae);
-    background-size: 600% 600%;
-    animation: gradientMove 12s ease infinite;
-    min-height: 100vh;
-    overflow-x: hidden;
-    position: relative;
-  }
-  @keyframes gradientMove {
-    0%{background-position:0% 50%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
-  }
-  /* Efecto destellos */
-  .sparkle {
-    position: fixed;
-    width: 6px;
-    height: 6px;
-    background: white;
-    border-radius: 50%;
-    animation: sparkleAnim 3s infinite ease-in-out;
-    opacity: 0.7;
-    z-index: 1;
-  }
-  @keyframes sparkleAnim {
-    0%, 100% { opacity: 0.1; transform: scale(0.8);}
-    50% { opacity: 1; transform: scale(1.5);}
-  }
-  .glass-card {
-    backdrop-filter: blur(16px);
-    background: rgba(255,255,255,0.8);
-    border-radius: 40px;
-    box-shadow: 0 4px 36px rgba(183,149,252,0.24);
-    border: 1.5px solid rgba(245,206,250,0.3);
-    animation: fadeIn 1.5s ease;
-    padding: 20px;
-    z-index: 10;
-  }
-  @keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.9);}
-    to { opacity: 1; transform: scale(1);}
-  }
-  .main-title {
-    font-family: 'Dancing Script', cursive;
-    font-size: 3.4rem;
-    color: #000;
-    margin-bottom: 12px;
-  }
-  /* Imagen Baby */
-  .baby-photo {
-    width: 340px;
-    height: 340px;
-    display: block;
-    margin: 0 auto 20px auto;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 8px solid #fff;
-    box-shadow: 0 0 30px rgba(255,182,230,0.7), 0 0 50px rgba(183,149,252,0.6);
-    animation: rotateZoom 8s infinite linear, glowPulse 2.5s infinite alternate;
-    transform-style: preserve-3d;
-  }
-  @keyframes rotateZoom {
-    0% {transform: rotateY(0deg) scale(1);}
-    50% {transform: rotateY(180deg) scale(1.05);}
-    100% {transform: rotateY(360deg) scale(1);}
-  }
-  @keyframes glowPulse {
-    0% {box-shadow: 0 0 20px rgba(255,182,230,0.6), 0 0 35px rgba(183,149,252,0.4);}
-    100% {box-shadow: 0 0 40px rgba(255,182,230,0.8), 0 0 70px rgba(183,149,252,0.6);}
-  }
-  /* Botón música principal */
-  .music-info {
-    font-size: 1rem;
-    color: #555;
-    margin-bottom: 8px;
-    font-weight: bold;
-  }
-  .music-btn {
-    background: #fff;
-    color: #000;
-    font-weight: bold;
-    padding: 14px 26px;
-    border-radius: 12px;
-    font-size: 1.1rem;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-  }
-  .music-btn:hover {
-    background: #000;
-    color: #fff;
-    transform: scale(1.08);
-    box-shadow: 0 6px 14px rgba(0,0,0,0.25);
-  }
-  /* Botón flotante música */
-  .music-float {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: #ffb6e6;
-    color: #fff;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 28px;
-    cursor: pointer;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.2);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    z-index: 100;
-  }
-  .music-float:hover {
-    transform: scale(1.15);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-  }
-  /* Botones interactivos */
-  .btn-3d {
-    background: #fff;
-    color: #000;
-    border: none;
-    border-radius: 12px;
-    padding: 14px 20px;
-    font-weight: bold;
-    font-size: 1rem;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    transition: all 0.3s ease;
-    text-align: left;
-    width: 100%;
-    display: block;
-  }
-  .btn-3d:hover {
-    background: #000;
-    color: #fff;
-    transform: scale(1.05);
-    box-shadow: 0 6px 14px rgba(0,0,0,0.2);
-  }
-  .btn-container {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-bottom: 20px;
-    width: 100%;
-  }
-  /* Contadores */
-  #countdown {
-    font-size: 1.3rem;
-    color: #ff69b4;
-    font-weight: bold;
-    margin-bottom: 6px;
-  }
-  #timer {
-    font-size: 1.5rem;
-    color: #b47ae0;
-    font-weight: bold;
-    margin-bottom: 18px;
-  }
-  .text-left p, .text-left li {
-    margin-bottom: 8px;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Baby Shower de Aitana</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(120deg, #fde8f3, #ffe8ae, #f7d9f7);
+      background-size: 300% 300%;
+      animation: gradient 10s ease infinite;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+    @keyframes gradient {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+    .glass-card {
+      backdrop-filter: blur(16px);
+      background: rgba(255,255,255,0.5);
+      border-radius: 32px;
+      box-shadow: 0 4px 32px rgba(255, 182, 230, 0.4);
+      border: 1.5px solid rgba(255,255,255,0.3);
+    }
+    .neon-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: 3.2rem;
+      background: linear-gradient(90deg, #ffb6e6, #ffe8ae, #b795fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 18px #ffb6e6, 0 0 30px #ffe8ae;
+      animation: glow 2s infinite alternate;
+    }
+    @keyframes glow {
+      0% { text-shadow: 0 0 18px #ffb6e6, 0 0 30px #ffe8ae; }
+      100% { text-shadow: 0 0 28px #ffe8ae, 0 0 48px #ffb6e6; }
+    }
+    .btn-premium {
+      background: linear-gradient(90deg, #ffb6e6, #ffd700, #b795fc);
+      background-size: 200% auto;
+      color: #fff;
+      border-radius: 999px;
+      padding: 16px 38px;
+      font-weight: bold;
+      font-size: 1.2rem;
+      transition: transform 0.3s, background-position 0.4s;
+    }
+    .btn-premium:hover {
+      background-position: right center;
+      transform: scale(1.05);
+      box-shadow: 0 8px 32px rgba(255,215,0,0.3);
+    }
+    .baby-photo {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 6px solid transparent;
+      background-image: linear-gradient(white, white), linear-gradient(90deg,#ffd700,#ffb6e6,#b795fc);
+      background-origin: border-box;
+      background-clip: content-box, border-box;
+      animation: borderGlow 4s linear infinite;
+      margin-bottom: 20px;
+    }
+    @keyframes borderGlow {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+    /* Globos animados */
+    .balloon {
+      position: absolute;
+      width: 70px;
+      height: 90px;
+      border-radius: 60% 60% 60% 60% / 60% 60% 80% 80%;
+      opacity: .9;
+      animation: float 6s ease-in-out infinite;
+    }
+    .balloon::after {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 50px;
+      background: #e6d0fa;
+      bottom: -50px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .balloon1 { left: 5%; top: 70%; background: linear-gradient(120deg,#ffb6e6,#ffe8ae);}
+    .balloon2 { left: 80%; top: 75%; background: linear-gradient(120deg,#b795fc,#ffb6e6);}
+    .balloon3 { left: 20%; top: 80%; background: linear-gradient(120deg,#ffe8ae,#b795fc);}
+    @keyframes float {
+      0%,100% { transform: translateY(0);}
+      50% { transform: translateY(-50px);}
+    }
+    /* Confeti */
+    .confetti {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: #ffd700;
+      opacity: 0.8;
+      animation: fall linear infinite;
+    }
+    @keyframes fall {
+      0% { transform: translateY(-10vh) rotate(0deg);}
+      100% { transform: translateY(110vh) rotate(360deg);}
+    }
+    /* Sparkles */
+    .sparkle {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: radial-gradient(circle, #fff 70%, transparent 100%);
+      border-radius: 50%;
+      animation: sparkle 1.5s infinite;
+    }
+    @keyframes sparkle {
+      0%,100% { opacity: 0.3; transform: scale(0.5);}
+      50% { opacity: 1; transform: scale(1);}
+    }
+    /* Iconos animados */
+    .icon-animated {
+      font-size: 2.5rem;
+      background: linear-gradient(90deg,#ffb6e6,#ffe8ae,#b795fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: floatIcons 4s ease-in-out infinite;
+      margin: 0 8px;
+    }
+    @keyframes floatIcons {
+      0%,100% { transform: translateY(0);}
+      50% { transform: translateY(-12px);}
+    }
+  </style>
 </head>
 <body>
-<!-- Destellos -->
-<script>
-for(let i=0;i<40;i++){
-  const s=document.createElement('div');
-  s.className='sparkle';
-  s.style.top=Math.random()*100+'vh';
-  s.style.left=Math.random()*100+'vw';
-  s.style.animationDelay=(Math.random()*3)+'s';
-  document.body.appendChild(s);
-}
-</script>
+  <!-- Globos -->
+  <div class="balloon balloon1"></div>
+  <div class="balloon balloon2"></div>
+  <div class="balloon balloon3"></div>
 
-<!-- Botón música flotante -->
-<div class="music-float" onclick="toggleMusic()">🎵</div>
+  <!-- Confeti y Sparkles -->
+  <script>
+    function createConfetti() {
+      const colors = ['#ffd700','#ffb6e6','#ffffff','#b795fc'];
+      for (let i = 0; i < 80; i++) {
+        const c = document.createElement('div');
+        c.className = 'confetti';
+        c.style.background = colors[Math.floor(Math.random()*colors.length)];
+        c.style.left = Math.random()*100 + '%';
+        c.style.animationDuration = (Math.random()*3+3)+'s';
+        c.style.animationDelay = (Math.random()*5)+'s';
+        document.body.appendChild(c);
+      }
+    }
+    function createSparkles() {
+      for (let i = 0; i < 30; i++) {
+        const s = document.createElement('div');
+        s.className = 'sparkle';
+        s.style.top = Math.random()*90 + "%";
+        s.style.left = Math.random()*100 + "%";
+        s.style.animationDelay = (Math.random()*2) + "s";
+        document.body.appendChild(s);
+      }
+    }
+    window.onload = () => { createConfetti(); createSparkles(); };
+  </script>
 
-<main class="flex flex-col items-center justify-center min-h-screen px-4 py-8 relative z-10">
-<section class="glass-card w-full max-w-3xl py-8 px-6 text-center">
+  <main class="flex flex-col items-center justify-center min-h-screen px-5 py-10 relative z-10">
+    <section class="glass-card w-full max-w-2xl p-8 shadow-lg text-center">
+      <img src="Baby.png" alt="Foto Baby Shower" class="baby-photo">
+      <h1 class="neon-title mb-4">¡Aitana está en camino!</h1>
+      <div class="flex justify-center mb-6">
+        <span class="icon-animated">🍼</span>
+        <span class="icon-animated">👶</span>
+        <span class="icon-animated">🎀</span>
+        <span class="icon-animated">🧸</span>
+        <span class="icon-animated">🌸</span>
+      </div>
+      <h2 class="text-xl mb-7" style="color:#b795fc; font-family: 'Dancing Script',cursive;">Acompáñanos a celebrar el Baby Shower de Fer & Dann</h2>
+      
+      <div class="bg-white/70 rounded-2xl p-5 mb-5 shadow-md">
+        <p class="font-bold text-lg mb-2" style="color:#b795fc">Sábado 20 de Septiembre</p>
+        <p class="font-semibold mb-2">2:00 PM a 11:00 PM</p>
+        <p class="font-semibold mb-2">Residencial Sendero Santa Fe</p>
+        <p class="text-sm">Lista en la entrada – confirma antes del 14 de septiembre</p>
+      </div>
 
-  <!-- Info música -->
-  <p class="music-info">🎵 Haz clic en el botón para escuchar música 🎶</p>
-  <button onclick="toggleMusic()" class="music-btn mb-4">▶️ Música ON/OFF</button>
-  <audio id="music" loop>
-    <source src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/jump.mp3" type="audio/mpeg">
-  </audio>
+      <div class="bg-white/70 rounded-2xl p-5 mb-6 shadow-md">
+        <p class="text-xl font-semibold mb-2" style="color:#ffb6e6;">¡Te esperamos con!</p>
+        <ul class="space-y-2 text-md">
+          <li>🌮 Tacos de guisado deliciosos</li>
+          <li>🍸 Barra libre: cervezas, tequila, ron, whisky</li>
+          <li>🎲 Juegos, rifas y baile 💃🕺</li>
+        </ul>
+      </div>
 
-  <!-- Imagen -->
-  <img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/Baby.png" alt="Baby" class="baby-photo" />
-  
-  <h1 class="main-title">🎀 Baby Shower de Aitana 🎀</h1>
-  
-  <!-- Contadores -->
-  <div id="countdown">🎈 Faltan X días para el gran día 🎈</div>
-  <div id="timer">00d : 00h : 00m : 00s</div>
-  
-  <div class="text-left bg-white/80 rounded-2xl p-5 mb-5 shadow-md">
-    <p>📅 Sábado 20 de Septiembre</p>
-    <p>⏰ 2:00 PM – 11:00 PM</p>
-    <p>🏘️ Residencial Sendero Santa Fe</p>
-    <p>⚠️ Confirma antes del 14 de septiembre</p>
-  </div>
-  
-  <div class="text-left bg-white/80 rounded-2xl p-5 mb-6 shadow-md">
-    <p class="text-xl font-semibold mb-4" style="color:#ffb6e6;">¡Te esperamos con!</p>
-    <ul>
-      <li>🌮 Tacos de guisado</li>
-      <li>🍸 Barra libre:</li>
-      <li style="margin-left:20px;">🍻 Cervezas</li>
-      <li style="margin-left:20px;">🍹 Tequila</li>
-      <li style="margin-left:20px;">🥃 Ron</li>
-      <li style="margin-left:20px;">🥂 Whisky</li>
-      <li>🎲 Juegos</li>
-      <li>🎖️ Rifas</li>
-      <li>💃🕺🏻 Baile</li>
-    </ul>
-  </div>
-  
-  <!-- Botones -->
-  <div class="btn-container">
-    <a href="https://waze.com/ul/h9g3qhubmq" target="_blank" class="btn-3d">📍 Cómo llegar con Waze</a>
-    <a href="https://maps.app.goo.gl/aJot9z4Qja81DHsw8?g_st=aw" target="_blank" class="btn-3d">📍 Cómo llegar con Google Maps</a>
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSd-vY-AAhe7GGVQdxJmZvxr-5m6rQh7PgrfKwXY0Dn1-ksgRw/viewform" target="_blank" class="btn-3d">✅ Confirmar asistencia</a>
-    <a href="https://mesaderegalos.liverpool.com.mx/milistaderegalos/51734815" target="_blank" class="btn-3d">🎁 Mesa de regalos Liverpool</a>
-    <a href="https://www.amazon.com.mx/baby-reg/waldodanielalvarez-martinez-diciembre-2025-ciudaddemexico/187ABTMWV8E8D" target="_blank" class="btn-3d">📦 Mesa de regalos Amazon</a>
-  </div>
-  
-  <p class="mt-4 text-lg" style="color:#b795fc;">✨ ¡Será un día mágico para celebrar juntos! ✨</p>
-</section>
-</main>
-
-<script>
-// Música
-function toggleMusic(){
-  const audio=document.getElementById('music');
-  if(audio.paused){ audio.play(); } else { audio.pause(); }
-}
-
-// Contadores
-const countdownEl=document.getElementById('countdown');
-const timerEl=document.getElementById('timer');
-const eventDate=new Date('2025-09-20T14:00:00');
-
-function updateCountdown(){
-  const now=new Date();
-  const diff=eventDate-now;
-  if(diff<=0){
-    countdownEl.textContent="🎉 ¡Hoy es el gran día! 🎉";
-    timerEl.textContent="00d : 00h : 00m : 00s";
-    return;
-  }
-  const days=Math.floor(diff/(1000*60*60*24));
-  const hours=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
-  const minutes=Math.floor((diff%(1000*60*60))/(1000*60));
-  const seconds=Math.floor((diff%(1000*60))/1000);
-  
-  countdownEl.textContent=`🎈 ¡Faltan ${days} días para el gran día! 🎈`;
-  timerEl.textContent=`${days}d : ${hours}h : ${minutes}m : ${seconds}s`;
-}
-updateCountdown();
-setInterval(updateCountdown,1000);
-</script>
+      <div class="flex flex-col gap-4 mb-6">
+        <a href="https://waze.com/ul/h9g3qhubmq" target="_blank" class="btn-premium">📍 Cómo llegar</a>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSd-vY-AAhe7GGVQdxJmZvxr-5m6rQh7PgrfKwXY0Dn1-ksgRw/viewform" target="_blank" class="btn-premium">✅ Confirmar asistencia</a>
+        <a href="https://mesaderegalos.liverpool.com.mx/milistaderegalos/51734815" target="_blank" class="btn-premium">🎁 Mesa de regalos</a>
+      </div>
+      <p class="mt-4 text-lg" style="color:#b795fc;">¡Será un día mágico para celebrar juntos! ✨</p>
+    </section>
+  </main>
 </body>
 </html>
