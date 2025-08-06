@@ -82,9 +82,16 @@ body.dark .theme-switch, body.dark .language-switch {
 @keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-15px);} }
 
 /* === Secciones glassmorphism y fade-in === */
+main {
+  margin-top: 40px;
+}
 section {
-  max-width:700px;margin:40px auto;background:rgba(255,255,255,0.80);
-  padding:20px;border-radius:26px;text-align:center;
+  max-width:700px;
+  margin:48px auto 48px auto; /* más espacio arriba y abajo */
+  background:rgba(255,255,255,0.80);
+  padding:32px 24px; /* más espacio en todos los lados */
+  border-radius:26px;
+  text-align:center;
   box-shadow:0 4px 30px rgba(183,149,252,0.22);
   opacity:0;transform:translateY(40px);
   transition:all 1s ease;
@@ -136,7 +143,7 @@ body.dark .main-title,body.dark .sub-title {
   width:100%;
   max-width:600px;
   border-radius:12px;
-  margin:20px auto;
+  margin:32px auto 0 auto;
   animation: zoomGlow 3s ease-in-out infinite alternate;
 }
 @keyframes zoomGlow {
@@ -145,13 +152,13 @@ body.dark .main-title,body.dark .sub-title {
 }
 
 #countdown {
-  font-size:1.6rem;font-weight:bold;margin:8px 0;
+  font-size:1.6rem;font-weight:bold;margin:8px 0 18px 0;
   background:linear-gradient(90deg,#ff69b4,#ffb6e6,#b47ae0);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
   animation:pulseGlow 1.5s infinite alternate;
 }
 #timer {
-  font-size:2rem;font-weight:bold;margin:8px 0;
+  font-size:2rem;font-weight:bold;margin:8px 0 0 0;
   background:linear-gradient(90deg,#ff69b4,#ffb6e6,#b47ae0);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
   animation:heartbeat 1.4s infinite ease-in-out;
@@ -162,12 +169,12 @@ body.dark .main-title,body.dark .sub-title {
 .info-block p {text-align:center;font-weight:bold;margin:10px 0;font-size:1.2rem;}
 
 .highlight-container {
-  font-size:1.8rem;font-weight:bold;color:#ff69b4;margin-bottom:20px;
+  font-size:1.8rem;font-weight:bold;color:#ff69b4;margin-bottom:18px;
   animation: shimmer 3s infinite linear;
 }
 @keyframes shimmer {0%{opacity:.6;}50%{opacity:1;}100%{opacity:.6;}}
 
-.btn-container {display:flex;flex-direction:column;gap:18px;margin-top:25px;}
+.btn-container {display:flex;flex-direction:column;gap:24px;margin-top:25px;}
 .btn-3d,.music-btn {
   width:100%;background:linear-gradient(270deg,#ffb6e6,#ffe8ae,#e6d0fa);
   background-size:400% 400%;animation:gradientMove 6s infinite alternate;
@@ -177,6 +184,7 @@ body.dark .main-title,body.dark .sub-title {
   box-shadow: 0 0 60px 20px #ffe8aecc, 0 2px 30px #ffb6e6cc;
   border: 2px solid #ffe8ae;
   animation: magicConfirm 1.2s infinite alternate;
+  margin-bottom: 8px;
 }
 body.dark .btn-3d, body.dark .music-btn {
   background:linear-gradient(270deg,#47386e,#232333,#ffe8ae);
@@ -269,14 +277,14 @@ body.dark .music-float {
 .music-drop {font-size:22px;opacity:0.6;}
 
 .qr-container {
-  display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 12px; margin-bottom: 14px;
+  display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 12px; margin-bottom: 18px;
 }
 .qr-container img {
   width: 90px; height: 90px; border-radius: 12px; box-shadow: 0 2px 14px #b47ae033;
 }
 
 .scroll-indicator {
-  margin-top:15px;font-size:1.2rem;color:#ff69b4;font-weight:bold;animation:blink 1.5s infinite;
+  margin-top:24px;font-size:1.2rem;color:#ff69b4;font-weight:bold;animation:blink 1.5s infinite;
 }
 @keyframes blink {0%,100%{opacity:1;}50%{opacity:0.4;}}
 .scroll-arrow {display:block;font-size:2rem;color:#ff69b4;animation:bounceArrow 1.4s infinite;}
@@ -293,6 +301,7 @@ body.dark .music-float {
 .typewriter {
   font-size:1.5rem;font-weight:bold;color:#b47ae0;border-right:.15em solid #b47ae0;
   white-space:nowrap;overflow:hidden;width:0;animation:type 4s steps(40,end) forwards,blinkCursor .75s step-end infinite;
+  margin-bottom: 6px;
 }
 @keyframes type {to{width:100%;}}
 @keyframes blinkCursor {50%{border-color:transparent;}}
@@ -317,7 +326,8 @@ body.dark .music-float {
 @keyframes pulseGlow {0%{box-shadow:0 0 10px #b47ae0;}100%{box-shadow:0 0 40px #ffe8ae99;}}
 
 @media (max-width: 700px) {
-  section {padding:10px;}
+  main { margin-top: 12px;}
+  section {padding:10px;margin:24px auto;}
   .main-title {font-size:2.1rem;}
   .sub-title {font-size:2rem;}
   .baby-photo {max-width:95vw;}
@@ -352,20 +362,20 @@ body.dark .music-float {
 <script>
 // Lluvia animada de emojis (menos cantidad y más lento)
 const emojiRain = document.getElementById('emojiRain');
-const emojis = ['💖','✨','🦋','⭐','🥳','🐝','🐶','🎉'];
+const emojis = ['💖','✨','🦋','⭐','💫','💜','🌈','🎉'];
 function rainEmojis() {
-  for(let i=0; i<7; i++){ // MENOS EMOJIS POR CICLO
+  for(let i=0; i<7; i++){
     const e = document.createElement('span');
     e.className='rain-emoji';
     e.textContent=emojis[Math.floor(Math.random()*emojis.length)];
     e.style.left=Math.random()*98+'vw';
-    e.style.animationDuration=(4.5+Math.random()*2.5)+'s'; // MÁS LENTO
+    e.style.animationDuration=(4.5+Math.random()*2.5)+'s';
     e.style.animationDelay=(Math.random()*2)+'s';
     emojiRain.appendChild(e);
     setTimeout(()=>e.remove(),7000);
   }
 }
-setInterval(rainEmojis, 3200); // MÁS LENTO
+setInterval(rainEmojis, 3200);
 rainEmojis();
 
 // Traducción completa
@@ -443,7 +453,7 @@ const translations = {
 // Modo oscuro/claro automático por horario + botón manual
 function autoThemeByHour() {
   const hour = new Date().getHours();
-  const isNight = (hour >= 19 || hour < 7); // 7pm a 7am
+  const isNight = (hour >= 19 || hour < 7);
   if (!localStorage.getItem('theme')) {
     if (isNight) {
       document.body.classList.add('dark');
@@ -460,7 +470,6 @@ function toggleTheme() {
 }
 if(localStorage.getItem('theme')==='dark') document.body.classList.add('dark');
 
-// Idioma ES/EN
 let lang = localStorage.getItem('lang') || 'es';
 function toggleLanguage() {
   lang = lang==='es'?'en':'es';
@@ -630,10 +639,10 @@ for(let i=0;i<10;i++){
   <section class="fade-in">
     <div class="qr-container">
       <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://dannzanetti.github.io/invitacion-aitana/" alt="QR Invitación"/>
-      <a href="https://api.whatsapp.com/send?text=¡Te%20invito%20al%20Baby%20Shower%20de%20Aitana!%20https://dannzanetti.github.io/invitacion-aitana/" target="_blank" class="btn-3d" id="qrBtn" style="font-size:1rem;width:auto;padding:8px 14px;display:inline-block;margin-top:4px;">💬 Compartir por WhatsApp</a>
+      <a href="https://api.whatsapp.com/send?text=¡Te%20invito%20al%20Baby%20Shower%20de%20Aitana!%20https://dannzanetti.github.io/invitacion-aitana/" target="_blank" class="btn-3d" id="qrBtn" style="font-size:1rem;width:auto;padding:8px 14px;display:inline-block;margin-top:16px;">💬 Compartir por WhatsApp</a>
     </div>
-    <p style="margin-bottom:10px;" id="listenMusic">🎵 Haz clic en el botón para escuchar música 🎶</p>
-    <button onclick="toggleMusic()" class="music-btn">▶️ Música ON/OFF</button>
+    <p style="margin-bottom:18px;margin-top:18px;" id="listenMusic">🎵 Haz clic en el botón para escuchar música 🎶</p>
+    <button onclick="toggleMusic()" class="music-btn" style="margin-bottom:18px;">▶️ Música ON/OFF</button>
     <p class="scroll-indicator"><span class="scroll-arrow">⬇️</span> ¡Sigue bajando para ver todos los detalles! <span class="scroll-arrow">⬇️</span></p>
     <audio id="music" loop>
       <source src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/jump.mp3" type="audio/mpeg">
@@ -683,7 +692,7 @@ for(let i=0;i<10;i++){
   </section>
 
   <section class="fade-in">
-    <div style="display:flex;justify-content:space-between;gap:10px;">
+    <div style="display:flex;justify-content:space-between;gap:18px;">
       <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Baby+Shower+Aitana&dates=20250920T200000Z/20250921T050000Z&details=Baby+Shower+de+Aitana&location=Residencial+Sendero+Santa+Fe" target="_blank" class="btn-3d" id="calendarG" style="width:48%;">📅 Google Calendar</a>
       <a href="https://dannzanetti.github.io/invitacion-aitana/babyshower.ics" class="btn-3d" id="calendarA" style="width:48%;">🍎 Apple Calendar</a>
     </div>
@@ -694,7 +703,7 @@ for(let i=0;i<10;i++){
     <div class="gif-container">
       <img id="finalGif" src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExeWV0NDMza3c2eXVsM2VrMnNhdHcyMG0yN2Z5YzN5aWV2bHJpdjk1OSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/QMkPpxPDYY0fu/giphy.gif" alt="GIF Final">
     </div>
-    <p id="gifFinal" style="margin-top:20px;font-size:1.4rem;color:#b47ae0;font-weight:bold;">✨ ¡Será un día mágico para celebrar juntos! ✨</p>
+    <p id="gifFinal" style="margin-top:24px;font-size:1.4rem;color:#b47ae0;font-weight:bold;">✨ ¡Será un día mágico para celebrar juntos! ✨</p>
   </section>
 </main>
 
