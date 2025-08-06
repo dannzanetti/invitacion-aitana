@@ -44,7 +44,6 @@
     0% {transform: translateY(0);}
     100% {transform: translateY(-10px);}
   }
-  /* Imagen Baby con efecto 3D y resplandor animado */
   .baby-photo {
     width: 240px; height: 240px;
     border-radius: 50%;
@@ -80,7 +79,6 @@
     transform: translateY(-3px) scale(1.05);
     box-shadow: 0 0 20px #ffb6e6, 0 0 35px #b795fc;
   }
-  /* Glow animado */
   .btn-3d::after {
     content: '';
     position: absolute;
@@ -135,7 +133,13 @@
     font-size: 1.3rem;
     color: #ff69b4;
     font-weight: bold;
-    margin-bottom: 16px;
+    margin-bottom: 6px;
+  }
+  #timer {
+    font-size: 1.5rem;
+    color: #b47ae0;
+    font-weight: bold;
+    margin-bottom: 18px;
   }
 </style>
 </head>
@@ -160,11 +164,22 @@
 
 <main class="flex flex-col items-center justify-center min-h-screen px-4 py-8 relative z-10">
 <section class="glass-card w-full max-w-2xl py-8 px-6 text-center">
-  <!-- Imagen Baby con URL RAW -->
+
+  <!-- Botón Música ARRIBA -->
+  <button onclick="toggleMusic()" class="btn-3d mb-4">🎵 Música ON/OFF</button>
+  <audio id="music" loop>
+    <source src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/adf23669b26577984ec30ecc7cfdbe5e07bd1655/Jump.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Imagen Baby -->
   <img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/adf23669b26577984ec30ecc7cfdbe5e07bd1655/Baby.png" alt="Baby" class="baby-photo" />
   
   <h1 class="main-title mb-2">💕 👶🏻 ¡AITANA está en camino! 👶🏻 💕</h1>
+  
+  <!-- Contador -->
   <div id="countdown">🎈 Faltan X días para el gran día 🎈</div>
+  <div id="timer">00d : 00h : 00m : 00s</div>
+  
   <h2 class="text-xl mb-6" style="color:#b795fc; font-family:'Dancing Script',cursive;">🎉 A celebrar el Baby Shower de Fer & Dann 🎉</h2>
   
   <div class="bg-white/80 rounded-2xl p-5 mb-5 shadow-md">
@@ -193,11 +208,6 @@
   
   <p class="mt-4 text-lg" style="color:#b795fc;">✨ ¡Será un día mágico para celebrar juntos! ✨</p>
 
-  <!-- Botón Música -->
-  <button onclick="toggleMusic()" class="btn-3d mt-4">🎵 Música ON/OFF</button>
-  <audio id="music" loop>
-    <source src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/adf23669b26577984ec30ecc7cfdbe5e07bd1655/Love%20Fast%20-%20Ryan%20Stasik%2C%20Kanika%20Moore.mp3" type="audio/mpeg">
-  </audio>
 </section>
 </main>
 
@@ -208,17 +218,30 @@ function toggleMusic(){
   if(audio.paused){ audio.play(); } else { audio.pause(); }
 }
 
-// Contador dinámico
+// Contador dinámico y cronómetro
 const countdownEl=document.getElementById('countdown');
-const eventDate=new Date('2025-09-20T00:00:00');
+const timerEl=document.getElementById('timer');
+const eventDate=new Date('2025-09-20T14:00:00'); // fecha y hora exacta
+
 function updateCountdown(){
   const now=new Date();
   const diff=eventDate-now;
+  if(diff<=0){
+    countdownEl.textContent="🎉 ¡Hoy es el gran día! 🎉";
+    timerEl.textContent="00d : 00h : 00m : 00s";
+    return;
+  }
   const days=Math.floor(diff/(1000*60*60*24));
+  const hours=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+  const minutes=Math.floor((diff%(1000*60*60))/(1000*60));
+  const seconds=Math.floor((diff%(1000*60))/1000);
+  
   countdownEl.textContent=`🎈 ¡Faltan ${days} días para el gran día! 🎈`;
+  timerEl.textContent=`${days}d : ${hours}h : ${minutes}m : ${seconds}s`;
 }
+
 updateCountdown();
-setInterval(updateCountdown,1000*60*60);
+setInterval(updateCountdown,1000);
 </script>
 </body>
 </html>
