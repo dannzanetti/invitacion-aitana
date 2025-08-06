@@ -82,10 +82,11 @@ body.dark .floating-controls .fc-btn {
   border-radius: 22px;
   box-shadow: 0 6px 24px #b47ae055;
   padding: 28px 20px 24px 20px;
-  text-align: left;
+  text-align: center; /* CENTRAR TODO EL CONTENIDO */
   position: relative;
   z-index: 5;
   backdrop-filter: blur(6px);
+  font-size: 1rem; /* Letra más pequeña */
 }
 body.dark .floating-info-module {
   background: rgba(44,44,54,0.87);
@@ -94,7 +95,7 @@ body.dark .floating-info-module {
 }
 .floating-info-title {
   font-family: 'Dancing Script', cursive;
-  font-size: 2.1rem;
+  font-size: 1.5rem; /* Letra más pequeña */
   font-weight: bold;
   text-align: center;
   margin-bottom: 14px;
@@ -110,16 +111,20 @@ body.dark .floating-info-title {
   list-style: none;
   padding: 0;
   margin: 0 0 8px 0;
+  text-align: center; /* Centrado */
+  font-size: 0.95rem; /* Letra más pequeña */
+  display: inline-block;
 }
 .floating-info-list li {
   margin-bottom: 11px;
-  font-size: 1.25rem;
+  font-size: 0.98rem;
   display: flex;
   align-items: center;
   gap: 12px;
+  justify-content: center; /* Centrar */
 }
 .floating-info-list .icon {
-  font-size: 1.8rem;
+  font-size: 1.25rem;
   margin-right: 7px;
   transition: transform .2s;
 }
@@ -127,7 +132,7 @@ body.dark .floating-info-title {
   transform: scale(1.18) rotate(-10deg);
 }
 .floating-info-note {
-  font-size: 1.07rem;
+  font-size: 0.95rem;
   color: #b47ae0;
   margin-top: 12px;
   text-align: center;
@@ -135,6 +140,22 @@ body.dark .floating-info-title {
 }
 body.dark .floating-info-note { color: #ffe8ae; }
 
+/* --- Imagen de Fer: efecto igual que la primera imagen --- */
+.baby-photo {
+  width:100%;
+  max-width:600px;
+  border-radius:12px;
+  margin:20px auto;
+  animation: zoomGlow 3s ease-in-out infinite alternate;
+  box-shadow:0 0 15px rgba(255,182,230,0.3);
+  display: block;
+}
+@keyframes zoomGlow {
+  0%{transform:scale(1);box-shadow:0 0 15px rgba(255,182,230,0.3);}
+  100%{transform:scale(1.05);box-shadow:0 0 45px rgba(183,149,252,0.5);}
+}
+
+/* --- Resto igual --- */
 .balloon {
   position: fixed;
   width: 60px; height: 80px;
@@ -213,17 +234,6 @@ body.dark .main-title,body.dark .sub-title {
   background:radial-gradient(circle,#ffe8ae88 0%,transparent 80%);
   z-index:1;filter:blur(16px);
   pointer-events:none;
-}
-.baby-photo {
-  width:100%;
-  max-width:600px;
-  border-radius:12px;
-  margin:20px auto;
-  animation: zoomGlow 3s ease-in-out infinite alternate;
-}
-@keyframes zoomGlow {
-  0%{transform:scale(1);box-shadow:0 0 15px rgba(255,182,230,0.3);}
-  100%{transform:scale(1.05);box-shadow:0 0 45px rgba(183,149,252,0.5);}
 }
 #countdown {
   font-size:1.6rem;font-weight:bold;margin:8px 0;
@@ -421,6 +431,9 @@ body.dark .btn-3d.confirmar {
     <h1 class="main-title">🎀 Baby Shower 🎀</h1>
     <h2 class="sub-title">🎀 AITANA 🎀</h2>
     <img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/Baby.png" alt="Baby" class="baby-photo"/>
+    <!-- Aquí va la foto de Fer, debajo de la imagen principal -->
+    <img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/0.jpg" alt="La futura Mamá, Fer" class="baby-photo" style="margin-top:24px;max-width:480px;">
+    <p style="font-size:1.18rem;color:#b47ae0;font-weight:bold;margin-bottom:18px;">La futura Mamá, Fer</p>
   </section>
   <section class="fade-in">
     <div id="countdown">🎈 ¡Faltan X días para el gran día! 🎈</div>
