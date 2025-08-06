@@ -48,20 +48,26 @@
     border: 8px solid #fff;
     box-shadow: 0 0 30px rgba(255,182,230,0.5);
   }
-  /* Botones */
+  /* Botones animados */
   .btn-3d {
-    background: linear-gradient(270deg, #ffb6e6, #e6d0fa, #ffe8ae);
+    background: linear-gradient(270deg, #ffb6e6, #ffe8ae, #e6d0fa);
     background-size: 400% 400%;
+    animation: gradientMove 6s infinite alternate;
     color: #000;
     font-weight: bold;
     border: none;
     border-radius: 14px;
     padding: 16px 22px;
     font-size: 1.05rem;
-    width: 100%;
-    text-align: left;
     display: block;
-    margin-bottom: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-decoration: none;
+  }
+  .btn-3d:hover {
+    transform: scale(1.08);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
   }
   /* Botón flotante música */
   .music-float {
@@ -82,26 +88,64 @@
     box-shadow: 0 4px 14px rgba(0,0,0,0.2);
     animation: gradientMove 6s infinite alternate;
     z-index: 100;
+    transition: transform 0.3s ease;
   }
   .music-float:hover {
     transform: scale(1.15);
     box-shadow: 0 6px 20px rgba(0,0,0,0.3);
   }
+  /* Música botón principal */
+  .music-btn {
+    background: linear-gradient(270deg, #e6d0fa, #ffe8ae, #ffb6e6);
+    background-size: 400% 400%;
+    color: #fff;
+    font-weight: bold;
+    padding: 14px 26px;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 12px rgba(183,149,252,0.3);
+    transition: all 0.3s ease;
+    animation: gradientMove 6s infinite alternate;
+    margin-bottom: 20px;
+  }
+  .music-btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 6px 18px rgba(255,182,230,0.5);
+  }
+  /* Contadores */
+  #countdown {
+    font-size: 1.3rem;
+    color: #ff69b4;
+    font-weight: bold;
+    margin-bottom: 6px;
+  }
+  #timer {
+    font-size: 1.5rem;
+    color: #b47ae0;
+    font-weight: bold;
+    margin-bottom: 18px;
+  }
+  .btn-container {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 20px;
+  }
 </style>
 </head>
 <body>
 
-<!-- Botón música flotante -->
+<!-- Botón flotante -->
 <div class="music-float" onclick="toggleMusic()">🎵</div>
 
 <main class="flex flex-col items-center justify-center min-h-screen px-4 py-8 relative z-10">
 <section class="glass-card w-full max-w-3xl">
   <p>🎵 Haz clic en el botón para escuchar música 🎶</p>
-  <button onclick="toggleMusic()" class="music-btn mb-4">▶️ Música ON/OFF</button>
+  <button onclick="toggleMusic()" class="music-btn">▶️ Música ON/OFF</button>
+  
   <audio id="music" loop>
     <source src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/jump.mp3" type="audio/mpeg">
   </audio>
-
   <audio id="popSound">
     <source src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/pop.mp3" type="audio/mpeg">
   </audio>
@@ -110,7 +154,6 @@
   <img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/68ce7c08261045db668ca023ce4f2f2acd1a6499/Baby.png" alt="Baby" class="baby-photo" />
 
   <h1 class="main-title">🎀 Baby Shower de Aitana 🎀</h1>
-
   <div id="countdown">🎈 Faltan X días para el gran día 🎈</div>
   <div id="timer">00d : 00h : 00m : 00s</div>
 
@@ -121,6 +164,7 @@
     <p>⚠️ Confirma antes del 14 de septiembre</p>
   </div>
 
+  <!-- Botones interactivos -->
   <div class="btn-container">
     <a href="https://waze.com/ul/h9g3qhubmq" target="_blank" class="btn-3d">📍 Cómo llegar con Waze</a>
     <a href="https://maps.app.goo.gl/aJot9z4Qja81DHsw8?g_st=aw" target="_blank" class="btn-3d">📍 Cómo llegar con Google Maps</a>
@@ -128,6 +172,8 @@
     <a href="https://mesaderegalos.liverpool.com.mx/milistaderegalos/51734815" target="_blank" class="btn-3d">🎁 Mesa de regalos Liverpool</a>
     <a href="https://www.amazon.com.mx/baby-reg/waldodanielalvarez-martinez-diciembre-2025-ciudaddemexico/187ABTMWV8E8D" target="_blank" class="btn-3d">📦 Mesa de regalos Amazon</a>
   </div>
+
+  <p class="mt-4 text-lg" style="color:#b795fc;">✨ ¡Será un día mágico para celebrar juntos! ✨</p>
 </section>
 </main>
 
