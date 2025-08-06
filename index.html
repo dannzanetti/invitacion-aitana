@@ -31,53 +31,41 @@
   .glass-card {
     width: 100%;
     max-width: 480px;
-    background: rgba(255,255,255,0.9);
+    background: rgba(255,255,255,0.92);
     backdrop-filter: blur(14px);
-    border-radius: 28px;
+    border-radius: 24px;
     padding: 20px;
     box-shadow: 0 4px 30px rgba(183,149,252,0.25);
     text-align: center;
     position: relative;
+    overflow: hidden;
   }
   .main-title {
     font-family: 'Dancing Script', cursive;
-    font-size: 2.4rem;
+    font-size: 2.6rem;
     color: #000;
-    margin: 10px 0;
+    margin: 16px 0;
   }
+  /* Imagen completa */
   .baby-photo {
-    width: 85%;
-    max-width: 320px;
-    margin: 0 auto;
-    border-radius: 50%;
-    border: 6px solid #fff;
+    width: 100%;
+    max-width: 420px;
+    border-radius: 18px;
     box-shadow: 0 0 30px rgba(255,182,230,0.5);
     display: block;
+    margin: 0 auto 20px;
   }
-  #countdown, #timer {
-    font-size: 1.3rem;
+  /* Texto centrado y negritas */
+  .info-text {
     font-weight: bold;
-    color: #b47ae0;
-    margin: 8px 0;
+    text-align: center;
+    font-size: 1.1rem;
+    margin-bottom: 12px;
   }
-  .info-block {
-    text-align: left;
-    background: rgba(255,255,255,0.85);
-    border-radius: 20px;
-    padding: 16px;
-    margin: 12px 0;
-    font-size: 1rem;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  .info-text p {
+    margin: 6px 0;
   }
-  .info-block p {
-    margin-bottom: 6px;
-  }
-  .btn-container {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    margin-top: 14px;
-  }
+  /* Botones */
   .btn-3d {
     background: linear-gradient(270deg, #ffb6e6, #ffe8ae, #e6d0fa);
     background-size: 400% 400%;
@@ -95,23 +83,13 @@
     transform: scale(1.08);
     box-shadow: 0 6px 20px rgba(0,0,0,0.2);
   }
-  .music-btn {
-    display: block;
-    margin: 12px auto;
-    background: linear-gradient(90deg,#e6d0fa,#ffb6e6);
-    color: #fff;
-    border-radius: 12px;
-    font-size: 1.2rem;
-    padding: 14px 30px;
-    font-weight: bold;
-    border: none;
-    cursor: pointer;
-    transition: 0.3s;
+  .btn-container {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 14px;
   }
-  .music-btn:hover {
-    transform: scale(1.05);
-  }
-  /* Botón flotante */
+  /* Botón música flotante */
   .music-float {
     position: fixed;
     bottom: 20px;
@@ -161,6 +139,22 @@
     50% { transform: translateY(50%) scale(1.2);}
     100% { transform: translateY(-120%) scale(0.9);}
   }
+  /* Animación scroll */
+  .fade-section {
+    opacity: 0;
+    transform: scale(0.95);
+    transition: all 0.8s ease-out;
+  }
+  .fade-section.show {
+    opacity: 1;
+    transform: scale(1);
+  }
+  #countdown, #timer {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #b47ae0;
+    margin: 8px 0;
+  }
 </style>
 </head>
 <body>
@@ -184,9 +178,9 @@ for(let i=0;i<50;i++){
 </script>
 
 <main>
-<section class="glass-card">
+<section class="glass-card fade-section">
   <div id="floating-notes"></div>
-
+  
   <p>🎵 Haz clic en el botón para escuchar música 🎶</p>
   <button onclick="toggleMusic()" class="music-btn">▶️ Música ON/OFF</button>
   
@@ -200,28 +194,17 @@ for(let i=0;i<50;i++){
   <div id="countdown">🎈 Faltan X días para el gran día 🎈</div>
   <div id="timer">00d : 00h : 00m : 00s</div>
 
-  <!-- Bloque info -->
-  <div class="info-block">
+  <!-- Info centrada en negritas -->
+  <div class="info-text">
     <p>📅 Sábado 20 de Septiembre</p>
     <p>⏰ 2:00 PM – 11:00 PM</p>
     <p>🏘️ Residencial Sendero Santa Fe</p>
     <p>⚠️ Confirma antes del 14 de septiembre</p>
-  </div>
-
-  <!-- Lista -->
-  <div class="info-block">
-    <p class="text-xl font-semibold mb-4" style="color:#ffb6e6;">¡Te esperamos con!</p>
-    <ul>
-      <li>🌮 Tacos de guisado</li>
-      <li>🍸 Barra libre:</li>
-      <li style="margin-left:20px;">🍻 Cervezas</li>
-      <li style="margin-left:20px;">🍹 Tequila</li>
-      <li style="margin-left:20px;">🥃 Ron</li>
-      <li style="margin-left:20px;">🥂 Whisky</li>
-      <li>🎲 Juegos</li>
-      <li>🎖️ Rifas</li>
-      <li>💃 Baile</li>
-    </ul>
+    <p>¡Te esperamos con!</p>
+    <p>🌮 Tacos de guisado</p>
+    <p>🍸 Barra libre:</p>
+    <p>🍻 Cervezas | 🍹 Tequila | 🥃 Ron | 🥂 Whisky</p>
+    <p>🎲 Juegos | 🎖️ Rifas | 💃 Baile</p>
   </div>
 
   <!-- Botones -->
@@ -232,12 +215,13 @@ for(let i=0;i<50;i++){
     <a href="https://mesaderegalos.liverpool.com.mx/milistaderegalos/51734815" target="_blank" class="btn-3d">🎁 Mesa de regalos Liverpool</a>
     <a href="https://www.amazon.com.mx/baby-reg/waldodanielalvarez-martinez-diciembre-2025-ciudaddemexico/187ABTMWV8E8D" target="_blank" class="btn-3d">📦 Mesa de regalos Amazon</a>
   </div>
-
+  
   <p class="mt-4 text-lg" style="color:#b795fc;">✨ ¡Será un día mágico para celebrar juntos! ✨</p>
 </section>
 </main>
 
 <script>
+// Música
 function toggleMusic(){
   const audio=document.getElementById('music');
   if(audio.paused){ audio.play(); } else { audio.pause(); }
@@ -276,6 +260,17 @@ for(let i=0;i<10;i++){
   note.style.animationDelay=(Math.random()*4)+'s';
   notesContainer.appendChild(note);
 }
+
+// Animación scroll (Fade + Zoom)
+const fadeElements=document.querySelectorAll('.fade-section');
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add('show');
+    }
+  });
+},{threshold:0.2});
+fadeElements.forEach(el=>observer.observe(el));
 </script>
 </body>
 </html>
