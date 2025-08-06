@@ -13,8 +13,8 @@
     background-size: 600% 600%;
     animation: gradientMove 12s ease infinite;
     min-height: 100vh;
-    overflow-x: hidden;
     margin: 0;
+    overflow-x: hidden;
   }
   @keyframes gradientMove {
     0%{background-position:0% 50%}
@@ -26,7 +26,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
+    gap: 24px;
   }
   .glass-card {
     width: 100%;
@@ -36,34 +36,66 @@
     border-radius: 24px;
     padding: 20px;
     box-shadow: 0 4px 30px rgba(183,149,252,0.25);
-    text-align: center;
     position: relative;
     overflow: hidden;
   }
   .main-title {
     font-family: 'Dancing Script', cursive;
-    font-size: 2.6rem;
+    font-size: 2.8rem;
     color: #000;
     margin: 16px 0;
+    text-align: center;
+    text-shadow: 0 0 8px rgba(255,182,230,0.5);
+    animation: glowTitle 2s infinite alternate;
   }
-  /* Imagen completa */
+  @keyframes glowTitle {
+    0% { text-shadow: 0 0 8px rgba(255,182,230,0.4);}
+    100% { text-shadow: 0 0 18px rgba(183,149,252,0.7);}
+  }
+  /* Imagen con brillo animado */
   .baby-photo {
     width: 100%;
     max-width: 420px;
     border-radius: 18px;
-    box-shadow: 0 0 30px rgba(255,182,230,0.5);
+    box-shadow: 0 0 25px rgba(255,182,230,0.4);
     display: block;
-    margin: 0 auto 20px;
+    margin: 30px auto 20px auto;
+    animation: pulseGlow 3s infinite alternate;
   }
-  /* Texto centrado y negritas */
-  .info-text {
+  @keyframes pulseGlow {
+    0% { box-shadow: 0 0 18px rgba(255,182,230,0.4);}
+    100% { box-shadow: 0 0 32px rgba(183,149,252,0.6);}
+  }
+  #countdown, #timer {
+    font-size: 1.3rem;
     font-weight: bold;
+    color: #b47ae0;
+    margin: 8px 0;
     text-align: center;
-    font-size: 1.1rem;
-    margin-bottom: 12px;
   }
-  .info-text p {
+  /* Texto info alineado izquierda */
+  .info-block {
+    text-align: left;
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-bottom: 16px;
+    color: #333;
+  }
+  .info-block p {
     margin: 6px 0;
+  }
+  /* Texto "Te esperamos con" */
+  .highlight-text {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #ff69b4;
+    text-align: center;
+    margin: 18px 0;
+    animation: blinkGlow 1.8s infinite alternate;
+  }
+  @keyframes blinkGlow {
+    0% { text-shadow: 0 0 6px #ff69b4;}
+    100% { text-shadow: 0 0 18px #ffb6e6;}
   }
   /* Botones */
   .btn-3d {
@@ -80,14 +112,22 @@
     transition: transform 0.3s ease;
   }
   .btn-3d:hover {
-    transform: scale(1.08);
+    animation: vibrate 0.4s linear infinite;
+    transform: scale(1.05);
     box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+  }
+  @keyframes vibrate {
+    0% { transform: translateX(0);}
+    25% { transform: translateX(-2px);}
+    50% { transform: translateX(2px);}
+    75% { transform: translateX(-2px);}
+    100% { transform: translateX(0);}
   }
   .btn-container {
     display: flex;
     flex-direction: column;
     gap: 14px;
-    margin-top: 14px;
+    margin-top: 16px;
   }
   /* Botón música flotante */
   .music-float {
@@ -120,7 +160,7 @@
     0% {transform: translateY(-10px);}
     100% {transform: translateY(100vh);}
   }
-  /* Notas musicales */
+  /* Notas musicales flotantes */
   #floating-notes {
     position: absolute;
     top: 0;
@@ -138,22 +178,6 @@
     0% { transform: translateY(100%) scale(0.8);}
     50% { transform: translateY(50%) scale(1.2);}
     100% { transform: translateY(-120%) scale(0.9);}
-  }
-  /* Animación scroll */
-  .fade-section {
-    opacity: 0;
-    transform: scale(0.95);
-    transition: all 0.8s ease-out;
-  }
-  .fade-section.show {
-    opacity: 1;
-    transform: scale(1);
-  }
-  #countdown, #timer {
-    font-size: 1.3rem;
-    font-weight: bold;
-    color: #b47ae0;
-    margin: 8px 0;
   }
 </style>
 </head>
@@ -178,29 +202,41 @@ for(let i=0;i<50;i++){
 </script>
 
 <main>
-<section class="glass-card fade-section">
-  <div id="floating-notes"></div>
-  
-  <p>🎵 Haz clic en el botón para escuchar música 🎶</p>
-  <button onclick="toggleMusic()" class="music-btn">▶️ Música ON/OFF</button>
+<section class="glass-card">
+
+  <!-- Botón Música Arriba -->
+  <p style="margin-bottom:12px; text-align:center;">🎵 Haz clic en el botón para escuchar música 🎶</p>
+  <button onclick="toggleMusic()" class="music-btn" style="background:#b795fc; color:white; font-weight:bold; padding:14px 24px; border-radius:10px; margin-bottom:20px;">▶️ Música ON/OFF</button>
   
   <audio id="music" loop>
     <source src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/jump.mp3" type="audio/mpeg">
   </audio>
 
+  <!-- Imagen -->
   <img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/Baby.png" alt="Baby" class="baby-photo" />
 
+  <!-- Título -->
   <h1 class="main-title">🎀 Baby Shower de Aitana 🎀</h1>
+  
   <div id="countdown">🎈 Faltan X días para el gran día 🎈</div>
   <div id="timer">00d : 00h : 00m : 00s</div>
 
-  <!-- Info centrada en negritas -->
-  <div class="info-text">
+  <!-- Info alineada izquierda -->
+  <div class="info-block">
     <p>📅 Sábado 20 de Septiembre</p>
     <p>⏰ 2:00 PM – 11:00 PM</p>
     <p>🏘️ Residencial Sendero Santa Fe</p>
     <p>⚠️ Confirma antes del 14 de septiembre</p>
-    <p>¡Te esperamos con!</p>
+  </div>
+
+  <!-- Espacio -->
+  <div style="height:20px;"></div>
+
+  <!-- Texto destacado -->
+  <p class="highlight-text">¡Te esperamos con!</p>
+
+  <!-- Lista -->
+  <div class="info-block" style="text-align:center;">
     <p>🌮 Tacos de guisado</p>
     <p>🍸 Barra libre:</p>
     <p>🍻 Cervezas | 🍹 Tequila | 🥃 Ron | 🥂 Whisky</p>
@@ -216,7 +252,7 @@ for(let i=0;i<50;i++){
     <a href="https://www.amazon.com.mx/baby-reg/waldodanielalvarez-martinez-diciembre-2025-ciudaddemexico/187ABTMWV8E8D" target="_blank" class="btn-3d">📦 Mesa de regalos Amazon</a>
   </div>
   
-  <p class="mt-4 text-lg" style="color:#b795fc;">✨ ¡Será un día mágico para celebrar juntos! ✨</p>
+  <p class="mt-4 text-lg" style="text-align:center; color:#b795fc;">✨ ¡Será un día mágico para celebrar juntos! ✨</p>
 </section>
 </main>
 
@@ -248,8 +284,10 @@ function updateCountdown(){
 updateCountdown();
 setInterval(updateCountdown,1000);
 
-// Notas musicales flotando
-const notesContainer=document.getElementById('floating-notes');
+// Notas musicales flotantes
+const notesContainer=document.createElement('div');
+notesContainer.id='floating-notes';
+document.body.appendChild(notesContainer);
 for(let i=0;i<10;i++){
   const note=document.createElement('div');
   note.className='music-note';
@@ -260,17 +298,6 @@ for(let i=0;i<10;i++){
   note.style.animationDelay=(Math.random()*4)+'s';
   notesContainer.appendChild(note);
 }
-
-// Animación scroll (Fade + Zoom)
-const fadeElements=document.querySelectorAll('.fade-section');
-const observer=new IntersectionObserver((entries)=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting){
-      entry.target.classList.add('show');
-    }
-  });
-},{threshold:0.2});
-fadeElements.forEach(el=>observer.observe(el));
 </script>
 </body>
 </html>
