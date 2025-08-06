@@ -1,0 +1,14 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//dannzanetti//Baby Shower de Aitana//ES
+BEGIN:VEVENT
+UID:babyshower-aitana-20250920@dannzanetti.github.io
+DTSTAMP:20250806T060000Z
+SUMMARY:Baby Shower de Aitana
+DTSTART:20250920T140000
+DTEND:20250920T230000
+LOCATION:Residencial Sendero Santa Fe
+DESCRIPTION:¡Ven a celebrar el Baby Shower de Aitana con Fer y Dann! Barra libre, tacos, juegos, rifas y mucha alegría.
+STATUS:CONFIRMED
+END:VEVENT
+END:VCALENDAR
