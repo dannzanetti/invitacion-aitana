@@ -23,7 +23,6 @@ body.dark {
   50%{background-position:100% 50%}
   100%{background-position:0% 50%}
 }
-/* === Lluvia de emojis === */
 .rain-emoji {
   position:fixed;top:-64px;z-index:1;font-size:2.2rem;pointer-events:none;animation:emojiFall linear infinite;
 }
@@ -40,21 +39,21 @@ body.dark {
   bottom: 24px;
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 22px;
   z-index: 500;
 }
 .floating-controls .fc-btn {
   background: linear-gradient(270deg,#ffb6e6,#ffe8ae,#e6d0fa);
   border-radius: 50%;
-  width: 54px;
-  height: 54px;
+  width: 68px;
+  height: 68px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2rem;
+  font-size: 2.55rem;
   color: #b47ae0;
   font-weight: bold;
-  box-shadow: 0 2px 18px #b47ae033;
+  box-shadow: 0 2px 22px #b47ae033;
   cursor: pointer;
   border: none;
   outline: none;
@@ -63,7 +62,7 @@ body.dark {
 .floating-controls .fc-btn:hover {
   background: linear-gradient(270deg,#ffe8ae,#ffb6e6,#b795fc);
   color: #ff69b4;
-  transform: scale(1.1);
+  transform: scale(1.13);
 }
 body.dark .floating-controls .fc-btn {
   background: linear-gradient(270deg,#47386e,#232333,#ffe8ae);
@@ -71,11 +70,71 @@ body.dark .floating-controls .fc-btn {
   box-shadow: 0 2px 10px #23233388;
 }
 @media (max-width:700px) {
-  .floating-controls {left:10px;bottom:10px;}
-  .floating-controls .fc-btn {width:45px;height:45px;font-size:1.7rem;}
+  .floating-controls {left:8px;bottom:8px;}
+  .floating-controls .fc-btn {width:54px;height:54px;font-size:2rem;}
 }
 
-/* El resto de tu CSS igual... */
+/* === Módulo explicativo de controles flotantes === */
+.floating-info-module {
+  max-width: 510px;
+  margin: 42px auto 28px auto;
+  background: rgba(255,255,255,0.9);
+  border-radius: 22px;
+  box-shadow: 0 6px 24px #b47ae055;
+  padding: 28px 20px 24px 20px;
+  text-align: left;
+  position: relative;
+  z-index: 5;
+  backdrop-filter: blur(6px);
+}
+body.dark .floating-info-module {
+  background: rgba(44,44,54,0.87);
+  color: #ffe8ae;
+  box-shadow: 0 6px 24px #23233377;
+}
+.floating-info-title {
+  font-family: 'Dancing Script', cursive;
+  font-size: 2.1rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 14px;
+  color: #b47ae0;
+  background: linear-gradient(90deg,#ff69b4,#ffb6e6,#b47ae0);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+body.dark .floating-info-title {
+  background: linear-gradient(90deg,#ffe8ae,#b795fc,#ffb6e6);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.floating-info-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 8px 0;
+}
+.floating-info-list li {
+  margin-bottom: 11px;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.floating-info-list .icon {
+  font-size: 1.8rem;
+  margin-right: 7px;
+  transition: transform .2s;
+}
+.floating-info-list li:hover .icon {
+  transform: scale(1.18) rotate(-10deg);
+}
+.floating-info-note {
+  font-size: 1.07rem;
+  color: #b47ae0;
+  margin-top: 12px;
+  text-align: center;
+  font-weight: bold;
+}
+body.dark .floating-info-note { color: #ffe8ae; }
+
 .balloon {
   position: fixed;
   width: 60px; height: 80px;
@@ -157,7 +216,7 @@ body.dark .main-title,body.dark .sub-title {
 }
 .baby-photo {
   width:100%;
-  max-width:600px; 
+  max-width:600px;
   border-radius:12px;
   margin:20px auto;
   animation: zoomGlow 3s ease-in-out infinite alternate;
@@ -300,6 +359,7 @@ body.dark .btn-3d.confirmar {
   .baby-photo {
     max-width:95vw;
   }
+  .floating-info-module {padding: 14px 8px;}
 }
 @keyframes miniConfetti {
   0% {opacity:1;transform:translateY(0);}
@@ -316,6 +376,17 @@ body.dark .btn-3d.confirmar {
   <button class="fc-btn" id="music-btn" title="Música">🎵</button>
 </div>
 
+<!-- Módulo explicativo de controles flotantes -->
+<div class="floating-info-module">
+  <div class="floating-info-title">👋 Personaliza la invitación</div>
+  <ul class="floating-info-list">
+    <li><span class="icon">🌙</span> Cambia el modo de luz, por si prefieres la invitación clarita o oscura.</li>
+    <li><span class="icon">🇲🇽</span><span class="icon">🇺🇸</span> Elige tu idioma favorito: español o inglés.</li>
+    <li><span class="icon">🎵</span> Ponle música de fondo para ambientar el momento.</li>
+  </ul>
+  <div class="floating-info-note">¡Haz clic en los botones de abajo a la izquierda y disfruta la experiencia como tú quieras!</div>
+</div>
+
 <div id="emojiRain"></div>
 <div class="balloon balloon1" onclick="popBalloon(this)"></div>
 <div class="balloon balloon2" onclick="popBalloon(this)"></div>
@@ -330,26 +401,14 @@ body.dark .btn-3d.confirmar {
 </div>
 
 <main style="display:none;" id="main-content">
-  <section class="fade-in">
-    <div class="qr-container">
-      <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://dannzanetti.github.io/invitacion-aitana/" alt="QR Invitación"/>
-      <a href="https://api.whatsapp.com/send?text=¡Te%20invito%20al%20Baby%20Shower%20de%20Aitana!%20https://dannzanetti.github.io/invitacion-aitana/" target="_blank" class="btn-3d" id="qrBtn" style="font-size:1rem;width:auto;padding:8px 14px;display:inline-block;margin-top:4px;">💬 Compartir por WhatsApp</a>
-    </div>
-    <p style="margin-bottom:10px;" id="listenMusic">🎵 Haz clic en el botón para escuchar música 🎶</p>
-    <button onclick="toggleMusic()" class="music-btn">▶️ Música ON/OFF</button>
-    <p class="scroll-indicator"><span class="scroll-arrow">⬇️</span> ¡Sigue bajando para ver todos los detalles! <span class="scroll-arrow">⬇️</span></p>
-    <audio id="music" loop>
-      <source src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/jump.mp3" type="audio/mpeg">
-    </audio>
-    <audio id="popSound">
-      <source src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/pop.mp3" type="audio/mpeg">
-    </audio>
-  </section>
   <section class="fade-in" style="position:relative;">
     <div class="halo-title"></div>
     <h1 class="main-title">🎀 Baby Shower 🎀</h1>
     <h2 class="sub-title">🎀 AITANA 🎀</h2>
     <img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/Baby.png" alt="Baby" class="baby-photo"/>
+    <!-- Nueva foto debajo de la imagen principal -->
+    <img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/0.jpg" alt="¡La futura mamá, Fer!" class="baby-photo" style="margin-top:24px;max-width:480px;">
+    <p style="font-size:1.18rem;color:#b47ae0;font-weight:bold;margin-bottom:18px;">La Mamá Fer</p>
   </section>
   <section class="fade-in">
     <div id="countdown">🎈 ¡Faltan X días para el gran día! 🎈</div>
@@ -413,7 +472,6 @@ function rainEmojis() {
 setInterval(rainEmojis,3200);
 rainEmojis();
 
-// Traducción completa
 const translations = {
   es: {
     mainTitle: '🎀 Baby Shower 🎀',
@@ -483,7 +541,6 @@ const translations = {
   }
 };
 
-// Función para mostrar traducción
 let lang = localStorage.getItem('lang') || 'es';
 function renderLanguage() {
   document.querySelector('.main-title').innerText = translations[lang].mainTitle;
@@ -558,11 +615,9 @@ document.addEventListener('DOMContentLoaded',()=>{
     document.querySelectorAll('section').forEach(s=>s.classList.add('fade-in'));
   },2500);
 
-  // Glow y rebote en TODOS los botones interactivos + mini confetti
   document.querySelectorAll('.btn-3d, .music-btn').forEach(btn => {
     btn.addEventListener('click', function(e) {
       btn.classList.add('magic');
-      // Mini confetti sobre el botón
       for(let i=0;i<15;i++){
         const c = document.createElement('div');
         c.className = '';
@@ -582,7 +637,6 @@ document.addEventListener('DOMContentLoaded',()=>{
       }
       setTimeout(()=>btn.classList.remove('magic'),500);
     });
-    // Sparkles
     for(let i=0;i<3;i++){
       const spark = document.createElement('span');
       spark.className = 'sparkle-btn';
