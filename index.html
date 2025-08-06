@@ -54,7 +54,7 @@ body {
 .loader-note { font-size:2.5rem; animation: float 1.5s ease-in-out infinite; }
 @keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-15px);} }
 
-/* === Secciones glassmorphism y fade-in === */
+/* === Secciones === */
 section {
   max-width:700px;margin:40px auto;background:rgba(255,255,255,0.80);
   padding:20px;border-radius:26px;text-align:center;
@@ -98,10 +98,11 @@ section.fade-in { opacity:1; animation: fadeIn 2.2s cubic-bezier(.5,.1,.25,1.2) 
   pointer-events:none;
 }
 
+/* ✅ Imagen principal más grande y con zoom más notorio */
 .baby-photo {
   width: 100%;
   max-width: 600px; /* Imagen más grande */
-  border-radius: 12px;
+  border-radius: 12px; /* Rectangular */
   margin: 20px auto;
   animation: zoomGlow 3s ease-in-out infinite alternate;
 }
@@ -110,6 +111,7 @@ section.fade-in { opacity:1; animation: fadeIn 2.2s cubic-bezier(.5,.1,.25,1.2) 
   100%{transform:scale(1.1); /* Más zoom */ box-shadow:0 0 60px rgba(183,149,252,0.6);}
 }
 
+/* Ajuste responsive */
 @media (max-width: 700px) {
   section {padding:10px;}
   .main-title {font-size:2.1rem;}
@@ -119,6 +121,34 @@ section.fade-in { opacity:1; animation: fadeIn 2.2s cubic-bezier(.5,.1,.25,1.2) 
 </style>
 </head>
 <body>
-<!-- TODO el resto de tu HTML se mantiene igual -->
+
+<!-- Globos -->
+<div class="balloon balloon1" onclick="popBalloon(this)"></div>
+<div class="balloon balloon2" onclick="popBalloon(this)"></div>
+<div class="balloon balloon3" onclick="popBalloon(this)"></div>
+
+<!-- Loader -->
+<div id="loader">
+  <p style="font-size:1.5rem;font-weight:bold;color:#b47ae0;">Cargando invitación...</p>
+  <div class="loader-note">🎵 🎶 🎵</div>
+</div>
+
+<!-- Contenido principal -->
+<main style="display:none;" id="main-content">
+  <section class="fade-in">
+    <h1 class="main-title">🎀 Baby Shower 🎀</h1>
+    <h2 class="sub-title">🎀 AITANA 🎀</h2>
+    <img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/Baby.png" alt="Baby" class="baby-photo"/>
+  </section>
+</main>
+
+<script>
+// Loader
+window.onload=()=>{setTimeout(()=>{
+  document.getElementById('loader').style.display='none';
+  document.getElementById('main-content').style.display='block';
+  document.querySelectorAll('section').forEach(s=>s.classList.add('fade-in'));
+},2500);};
+</script>
 </body>
 </html>
