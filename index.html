@@ -106,11 +106,6 @@ section.fade-in { opacity:1; animation: fadeIn 2.2s cubic-bezier(.5,.1,.25,1.2) 
   animation: zoomGlow 3s ease-in-out infinite alternate;
 }
 
-@media (max-width: 700px) {
-  .baby-photo {
-    max-width: 320px; /* Imagen más grande también en móviles */
-  }
-}
 @keyframes zoomGlow {
   0%{transform:scale(1);box-shadow:0 0 15px rgba(255,182,230,0.3);}
   100%{transform:scale(1.05);box-shadow:0 0 45px rgba(183,149,252,0.5);}
@@ -428,8 +423,8 @@ function updateCountdown(){
   const m=Math.floor((diff%(1000*60*60))/(1000*60));
   const s=Math.floor((diff%(1000*60))/1000);
 
-  countdownEl.textContent=🎈 ¡Faltan ${d} días para el gran día! 🎈;
-  timerEl.textContent=${d}d : ${h}h : ${m}m : ${s}s;
+  countdownEl.textContent=`🎈 ¡Faltan ${d} días para el gran día! 🎈`;
+  timerEl.textContent=`${d}d : ${h}h : ${m}m : ${s}s`;
 }
 updateCountdown();
 setInterval(updateCountdown,1000);
