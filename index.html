@@ -100,7 +100,7 @@
     transform: scale(1.15);
     box-shadow: 0 6px 20px rgba(0,0,0,0.3);
   }
-  /* Animaciones */
+  /* Animación fade */
   @keyframes fadeInUp {
     0% { opacity: 0; transform: translateY(30px);}
     100% { opacity: 1; transform: translateY(0);}
@@ -125,16 +125,12 @@
     position: absolute;
     font-size: 24px;
     opacity: 0.6;
-    animation: floatNote 10s linear infinite, pulseNote 3s ease-in-out infinite;
+    animation: floatNote 10s linear infinite;
     z-index: 0;
   }
   @keyframes floatNote {
     0% { transform: translateY(100vh) translateX(0);}
     100% { transform: translateY(-10vh) translateX(50px);}
-  }
-  @keyframes pulseNote {
-    0%, 100% { transform: scale(1);}
-    50% { transform: scale(1.4);}
   }
   /* Globos */
   .balloon {
@@ -157,9 +153,8 @@
     top: 70px;
   }
   @keyframes balloonFloat {
-    0% { transform: translateY(100vh) translateX(0);}
-    50% { transform: translateY(50vh) translateX(15px);}
-    100% { transform: translateY(-120px) translateX(-10px);}
+    0% { transform: translateY(100vh);}
+    100% { transform: translateY(-120px);}
   }
   /* Contador */
   #countdown {
@@ -181,7 +176,7 @@
 <!-- Botón flotante -->
 <div class="music-float" onclick="toggleMusic()">🎵</div>
 
-<!-- Confeti, globos y notas -->
+<!-- Confeti dinámico -->
 <script>
 for(let i=0;i<40;i++){
   const confetti=document.createElement('div');
