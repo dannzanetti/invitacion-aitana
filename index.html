@@ -26,6 +26,7 @@
     opacity: 0;
     transform: translateY(30px);
     animation: fadeInUpAnim 1s ease forwards;
+    animation-fill-mode: forwards;
   }
   @keyframes fadeInUpAnim {
     0% {opacity: 0; transform: translateY(30px);}
@@ -191,23 +192,23 @@ for(let i=0;i<40;i++){
 <div class="music-float" onclick="toggleMusic()">🎵</div>
 
 <main class="flex flex-col items-center justify-center min-h-screen px-4 py-8 relative z-10">
-<section class="glass-card w-full max-w-3xl py-8 px-6 text-center fadeInUp" style="--delay:0s; animation-delay:0s;">
+<section class="glass-card w-full max-w-3xl py-8 px-6 text-center fadeInUp" style="animation-delay:0s;">
 
-  <p class="music-info fadeInUp" style="--delay:0.2s; animation-delay:0.2s;">🎵 Haz clic en el botón para escuchar música 🎶</p>
-  <button onclick="toggleMusic()" class="music-btn mb-4 fadeInUp" style="--delay:0.4s; animation-delay:0.4s;">▶️ Música ON/OFF</button>
+  <p class="music-info fadeInUp" style="animation-delay:0.2s;">🎵 Haz clic en el botón para escuchar música 🎶</p>
+  <button onclick="toggleMusic()" class="music-btn mb-4 fadeInUp" style="animation-delay:0.4s;">▶️ Música ON/OFF</button>
   <audio id="music" loop>
     <source src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/jump.mp3" type="audio/mpeg">
   </audio>
 
-  <img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/Baby.png" alt="Baby" class="baby-photo fadeInUp" style="--delay:0.6s; animation-delay:0.6s;" />
+  <img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/Baby.png" alt="Baby" class="baby-photo fadeInUp" style="animation-delay:0.6s;" />
   
-  <h1 class="main-title fadeInUp" style="--delay:0.8s; animation-delay:0.8s;">🎀 Baby Shower de Aitana 🎀</h1>
+  <h1 class="main-title fadeInUp" style="animation-delay:0.8s;">🎀 Baby Shower de Aitana 🎀</h1>
   
-  <div id="countdown" class="fadeInUp" style="--delay:1s; animation-delay:1s;">🎈 Faltan X días para el gran día 🎈</div>
-  <div id="timer" class="fadeInUp" style="--delay:1.2s; animation-delay:1.2s;">00d : 00h : 00m : 00s</div>
+  <div id="countdown" class="fadeInUp" style="animation-delay:1s;">🎈 Faltan X días para el gran día 🎈</div>
+  <div id="timer" class="fadeInUp" style="animation-delay:1.2s;">00d : 00h : 00m : 00s</div>
   
   <!-- Bloque info -->
-  <div class="text-left bg-white/80 rounded-2xl p-5 mb-5 shadow-md fadeInUp" style="--delay:1.4s; animation-delay:1.4s;">
+  <div class="text-left bg-white/80 rounded-2xl p-5 mb-5 shadow-md fadeInUp" style="animation-delay:1.4s;">
     <p>📅 Sábado 20 de Septiembre</p>
     <p>⏰ 2:00 PM – 11:00 PM</p>
     <p>🏘️ Residencial Sendero Santa Fe</p>
@@ -215,7 +216,7 @@ for(let i=0;i<40;i++){
   </div>
   
   <!-- Lista -->
-  <div class="text-left bg-white/80 rounded-2xl p-5 mb-6 shadow-md fadeInUp" style="--delay:1.6s; animation-delay:1.6s;">
+  <div class="text-left bg-white/80 rounded-2xl p-5 mb-6 shadow-md fadeInUp" style="animation-delay:1.6s;">
     <p class="text-xl font-semibold mb-4" style="color:#ffb6e6;">¡Te esperamos con!</p>
     <ul>
       <li>🌮 Tacos de guisado</li>
@@ -231,7 +232,7 @@ for(let i=0;i<40;i++){
   </div>
   
   <!-- Botones -->
-  <div class="btn-container fadeInUp" style="--delay:1.8s; animation-delay:1.8s;">
+  <div class="btn-container fadeInUp" style="animation-delay:1.8s;">
     <a href="https://waze.com/ul/h9g3qhubmq" target="_blank" class="btn-3d">📍 Cómo llegar con Waze</a>
     <a href="https://maps.app.goo.gl/aJot9z4Qja81DHsw8?g_st=aw" target="_blank" class="btn-3d">📍 Cómo llegar con Google Maps</a>
     <a href="https://docs.google.com/forms/d/e/1FAIpQLSd-vY-AAhe7GGVQdxJmZvxr-5m6rQh7PgrfKwXY0Dn1-ksgRw/viewform" target="_blank" class="btn-3d">✅ Confirmar asistencia</a>
@@ -239,7 +240,7 @@ for(let i=0;i<40;i++){
     <a href="https://www.amazon.com.mx/baby-reg/waldodanielalvarez-martinez-diciembre-2025-ciudaddemexico/187ABTMWV8E8D" target="_blank" class="btn-3d">📦 Mesa de regalos Amazon</a>
   </div>
   
-  <p class="mt-4 text-lg fadeInUp" style="--delay:2s; animation-delay:2s; color:#b795fc;">✨ ¡Será un día mágico para celebrar juntos! ✨</p>
+  <p class="mt-4 text-lg fadeInUp" style="animation-delay:2s; color:#b795fc;">✨ ¡Será un día mágico para celebrar juntos! ✨</p>
 </section>
 </main>
 
