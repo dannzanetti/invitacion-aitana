@@ -31,6 +31,7 @@
     z-index: 10;
     text-align: center;
     position: relative;
+    overflow: hidden; /* Para que las notas no salgan del bloque */
   }
   .main-title {
     font-family: 'Dancing Script', cursive;
@@ -100,12 +101,6 @@
     transform: scale(1.15);
     box-shadow: 0 6px 20px rgba(0,0,0,0.3);
   }
-  /* Animación fade */
-  @keyframes fadeInUp {
-    0% { opacity: 0; transform: translateY(30px);}
-    100% { opacity: 1; transform: translateY(0);}
-  }
-  .fadeInUp { animation: fadeInUp 1s ease forwards;}
   /* Confeti */
   .confetti {
     position: fixed;
@@ -113,48 +108,25 @@
     height: 8px;
     background: #ffb6e6;
     animation: fall linear infinite;
-    opacity: 0.8;
+    opacity: 0.7;
     z-index: 1;
+    border-radius: 50%;
   }
   @keyframes fall {
     0% {transform: translateY(-10px) rotate(0deg);}
     100% {transform: translateY(100vh) rotate(360deg);}
   }
-  /* Notas musicales flotando */
+  /* Notas musicales en el fondo */
   .music-note {
     position: absolute;
-    font-size: 24px;
-    opacity: 0.6;
-    animation: floatNote 10s linear infinite;
-    z-index: 0;
+    font-size: 22px;
+    opacity: 0.5;
+    animation: floatNote 8s linear infinite;
   }
   @keyframes floatNote {
-    0% { transform: translateY(100vh) translateX(0);}
-    100% { transform: translateY(-10vh) translateX(50px);}
-  }
-  /* Globos */
-  .balloon {
-    position: absolute;
-    width: 50px;
-    height: 70px;
-    border-radius: 50%;
-    background: #ffb6e6;
-    opacity: 0.8;
-    animation: balloonFloat 12s ease-in-out infinite;
-  }
-  .balloon::after {
-    content: '';
-    position: absolute;
-    width: 2px;
-    height: 40px;
-    background: #ccc;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 70px;
-  }
-  @keyframes balloonFloat {
-    0% { transform: translateY(100vh);}
-    100% { transform: translateY(-120px);}
+    0% { transform: translateY(100%) scale(0.8);}
+    50% { transform: translateY(50%) scale(1.2);}
+    100% { transform: translateY(-120%) scale(0.9);}
   }
   /* Contador */
   #countdown {
@@ -178,35 +150,24 @@
 
 <!-- Confeti dinámico -->
 <script>
-for(let i=0;i<40;i++){
+for(let i=0;i<50;i++){
   const confetti=document.createElement('div');
   confetti.className='confetti';
   confetti.style.left=Math.random()*100+'vw';
   confetti.style.animationDuration=(3+Math.random()*3)+'s';
   confetti.style.animationDelay=(Math.random()*5)+'s';
   confetti.style.background=['#ffb6e6','#ffe8ae','#b795fc'][Math.floor(Math.random()*3)];
+  confetti.style.width=(6+Math.random()*8)+'px';
+  confetti.style.height=confetti.style.width;
   document.body.appendChild(confetti);
-}
-for(let i=0;i<15;i++){
-  const note=document.createElement('div');
-  note.className='music-note';
-  note.innerHTML=Math.random()>0.5?'🎵':'🎶';
-  note.style.left=Math.random()*100+'vw';
-  note.style.animationDuration=(8+Math.random()*8)+'s';
-  document.body.appendChild(note);
-}
-for(let i=0;i<6;i++){
-  const balloon=document.createElement('div');
-  balloon.className='balloon';
-  balloon.style.left=Math.random()*90+'vw';
-  balloon.style.background=['#ffb6e6','#e6d0fa','#ffe8ae'][Math.floor(Math.random()*3)];
-  balloon.style.animationDelay=(Math.random()*8)+'s';
-  document.body.appendChild(balloon);
 }
 </script>
 
 <main class="flex flex-col items-center justify-center min-h-screen px-4 py-8 relative z-10">
 <section class="glass-card w-full max-w-3xl fadeInUp">
+  <!-- Notas dentro del bloque -->
+  <div id="floating-notes"></div>
+
   <p>🎵 Haz clic en el botón para escuchar música 🎶</p>
   <button onclick="toggleMusic()" class="music-btn">▶️ Música ON/OFF</button>
   
@@ -231,6 +192,21 @@ for(let i=0;i<6;i++){
     <p>⚠️ Confirma antes del 14 de septiembre</p>
   </div>
 
+  <div class="text-left bg-white/80 rounded-2xl p-5 mb-6 shadow-md fadeInUp">
+    <p class="text-xl font-semibold mb-4" style="color:#ffb6e6;">¡Te esperamos con!</p>
+    <ul>
+      <li>🌮 Tacos de guisado</li>
+      <li>🍸 Barra libre:</li>
+      <li style="margin-left:20px;">🍻 Cervezas</li>
+      <li style="margin-left:20px;">🍹 Tequila</li>
+      <li style="margin-left:20px;">🥃 Ron</li>
+      <li style="margin-left:20px;">🥂 Whisky</li>
+      <li>🎲 Juegos</li>
+      <li>🎖️ Rifas</li>
+      <li>💃 Baile</li>
+    </ul>
+  </div>
+
   <!-- Botones -->
   <div class="btn-container">
     <a href="https://waze.com/ul/h9g3qhubmq" target="_blank" class="btn-3d">📍 Cómo llegar con Waze</a>
@@ -245,10 +221,12 @@ for(let i=0;i<6;i++){
 </main>
 
 <script>
+// Música
 function toggleMusic(){
   const audio=document.getElementById('music');
   if(audio.paused){ audio.play(); } else { audio.pause(); }
 }
+// Pop
 function playPop(){
   const pop = document.getElementById('popSound');
   pop.currentTime = 0;
@@ -259,6 +237,7 @@ document.addEventListener("DOMContentLoaded", () => {
     btn.addEventListener('click', playPop);
   });
 });
+// Contador
 const countdownEl=document.getElementById('countdown');
 const timerEl=document.getElementById('timer');
 const eventDate=new Date('2025-09-20T14:00:00');
@@ -279,6 +258,20 @@ function updateCountdown(){
 }
 updateCountdown();
 setInterval(updateCountdown,1000);
+
+// Notas dentro del bloque
+const notesContainer=document.getElementById('floating-notes');
+for(let i=0;i<10;i++){
+  const note=document.createElement('div');
+  note.className='music-note';
+  note.innerHTML=Math.random()>0.5?'🎵':'🎶';
+  note.style.left=Math.random()*90+'%';
+  note.style.top='100%';
+  note.style.fontSize=(18+Math.random()*16)+'px';
+  note.style.animationDuration=(6+Math.random()*5)+'s';
+  note.style.animationDelay=(Math.random()*4)+'s';
+  notesContainer.appendChild(note);
+}
 </script>
 </body>
 </html>
