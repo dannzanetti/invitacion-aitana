@@ -21,18 +21,15 @@
     50%{background-position:100% 50%}
     100%{background-position:0% 50%}
   }
-  /* Animaciones FadeInUp */
   .fadeInUp {
     opacity: 0;
     transform: translateY(30px);
     animation: fadeInUpAnim 1s ease forwards;
-    animation-fill-mode: forwards;
   }
   @keyframes fadeInUpAnim {
     0% {opacity: 0; transform: translateY(30px);}
     100% {opacity: 1; transform: translateY(0);}
   }
-  /* Destellos */
   .sparkle {
     position: fixed;
     width: 6px;
@@ -62,7 +59,6 @@
     color: #000;
     margin-bottom: 12px;
   }
-  /* Imagen Baby */
   .baby-photo {
     width: 340px;
     height: 340px;
@@ -84,11 +80,10 @@
     0% {box-shadow: 0 0 20px rgba(255,182,230,0.6), 0 0 35px rgba(183,149,252,0.4);}
     100% {box-shadow: 0 0 40px rgba(255,182,230,0.8), 0 0 70px rgba(183,149,252,0.6);}
   }
-  /* Botones pastel animados */
   .btn-3d {
     background: linear-gradient(270deg, #ffb6e6, #e6d0fa, #ffe8ae);
     background-size: 400% 400%;
-    color: #000; /* Texto negro */
+    color: #000;
     font-weight: bold;
     border: none;
     border-radius: 14px;
@@ -105,7 +100,6 @@
     transform: scale(1.06);
     box-shadow: 0 6px 18px rgba(255,182,230,0.5);
   }
-  /* Botón música principal */
   .music-btn {
     background: linear-gradient(270deg, #e6d0fa, #ffe8ae, #ffb6e6);
     background-size: 400% 400%;
@@ -122,7 +116,6 @@
     transform: scale(1.08);
     box-shadow: 0 6px 18px rgba(255,182,230,0.5);
   }
-  /* Botón flotante música */
   .music-float {
     position: fixed;
     bottom: 20px;
@@ -154,7 +147,6 @@
     margin-bottom: 20px;
     width: 100%;
   }
-  /* Contadores */
   #countdown {
     font-size: 1.3rem;
     color: #ff69b4;
@@ -173,7 +165,6 @@
 </style>
 </head>
 <body>
-<!-- Destellos -->
 <script>
 for(let i=0;i<40;i++){
   const s=document.createElement('div');
@@ -185,41 +176,39 @@ for(let i=0;i<40;i++){
 }
 </script>
 
-<!-- Botón música flotante -->
 <div class="music-float" onclick="toggleMusic()">🎵</div>
 
 <main class="flex flex-col items-center justify-center min-h-screen px-4 py-8 relative z-10">
-<section class="glass-card w-full max-w-3xl py-8 px-6 text-center fadeInUp" style="animation-delay:0s;">
+<section class="glass-card w-full max-w-3xl py-8 px-6 text-center fadeInUp">
 
-  <p class="music-info fadeInUp" style="animation-delay:0.2s;">🎵 Haz clic en el botón para escuchar música 🎶</p>
-  <button onclick="toggleMusic()" class="music-btn mb-4 fadeInUp" style="animation-delay:0.4s;">▶️ Música ON/OFF</button>
+  <p class="fadeInUp">🎵 Haz clic en el botón para escuchar música 🎶</p>
+  <button onclick="toggleMusic()" class="music-btn mb-4 fadeInUp">▶️ Música ON/OFF</button>
   <audio id="music" loop>
     <source src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/jump.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- Sonido POP -->
   <audio id="popSound">
     <source src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/pop.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- Imagen Baby -->
-  <img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/Baby.png" alt="Baby" class="baby-photo fadeInUp" style="animation-delay:0.6s;" />
-  
-  <h1 class="main-title fadeInUp" style="animation-delay:0.8s;">🎀 Baby Shower de Aitana 🎀</h1>
-  
-  <div id="countdown" class="fadeInUp" style="animation-delay:1s;">🎈 Faltan X días para el gran día 🎈</div>
-  <div id="timer" class="fadeInUp" style="animation-delay:1.2s;">00d : 00h : 00m : 00s</div>
-  
-  <!-- Bloque info -->
-  <div class="text-left bg-white/80 rounded-2xl p-5 mb-5 shadow-md fadeInUp" style="animation-delay:1.4s;">
+  <!-- Imagen con link RAW correcto -->
+  <img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/68ce7c08261045db668ca023ce4f2f2acd1a6499/Baby.png"
+       alt="Baby"
+       class="baby-photo fadeInUp" />
+
+  <h1 class="main-title fadeInUp">🎀 Baby Shower de Aitana 🎀</h1>
+
+  <div id="countdown" class="fadeInUp">🎈 Faltan X días para el gran día 🎈</div>
+  <div id="timer" class="fadeInUp">00d : 00h : 00m : 00s</div>
+
+  <div class="text-left bg-white/80 rounded-2xl p-5 mb-5 shadow-md fadeInUp">
     <p>📅 Sábado 20 de Septiembre</p>
     <p>⏰ 2:00 PM – 11:00 PM</p>
     <p>🏘️ Residencial Sendero Santa Fe</p>
     <p>⚠️ Confirma antes del 14 de septiembre</p>
   </div>
-  
-  <!-- Lista -->
-  <div class="text-left bg-white/80 rounded-2xl p-5 mb-6 shadow-md fadeInUp" style="animation-delay:1.6s;">
+
+  <div class="text-left bg-white/80 rounded-2xl p-5 mb-6 shadow-md fadeInUp">
     <p class="text-xl font-semibold mb-4" style="color:#ffb6e6;">¡Te esperamos con!</p>
     <ul>
       <li>🌮 Tacos de guisado</li>
@@ -233,46 +222,37 @@ for(let i=0;i<40;i++){
       <li>💃 Baile</li>
     </ul>
   </div>
-  
-  <!-- Botones -->
-  <div class="btn-container fadeInUp" style="animation-delay:1.8s;">
+
+  <div class="btn-container fadeInUp">
     <a href="https://waze.com/ul/h9g3qhubmq" target="_blank" class="btn-3d">📍 Cómo llegar con Waze</a>
     <a href="https://maps.app.goo.gl/aJot9z4Qja81DHsw8?g_st=aw" target="_blank" class="btn-3d">📍 Cómo llegar con Google Maps</a>
     <a href="https://docs.google.com/forms/d/e/1FAIpQLSd-vY-AAhe7GGVQdxJmZvxr-5m6rQh7PgrfKwXY0Dn1-ksgRw/viewform" target="_blank" class="btn-3d">✅ Confirmar asistencia</a>
     <a href="https://mesaderegalos.liverpool.com.mx/milistaderegalos/51734815" target="_blank" class="btn-3d">🎁 Mesa de regalos Liverpool</a>
     <a href="https://www.amazon.com.mx/baby-reg/waldodanielalvarez-martinez-diciembre-2025-ciudaddemexico/187ABTMWV8E8D" target="_blank" class="btn-3d">📦 Mesa de regalos Amazon</a>
   </div>
-  
-  <p class="mt-4 text-lg fadeInUp" style="animation-delay:2s; color:#b795fc;">✨ ¡Será un día mágico para celebrar juntos! ✨</p>
+
+  <p class="mt-4 text-lg fadeInUp" style="color:#b795fc;">✨ ¡Será un día mágico para celebrar juntos! ✨</p>
 </section>
 </main>
 
 <script>
-// Música
 function toggleMusic(){
   const audio=document.getElementById('music');
   if(audio.paused){ audio.play(); } else { audio.pause(); }
 }
-
-// Efecto POP
 function playPop(){
   const pop = document.getElementById('popSound');
   pop.currentTime = 0;
   pop.play();
 }
-
-// Agregar evento a botones
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll('.btn-3d, .music-btn, .music-float').forEach(btn=>{
     btn.addEventListener('click', playPop);
   });
 });
-
-// Contadores
 const countdownEl=document.getElementById('countdown');
 const timerEl=document.getElementById('timer');
 const eventDate=new Date('2025-09-20T14:00:00');
-
 function updateCountdown(){
   const now=new Date();
   const diff=eventDate-now;
@@ -285,7 +265,6 @@ function updateCountdown(){
   const hours=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
   const minutes=Math.floor((diff%(1000*60*60))/(1000*60));
   const seconds=Math.floor((diff%(1000*60))/1000);
-  
   countdownEl.textContent=`🎈 ¡Faltan ${days} días para el gran día! 🎈`;
   timerEl.textContent=`${days}d : ${hours}h : ${minutes}m : ${seconds}s`;
 }
