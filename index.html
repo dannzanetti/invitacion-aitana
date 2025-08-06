@@ -98,8 +98,12 @@ section.fade-in { opacity:1; animation: fadeIn 2.2s cubic-bezier(.5,.1,.25,1.2) 
   pointer-events:none;
 }
 
+/* FOTO MÁS GRANDE */
 .baby-photo {
-  width:100%;max-width:420px;border-radius:12px;margin:20px auto;
+  width:100%;
+  max-width:600px;  /* <<-- ¡más grande! */
+  border-radius:12px;
+  margin:20px auto;
   animation: zoomGlow 3s ease-in-out infinite alternate;
 }
 @keyframes zoomGlow {
@@ -130,7 +134,6 @@ section.fade-in { opacity:1; animation: fadeIn 2.2s cubic-bezier(.5,.1,.25,1.2) 
 }
 @keyframes shimmer {0%{opacity:.6;}50%{opacity:1;}100%{opacity:.6;}}
 
-/* === Botones y magia extra en botón confirmar === */
 .btn-container {display:flex;flex-direction:column;gap:18px;margin-top:25px;}
 .btn-3d,.music-btn {
   width:100%;background:linear-gradient(270deg,#ffb6e6,#ffe8ae,#e6d0fa);
@@ -166,21 +169,20 @@ section.fade-in { opacity:1; animation: fadeIn 2.2s cubic-bezier(.5,.1,.25,1.2) 
   100% { box-shadow: 0 0 32px 14px #ffb6e6aa, 0 2px 20px #ffe8aecc;}
 }
 
-/* === Botón flotante música === */
 .music-float {
   position:fixed;bottom:20px;right:20px;background:linear-gradient(270deg,#ffb6e6,#ffe8ae,#e6d0fa);
   background-size:400% 400%;color:#fff;border-radius:50%;width:65px;height:65px;
   display:flex;align-items:center;justify-content:center;font-size:30px;cursor:pointer;z-index:100;
   animation:gradientMove 6s infinite alternate,bounce 1.8s ease-in-out infinite;
 }
-@keyframes bounce {0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+@keyframes bounce {0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}
 
-/* === Confetti & Notas === */
+}
+
 .confetti,.music-drop {position:fixed;z-index:1;animation:fall linear infinite;}
 @keyframes fall {0%{transform:translateY(-10px);}100%{transform:translateY(100vh);}}
 .music-drop {font-size:22px;opacity:0.6;}
 
-/* === Compartir y QR === */
 .qr-container {
   display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 12px; margin-bottom: 14px;
 }
@@ -188,17 +190,14 @@ section.fade-in { opacity:1; animation: fadeIn 2.2s cubic-bezier(.5,.1,.25,1.2) 
   width: 90px; height: 90px; border-radius: 12px; box-shadow: 0 2px 14px #b47ae033;
 }
 
-/* === Scroll indicator === */
 .scroll-indicator {
   margin-top:15px;font-size:1.2rem;color:#ff69b4;font-weight:bold;animation:blink 1.5s infinite;
 }
 @keyframes blink {0%,100%{opacity:1;}50%{opacity:0.4;}}
 .scroll-arrow {display:block;font-size:2rem;color:#ff69b4;animation:bounceArrow 1.4s infinite;}
 @keyframes bounceArrow {0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}
-
 }
 
-/* === Equalizer === */
 .equalizer {display:inline-flex;gap:4px;position:absolute;right:20px;bottom:20px;}
 .bar {width:6px;height:18px;background:#fff;border-radius:2px;animation:equalize 1s infinite;}
 .bar:nth-child(1){animation-delay:0s;}
@@ -206,7 +205,6 @@ section.fade-in { opacity:1; animation: fadeIn 2.2s cubic-bezier(.5,.1,.25,1.2) 
 .bar:nth-child(3){animation-delay:.4s;}
 @keyframes equalize {0%{height:6px;}50%{height:18px;}100%{height:6px;}}
 
-/* === Mensaje final === */
 .typewriter {
   font-size:1.5rem;font-weight:bold;color:#b47ae0;border-right:.15em solid #b47ae0;
   white-space:nowrap;overflow:hidden;width:0;animation:type 4s steps(40,end) forwards,blinkCursor .75s step-end infinite;
@@ -214,7 +212,6 @@ section.fade-in { opacity:1; animation: fadeIn 2.2s cubic-bezier(.5,.1,.25,1.2) 
 @keyframes type {to{width:100%;}}
 @keyframes blinkCursor {50%{border-color:transparent;}}
 
-/* === GIF final con glow y confetti === */
 .gif-container {
   display:flex;justify-content:center;align-items:center;margin-top:30px;position:relative;
 }
@@ -234,12 +231,13 @@ section.fade-in { opacity:1; animation: fadeIn 2.2s cubic-bezier(.5,.1,.25,1.2) 
 }
 @keyframes pulseGlow {0%{box-shadow:0 0 10px #b47ae0;}100%{box-shadow:0 0 40px #ffe8ae99;}}
 
-/* === Responsive === */
 @media (max-width: 700px) {
   section {padding:10px;}
   .main-title {font-size:2.1rem;}
   .sub-title {font-size:2rem;}
-  .baby-photo {max-width:220px;}
+  .baby-photo {
+    max-width:95vw; /* siempre cabe en la pantalla móvil */
+  }
 }
 </style>
 </head>
@@ -251,21 +249,16 @@ section.fade-in { opacity:1; animation: fadeIn 2.2s cubic-bezier(.5,.1,.25,1.2) 
 <div class="balloon balloon3" onclick="popBalloon(this)"></div>
 <audio id="popBalloonSound" src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/pop.mp3"></audio>
 
-<!-- Loader -->
 <div id="loader">
   <p style="font-size:1.5rem;font-weight:bold;color:#b47ae0;">Cargando invitación...</p>
   <div class="loader-note">🎵 🎶 🎵</div>
 </div>
 
-<!-- Botón flotante música -->
 <div class="music-float" onclick="toggleMusic()">🎵</div>
-
-<!-- Equalizer -->
 <div class="equalizer" id="equalizer" style="display:none;">
   <div class="bar"></div><div class="bar"></div><div class="bar"></div>
 </div>
 
-<!-- Confetti + Notas -->
 <script>
 for(let i=0;i<80;i++){
   const confetti=document.createElement('div');
@@ -290,7 +283,6 @@ for(let i=0;i<10;i++){
 </script>
 
 <main style="display:none;" id="main-content">
-  <!-- QR y compartir -->
   <section class="fade-in">
     <div class="qr-container">
       <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://dannzanetti.github.io/invitacion-aitana/" alt="QR Invitación"/>
@@ -307,7 +299,6 @@ for(let i=0;i<10;i++){
     </audio>
   </section>
 
-  <!-- Título + Imagen -->
   <section class="fade-in" style="position:relative;">
     <div class="halo-title"></div>
     <h1 class="main-title">🎀 Baby Shower 🎀</h1>
@@ -315,13 +306,11 @@ for(let i=0;i<10;i++){
     <img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/Baby.png" alt="Baby" class="baby-photo"/>
   </section>
 
-  <!-- Cuenta regresiva -->
   <section class="fade-in">
     <div id="countdown">🎈 ¡Faltan X días para el gran día! 🎈</div>
     <div id="timer">00d : 00h : 00m : 00s</div>
   </section>
 
-  <!-- Info -->
   <section class="info-block fade-in">
     <p>📅 <strong>Sábado 20 de Septiembre</strong></p>
     <p>⏰ <strong>2:00 PM – 11:00 PM</strong></p>
@@ -329,7 +318,6 @@ for(let i=0;i<10;i++){
     <p>⚠️ <strong>Confirma antes del 14 de septiembre</strong></p>
   </section>
 
-  <!-- Te esperamos -->
   <section class="fade-in">
     <div class="highlight-container">¡Te esperamos con!</div>
     <div style="margin-top:20px;">
@@ -340,7 +328,6 @@ for(let i=0;i<10;i++){
     </div>
   </section>
 
-  <!-- Botones principales -->
   <section class="fade-in">
     <div class="btn-container">
       <a href="https://waze.com/ul/h9g3qhubmq" target="_blank" class="btn-3d">📍 Cómo llegar con Waze</a>
@@ -351,7 +338,6 @@ for(let i=0;i<10;i++){
     </div>
   </section>
 
-  <!-- Calendarios -->
   <section class="fade-in">
     <div style="display:flex;justify-content:space-between;gap:10px;">
       <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Baby+Shower+Aitana&dates=20250920T200000Z/20250921T050000Z&details=Baby+Shower+de+Aitana&location=Residencial+Sendero+Santa+Fe" target="_blank" class="btn-3d" style="width:48%;">📅 Google Calendar</a>
@@ -359,7 +345,6 @@ for(let i=0;i<10;i++){
     </div>
   </section>
 
-  <!-- Mensaje final + GIF -->
   <section class="fade-in">
     <p class="typewriter">💕 ¡Gracias por acompañarnos! 💕</p>
     <div class="gif-container">
@@ -370,14 +355,12 @@ for(let i=0;i<10;i++){
 </main>
 
 <script>
-// Loader
 window.onload=()=>{setTimeout(()=>{
   document.getElementById('loader').style.display='none';
   document.getElementById('main-content').style.display='block';
   document.querySelectorAll('section').forEach(s=>s.classList.add('fade-in'));
 },2500);};
 
-// Música
 function toggleMusic(){
   const audio=document.getElementById('music');
   const eq=document.getElementById('equalizer');
@@ -386,7 +369,6 @@ function toggleMusic(){
 function playPop(){const pop=document.getElementById('popSound');pop.volume=0.4;pop.currentTime=0;pop.play();}
 document.querySelectorAll('.btn-3d,.music-btn').forEach(btn=>btn.addEventListener('click',playPop));
 
-// Sparkles sobre botones
 document.addEventListener('DOMContentLoaded',()=> {
   document.querySelectorAll('.btn-3d').forEach(btn => {
     for(let i=0;i<3;i++){
@@ -400,14 +382,12 @@ document.addEventListener('DOMContentLoaded',()=> {
   });
 });
 
-// Animación scroll
 const sections=document.querySelectorAll('section');
 const observer=new IntersectionObserver(entries=>{
   entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');}});
 },{threshold:0.2});
 sections.forEach(section=>observer.observe(section));
 
-// Countdown
 const countdownEl=document.getElementById('countdown');
 const timerEl=document.getElementById('timer');
 const eventDate=new Date('2025-09-20T14:00:00');
@@ -418,14 +398,12 @@ function updateCountdown(){
   const h=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
   const m=Math.floor((diff%(1000*60*60))/(1000*60));
   const s=Math.floor((diff%(1000*60))/1000);
-
   countdownEl.textContent=`🎈 ¡Faltan ${d} días para el gran día! 🎈`;
   timerEl.textContent=`${d}d : ${h}h : ${m}m : ${s}s`;
 }
 updateCountdown();
 setInterval(updateCountdown,1000);
 
-// Confetti y sonido al confirmar asistencia
 document.getElementById('confirmar-btn').addEventListener('click', function(e){
   setTimeout(function(){
     for(let i=0;i<30;i++){
@@ -446,7 +424,6 @@ document.getElementById('confirmar-btn').addEventListener('click', function(e){
   },100);
 });
 
-// Globos: pop + confetti
 function popBalloon(balloon) {
   balloon.style.opacity = 0;
   document.getElementById('popBalloonSound').currentTime=0;
@@ -469,7 +446,6 @@ function popBalloon(balloon) {
   setTimeout(()=>{balloon.style.display='none';},600);
 }
 
-// Confetti y animación al GIF final
 document.getElementById('finalGif').addEventListener('click',function(){
   this.classList.add('active');
   for(let i=0;i<40;i++){
