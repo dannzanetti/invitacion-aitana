@@ -7,313 +7,328 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 <style>
-/* ===== Loader ===== */
-#loader {
-  position: fixed; top:0; left:0; width:100%; height:100%;
-  background: linear-gradient(135deg,#ffe8f3,#e6d0fa,#ffe8ae);
-  display:flex; flex-direction:column; justify-content:center; align-items:center;
-  z-index:9999; animation: gradientMove 8s infinite alternate;
-}
-.loader-note { font-size:2.5rem; animation: float 1.5s ease-in-out infinite; }
-@keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-15px);} }
-
-/* ===== Fondo dinámico ===== */
-body {
-  font-family:'Montserrat',sans-serif;
-  background:linear-gradient(270deg,#fde8f3,#e6d0fa,#ffe8ae);
-  background-size:600% 600%;
-  animation:gradientMove 20s ease infinite;
-  margin:0;overflow-x:hidden;
-}
-@keyframes gradientMove {
-  0%{background-position:0% 50%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 50%}
-}
-
-/* ===== Secciones ===== */
-section {
-  max-width:700px;margin:40px auto;background:rgba(255,255,255,0.95);
-  padding:20px;border-radius:20px;text-align:center;
-  box-shadow:0 4px 30px rgba(183,149,252,0.25);
-  opacity:0;transform:translateY(40px);
-  transition:all 1s ease;
-}
-section.visible {opacity:1;transform:translateY(0);}
-
-/* ===== Títulos ===== */
-.main-title,.sub-title {
-  font-family:'Dancing Script',cursive;
-  background:linear-gradient(90deg,#ff69b4,#ffb6e6,#b47ae0);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  animation: rainbowBorder 3s linear infinite, bounceSlow 4s ease-in-out infinite;
-}
-.main-title {font-size:3rem;margin-bottom:10px;}
-.sub-title {font-size:3.6rem;font-weight:bold;}
-@keyframes rainbowBorder {
-  0% {text-shadow:0 0 6px #ff69b4;}
-  50% {text-shadow:0 0 14px #b47ae0;}
-  100% {text-shadow:0 0 6px #ff69b4;}
-}
-@keyframes bounceSlow {0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
-
-/* ===== Imagen ===== */
-.baby-photo {
-  width:100%;max-width:420px;border-radius:12px;margin:20px auto;
-  animation: zoomGlow 3s ease-in-out infinite alternate;
-}
-@keyframes zoomGlow {
-  0%{transform:scale(1);box-shadow:0 0 15px rgba(255,182,230,0.3);}
-  100%{transform:scale(1.05);box-shadow:0 0 45px rgba(183,149,252,0.6);}
-}
-
-/* ===== Contador ===== */
-#countdown {
-  font-size:1.6rem;font-weight:bold;margin:8px 0;
-  background:linear-gradient(90deg,#ff69b4,#ffb6e6,#b47ae0);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  animation:pulseGlow 1.5s infinite alternate;
-}
-#timer {
-  font-size:2rem;font-weight:bold;margin:8px 0;
-  background:linear-gradient(90deg,#ff69b4,#ffb6e6,#b47ae0);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  animation:heartbeat 1.4s infinite ease-in-out;
-}
-@keyframes pulseGlow {0%{text-shadow:0 0 6px #ffe8ae;}100%{text-shadow:0 0 16px #ff69b4;}}
-@keyframes heartbeat {0%,100%{transform:scale(1);}50%{transform:scale(1.1);}}
-
-/* ===== Info block ===== */
-.info-block p {text-align:left;font-weight:bold;margin:10px 0;font-size:1.2rem;}
-
-/* ===== Texto destacado ===== */
-.highlight-container {
-  font-size:1.8rem;font-weight:bold;color:#ff69b4;margin-bottom:20px;
-  animation: shimmer 3s infinite linear;
-}
-@keyframes shimmer {0%{opacity:.6;}50%{opacity:1;}100%{opacity:.6;}}
-
-/* ===== Botones ===== */
-.btn-container {display:flex;flex-direction:column;gap:18px;margin-top:25px;}
-.btn-3d,.music-btn {
-  width:100%;background:linear-gradient(270deg,#ffb6e6,#ffe8ae,#e6d0fa);
-  background-size:400% 400%;animation:gradientMove 6s infinite alternate;
-  color:#000;font-weight:bold;border-radius:16px;padding:18px;
-  font-size:1.1rem;text-align:center;text-decoration:none;transition:transform 0.3s ease;
-}
-.btn-3d:hover,.music-btn:hover {animation:vibrate 0.4s linear infinite;transform:scale(1.05);}
-@keyframes vibrate {0%,100%{transform:translateX(0);}25%{transform:translateX(-2px);}50%{transform:translateX(2px);}75%{transform:translateX(-2px);}}
-
-/* ===== Botón flotante música ===== */
-.music-float {
-  position:fixed;bottom:20px;right:20px;background:linear-gradient(270deg,#ffb6e6,#ffe8ae,#e6d0fa);
-  background-size:400% 400%;color:#fff;border-radius:50%;width:65px;height:65px;
-  display:flex;align-items:center;justify-content:center;font-size:30px;cursor:pointer;z-index:100;
-  animation:gradientMove 6s infinite alternate,bounce 1.8s ease-in-out infinite;
-}
-@keyframes bounce {0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
-
-/* ===== Confetti & Notas ===== */
-.confetti,.music-drop {position:fixed;z-index:1;animation:fall linear infinite;}
-@keyframes fall {0%{transform:translateY(-10px);}100%{transform:translateY(100vh);}}
-.music-drop {font-size:22px;opacity:0.6;}
-
-/* ===== Scroll indicator ===== */
-.scroll-indicator {
-  margin-top:15px;font-size:1.2rem;color:#ff69b4;font-weight:bold;animation:blink 1.5s infinite;
-}
-@keyframes blink {0%,100%{opacity:1;}50%{opacity:0.4;}}
-.scroll-arrow {display:block;font-size:2rem;color:#ff69b4;animation:bounceArrow 1.4s infinite;}
-@keyframes bounceArrow {0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
-
-/* ===== Equalizer (Música ON) ===== */
-.equalizer {
-  display:inline-flex;gap:4px;position:absolute;right:20px;bottom:20px;
-}
-.bar {
-  width:6px;height:18px;background:#fff;border-radius:2px;animation:equalize 1s infinite;
-}
-.bar:nth-child(1){animation-delay:0s;}
-.bar:nth-child(2){animation-delay:.2s;}
-.bar:nth-child(3){animation-delay:.4s;}
-@keyframes equalize {0%{height:6px;}50%{height:18px;}100%{height:6px;}}
-
-/* ===== Mensaje final con typewriter ===== */
-.typewriter {
-  font-size:1.5rem;font-weight:bold;color:#b47ae0;border-right:.15em solid #b47ae0;
-  white-space:nowrap;overflow:hidden;width:0;animation:type 4s steps(40,end) forwards,blinkCursor .75s step-end infinite;
-}
-@keyframes type {to{width:100%;}}
-@keyframes blinkCursor {50%{border-color:transparent;}}
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(270deg, #fde8f3, #e6d0fa, #ffe8ae);
+    background-size: 600% 600%;
+    animation: gradientMove 12s ease infinite;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+  @keyframes gradientMove {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+  }
+  .fade-section {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 1s ease;
+  }
+  .fade-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  /* Loader */
+  #loader {
+    position: fixed;
+    top:0; left:0; width:100%; height:100%;
+    background:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    z-index:9999;
+  }
+  .note {
+    font-size:40px;
+    animation: bounce 1.2s infinite;
+  }
+  .note:nth-child(2){animation-delay:0.2s;}
+  .note:nth-child(3){animation-delay:0.4s;}
+  @keyframes bounce {
+    0%,80%,100% {transform:translateY(0);}
+    40% {transform:translateY(-20px);}
+  }
+  /* Imagen */
+  .baby-photo {
+    max-width: 320px;
+    width:90%;
+    border-radius: 12px;
+    display:block;
+    margin:20px auto;
+    box-shadow:0 0 30px rgba(255,182,230,0.7);
+    animation: zoomPulse 4s infinite alternate;
+  }
+  @keyframes zoomPulse {
+    0% {transform: scale(1);}
+    100% {transform: scale(1.05);}
+  }
+  /* Títulos */
+  .rainbow-text {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.8rem;
+    font-weight:bold;
+    background: linear-gradient(270deg,#ff69b4,#b47ae0,#ffe8ae);
+    background-size:300% 300%;
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    animation: rainbow 4s linear infinite;
+    text-align:center;
+  }
+  @keyframes rainbow {
+    0% {background-position:0% 50%;}
+    100% {background-position:100% 50%;}
+  }
+  .sub-title {
+    font-size:2.2rem;
+    margin-bottom:10px;
+  }
+  .highlight {
+    text-align:center;
+    font-size:3rem;
+    font-weight:bold;
+    color:#ff69b4;
+    text-shadow:0 0 15px rgba(255,105,180,0.6);
+    animation:pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%,100%{transform:scale(1);}
+    50%{transform:scale(1.05);}
+  }
+  /* Música */
+  .music-btn {
+    background: linear-gradient(270deg,#ffb6e6,#ffe8ae,#e6d0fa);
+    background-size:400% 400%;
+    animation:gradientMove 6s infinite alternate;
+    color:#000;
+    font-weight:bold;
+    padding:14px 24px;
+    border-radius:14px;
+    font-size:1.1rem;
+    margin:15px auto;
+    display:block;
+    width:80%;
+    text-align:center;
+    box-shadow:0 4px 12px rgba(0,0,0,0.2);
+    transition:transform .3s ease;
+  }
+  .music-btn:hover{transform:scale(1.05);}
+  /* Indicador scroll */
+  .scroll-indicator {
+    font-size:1rem;
+    color:#555;
+    margin-top:10px;
+    animation:blink 1.5s infinite;
+  }
+  @keyframes blink {
+    0%,100%{opacity:1;}
+    50%{opacity:0;}
+  }
+  /* Cronómetro */
+  #countdown {
+    font-size:1.3rem;
+    font-weight:bold;
+    color:#ff69b4;
+    text-align:center;
+    margin-top:20px;
+    animation:glow 2s infinite alternate;
+  }
+  #timer {
+    font-size:1.8rem;
+    font-weight:bold;
+    color:#b47ae0;
+    text-align:center;
+    margin-bottom:20px;
+    animation:pulse 2s infinite;
+  }
+  @keyframes glow {
+    0%{text-shadow:0 0 10px #ffb6e6;}
+    100%{text-shadow:0 0 20px #ff69b4;}
+  }
+  /* Info */
+  .info-block {
+    background:rgba(255,255,255,0.85);
+    border-radius:12px;
+    padding:15px;
+    font-weight:bold;
+    margin-bottom:30px;
+    font-size:1.1rem;
+  }
+  .pink-title {
+    color:#ff69b4;
+    font-size:1.6rem;
+    font-weight:bold;
+    text-align:center;
+    margin-bottom:15px;
+    animation: shimmer 2s infinite;
+  }
+  @keyframes shimmer {
+    0% {text-shadow: 0 0 10px #ffb6e6;}
+    100% {text-shadow: 0 0 20px #ff69b4;}
+  }
+  /* Botones interactivos */
+  .btn-3d {
+    background:linear-gradient(270deg,#ffb6e6,#ffe8ae,#e6d0fa);
+    background-size:400% 400%;
+    animation:gradientMove 6s infinite alternate;
+    color:#000;
+    font-weight:bold;
+    border-radius:14px;
+    padding:14px;
+    display:block;
+    text-align:center;
+    text-decoration:none;
+    margin-bottom:15px;
+    font-size:1.05rem;
+    box-shadow:0 4px 12px rgba(0,0,0,0.2);
+    transition:transform .2s ease;
+  }
+  .btn-3d:hover{transform:scale(1.05);}
+  /* Confetti y notas */
+  .confetti{
+    position:fixed;width:8px;height:8px;border-radius:50%;
+    animation:fall linear infinite;z-index:1;
+  }
+  @keyframes fall{
+    0%{transform:translateY(-10px) rotate(0deg);}
+    100%{transform:translateY(100vh) rotate(360deg);}
+  }
+  .music-note{
+    position:fixed;font-size:22px;opacity:0.4;
+    animation:floatNote 10s linear infinite;
+  }
+  @keyframes floatNote{
+    0%{transform:translateY(100vh);}
+    100%{transform:translateY(-10vh);}
+  }
+  /* Últimos mensajes */
+  .thank-you{text-align:center;font-size:1.8rem;font-weight:bold;margin-top:30px;}
+  .magic{text-align:center;font-size:1.6rem;margin-top:30px;color:#ff69b4;font-weight:bold;animation:glow 2s infinite alternate;}
 </style>
 </head>
 <body>
 
 <!-- Loader -->
 <div id="loader">
-  <p style="font-size:1.5rem;font-weight:bold;color:#b47ae0;">Cargando invitación...</p>
-  <div class="loader-note">🎵 🎶 🎵</div>
+  <div class="note">🎵</div>
+  <div class="note">🎶</div>
+  <div class="note">🎵</div>
+  <p>Cargando invitación...</p>
 </div>
 
-<!-- Botón flotante música -->
-<div class="music-float" onclick="toggleMusic()">🎵</div>
-
-<!-- Equalizer -->
-<div class="equalizer" id="equalizer" style="display:none;">
-  <div class="bar"></div><div class="bar"></div><div class="bar"></div>
-</div>
-
-<!-- Confetti + Notas musicales -->
+<!-- Confetti y notas -->
 <script>
 for(let i=0;i<60;i++){
-  const confetti=document.createElement('div');
-  confetti.className='confetti';
-  confetti.style.left=Math.random()*100+'vw';
-  confetti.style.background=['#ffb6e6','#ffe8ae','#b795fc'][Math.floor(Math.random()*3)];
-  confetti.style.width=(6+Math.random()*8)+'px';
-  confetti.style.height=confetti.style.width;
-  confetti.style.animationDuration=(4+Math.random()*5)+'s';
-  confetti.style.animationDelay=(Math.random()*6)+'s';
-  document.body.appendChild(confetti);
+  const c=document.createElement('div');
+  c.className='confetti';
+  c.style.left=Math.random()*100+'vw';
+  c.style.background=['#ffb6e6','#ffe8ae','#b795fc'][Math.floor(Math.random()*3)];
+  c.style.animationDuration=(3+Math.random()*3)+'s';
+  document.body.appendChild(c);
 }
 for(let i=0;i<12;i++){
-  const note=document.createElement('div');
-  note.className='music-drop';
-  note.innerHTML=Math.random()>0.5?'🎵':'🎶';
-  note.style.left=Math.random()*95+'vw';
-  note.style.animationDuration=(9+Math.random()*5)+'s';
-  note.style.animationDelay=(Math.random()*4)+'s';
-  document.body.appendChild(note);
+  const n=document.createElement('div');
+  n.className='music-note';
+  n.innerHTML=Math.random()>0.5?'🎵':'🎶';
+  n.style.left=Math.random()*100+'vw';
+  n.style.animationDuration=(8+Math.random()*8)+'s';
+  document.body.appendChild(n);
 }
 </script>
 
-<main style="display:none;" id="main-content">
-  <!-- Botón Música -->
-  <section>
-    <p style="margin-bottom:10px;">🎵 Haz clic en el botón para escuchar música 🎶</p>
-    <button onclick="toggleMusic()" class="music-btn">▶️ Música ON/OFF</button>
-    <p class="scroll-indicator"><span class="scroll-arrow">⬇️</span> ¡Sigue bajando para ver todos los detalles! <span class="scroll-arrow">⬇️</span></p>
-    <audio id="music" loop>
-      <source src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/jump.mp3" type="audio/mpeg">
-    </audio>
-    <audio id="popSound">
-      <source src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/pop.mp3" type="audio/mpeg">
-    </audio>
-  </section>
+<main style="max-width:800px;margin:0 auto;padding:20px;">
+  <!-- Botón música -->
+  <p class="scroll-indicator">🎵 Haz clic en el botón para escuchar música 🎶</p>
+  <button onclick="toggleMusic()" class="music-btn">▶️ Música ON/OFF</button>
+  <audio id="music" loop>
+    <source src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/jump.mp3" type="audio/mpeg">
+  </audio>
 
-  <!-- Título + Imagen -->
-  <section>
-    <h1 class="main-title">🎀 Baby Shower 🎀</h1>
-    <h2 class="sub-title">🎀 AITANA 🎀</h2>
-    <img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/Baby.png" alt="Baby" class="baby-photo"/>
-  </section>
+  <!-- Imagen -->
+  <img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/Baby.png" alt="Baby" class="baby-photo fade-section" />
 
-  <!-- Cuenta regresiva -->
-  <section>
-    <div id="countdown">🎈 ¡Faltan X días para el gran día! 🎈</div>
-    <div id="timer">00d : 00h : 00m : 00s</div>
-  </section>
+  <!-- Títulos -->
+  <h1 class="rainbow-text sub-title fade-section">🎀 Baby Shower 🎀</h1>
+  <h2 class="highlight fade-section">🎀 AITANA 🎀</h2>
 
-  <!-- Clima -->
-  <section>
-    <h3 style="color:#b47ae0;font-weight:bold;">☀️ Clima Actual</h3>
-    <p id="weather" style="font-size:1.2rem;">Cargando clima...</p>
-  </section>
+  <!-- Contador -->
+  <div id="countdown" class="fade-section">✨ ¡Faltan X días para el gran día! ✨</div>
+  <div id="timer" class="fade-section">00d : 00h : 00m : 00s</div>
 
   <!-- Info -->
-  <section class="info-block">
-    <p>📅 <strong>Sábado 20 de Septiembre</strong></p>
-    <p>⏰ <strong>2:00 PM – 11:00 PM</strong></p>
-    <p>🏘️ <strong>Residencial Sendero Santa Fe</strong></p>
-    <p>⚠️ <strong>Confirma antes del 14 de septiembre</strong></p>
-  </section>
+  <div class="info-block fade-section" style="text-align:left;">
+    <p><strong>📅 Sábado 20 de Septiembre</strong></p>
+    <p><strong>⏰ 2:00 PM – 11:00 PM</strong></p>
+    <p><strong>🏘️ Residencial Sendero Santa Fe</strong></p>
+    <p><strong>⚠️ Confirma antes del 14 de septiembre</strong></p>
+  </div>
 
-  <!-- Te esperamos -->
-  <section>
-    <div class="highlight-container">¡Te esperamos con!</div>
-    <div style="margin-top:20px;">
-      <p>🌮 Tacos de guisado</p>
-      <p>🍸 Barra libre:</p>
-      <p>🍻 Cervezas | 🍹 Tequila | 🥃 Ron | 🥂 Whisky</p>
-      <p>🎲 Juegos | 🎖️ Rifas | 💃 Baile</p>
-    </div>
-  </section>
+  <p class="pink-title fade-section">¡Te esperamos con!</p>
+
+  <p style="text-align:center;margin-bottom:10px;">🌮 Tacos de guisado 🌮</p>
+  <p style="text-align:center;margin-bottom:10px;">🍸 Barra libre:</p>
+  <p style="text-align:center;margin-bottom:10px;">🍻 Cervezas | 🍹 Tequila | 🥃 Ron | 🥂 Whisky</p>
+  <p style="text-align:center;margin-bottom:30px;">🎲 Juegos | 🎖️ Rifas | 💃 Baile</p>
 
   <!-- Botones -->
-  <section>
-    <div class="btn-container">
-      <a href="https://waze.com/ul/h9g3qhubmq" target="_blank" class="btn-3d">📍 Cómo llegar con Waze</a>
-      <a href="https://maps.app.goo.gl/aJot9z4Qja81DHsw8?g_st=aw" target="_blank" class="btn-3d">📍 Cómo llegar con Google Maps</a>
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSd-vY-AAhe7GGVQdxJmZvxr-5m6rQh7PgrfKwXY0Dn1-ksgRw/viewform" target="_blank" class="btn-3d">✅ Confirmar asistencia</a>
-      <a href="https://mesaderegalos.liverpool.com.mx/milistaderegalos/51734815" target="_blank" class="btn-3d">🎁 Mesa de regalos Liverpool</a>
-      <a href="https://www.amazon.com.mx/baby-reg/waldodanielalvarez-martinez-diciembre-2025-ciudaddemexico/187ABTMWV8E8D" target="_blank" class="btn-3d">📦 Mesa de regalos Amazon</a>
-    </div>
-  </section>
+  <div>
+    <a href="https://waze.com/ul/h9g3qhubmq" target="_blank" class="btn-3d">📍 Cómo llegar con Waze</a>
+    <a href="https://maps.app.goo.gl/aJot9z4Qja81DHsw8?g_st=aw" target="_blank" class="btn-3d">📍 Cómo llegar con Google Maps</a>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSd-vY-AAhe7GGVQdxJmZvxr-5m6rQh7PgrfKwXY0Dn1-ksgRw/viewform" target="_blank" class="btn-3d">✅ Confirmar asistencia</a>
+    <a href="https://mesaderegalos.liverpool.com.mx/milistaderegalos/51734815" target="_blank" class="btn-3d">🎁 Mesa de regalos Liverpool</a>
+    <a href="https://www.amazon.com.mx/baby-reg/waldodanielalvarez-martinez-diciembre-2025-ciudaddemexico/187ABTMWV8E8D" target="_blank" class="btn-3d">📦 Mesa de regalos Amazon</a>
+  </div>
 
   <!-- Mensaje final -->
-  <section>
-    <p class="typewriter">¡Gracias por acompañarnos en este momento especial! 💕</p>
-    <img src="https://media.giphy.com/media/l0HlSNOxJB956qwfK/giphy.gif" alt="baby gif" style="width:150px;margin-top:15px;"/>
-  </section>
+  <div class="thank-you fade-section">Gracias por acompañarnos</div>
+  <img src="https://media.giphy.com/media/l41lZxzroU33typuU/giphy.gif" alt="Gracias" style="display:block;margin:10px auto;width:120px;">
+  <div class="magic fade-section">✨ ¡Será un día mágico para celebrar juntos! ✨</div>
 </main>
 
 <script>
 // Loader
-window.onload=()=>{setTimeout(()=>{document.getElementById('loader').style.display='none';document.getElementById('main-content').style.display='block';},2500);};
+window.onload=()=>{document.getElementById('loader').style.display='none';};
 
 // Música
 function toggleMusic(){
   const audio=document.getElementById('music');
-  const eq=document.getElementById('equalizer');
-  if(audio.paused){audio.play();eq.style.display='inline-flex';}else{audio.pause();eq.style.display='none';}
+  if(audio.paused){ audio.play(); } else { audio.pause(); }
 }
-function playPop(){const pop=document.getElementById('popSound');pop.volume=0.4;pop.currentTime=0;pop.play();}
-document.querySelectorAll('.btn-3d,.music-btn').forEach(btn=>btn.addEventListener('click',playPop));
 
 // Animación scroll
-const sections=document.querySelectorAll('section');
-const observer=new IntersectionObserver(entries=>{
-  entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');}});
-},{threshold:0.2});
-sections.forEach(section=>observer.observe(section));
+const sections=document.querySelectorAll('.fade-section');
+window.addEventListener('scroll',()=>{
+  const trigger=window.innerHeight*0.85;
+  sections.forEach(sec=>{
+    if(sec.getBoundingClientRect().top<trigger){
+      sec.classList.add('visible');
+    }
+  });
+});
 
-// Countdown
-const countdownEl=document.getElementById('countdown');const timerEl=document.getElementById('timer');
+// Contador
+const countdownEl=document.getElementById('countdown');
+const timerEl=document.getElementById('timer');
 const eventDate=new Date('2025-09-20T14:00:00');
 function updateCountdown(){
-  const now=new Date();const diff=eventDate-now;
-  if(diff<=0){countdownEl.textContent="🎉 ¡Hoy es el gran día! 🎉";timerEl.textContent="00d : 00h : 00m : 00s";return;}
-  const d=Math.floor(diff/(1000*60*60*24)),h=Math.floor((diff%(1000*60*60*24))/(1000*60*60)),m=Math.floor((diff%(1000*60*60))/(1000*60)),s=Math.floor((diff%(1000*60))/1000);
-  countdownEl.textContent=`🎈 ¡Faltan ${d} días para el gran día! 🎈`;timerEl.textContent=`${d}d : ${h}h : ${m}m : ${s}s`;
-}
-updateCountdown();setInterval(updateCountdown,1000);
-
-// Clima API
-const API_KEY="YOUR_API_KEY"; // Reemplaza con tu API Key de OpenWeather
-const weatherEl=document.getElementById('weather');
-function getWeather(lat,lon){
-  fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=es&appid=${API_KEY}`)
-    .then(res=>res.json())
-    .then(data=>{
-      const icon=`https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
-      weatherEl.innerHTML=`
-        <img src="${icon}" style="width:40px;vertical-align:middle;"/> 
-        ${data.name}: ${Math.round(data.main.temp)}°C, ${data.weather[0].description}
-        <br>Sensación: ${Math.round(data.main.feels_like)}°C
-      `;
-    })
-    .catch(()=>{weatherEl.textContent="No se pudo cargar el clima";});
-}
-
-// Intentar obtener ubicación
-if(navigator.geolocation){
-  navigator.geolocation.getCurrentPosition(
-    pos=>getWeather(pos.coords.latitude,pos.coords.longitude),
-    ()=>getWeather(19.4326,-99.1332) // Fallback: CDMX
-  );
-}else{
-   getWeather(19.4326,-99.1332);
+  const now=new Date();
+  const diff=eventDate-now;
+  if(diff<=0){
+    countdownEl.textContent="🎉 ¡Hoy es el gran día! 🎉";
+    timerEl.textContent="00d : 00h : 00m : 00s";
+    return;
   }
-  </script>
+  const days=Math.floor(diff/(1000*60*60*24));
+  const hours=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+  const mins=Math.floor((diff%(1000*60*60))/(1000*60));
+  const secs=Math.floor((diff%(1000*60))/1000);
+  countdownEl.textContent=`✨ ¡Faltan ${days} días para el gran día! ✨`;
+  timerEl.textContent=`${days}d : ${hours}h : ${mins}m : ${secs}s`;
+}
+updateCountdown();
+setInterval(updateCountdown,1000);
+</script>
 </body>
 </html>
