@@ -334,11 +334,80 @@ function rainEmojis() {
 setInterval(rainEmojis,1800);
 rainEmojis();
 
+// Traducción completa
+const translations = {
+  es: {
+    mainTitle: '🎀 Baby Shower 🎀',
+    subTitle: '🎀 AITANA 🎀',
+    qrBtn: '💬 Compartir por WhatsApp',
+    listenMusic: '🎵 Haz clic en el botón para escuchar música 🎶',
+    musicBtn: '▶️ Música ON/OFF',
+    scroll: '¡Sigue bajando para ver todos los detalles!',
+    countdown: '🎈 ¡Faltan X días para el gran día! 🎈',
+    today: '🎉 ¡Hoy es el gran día! 🎉',
+    timer: '00d : 00h : 00m : 00s',
+    infoDate: '📅 <strong>Sábado 20 de Septiembre</strong>',
+    infoTime: '⏰ <strong>2:00 PM – 11:00 PM</strong>',
+    infoPlace: '🏘️ <strong>Residencial Sendero Santa Fe</strong>',
+    infoRSVP: '⚠️ <strong>Confirma antes del 14 de septiembre</strong>',
+    partyTitle: '¡Te esperamos con!',
+    food: '🌮 Tacos de guisado',
+    bar: '🍸 Barra libre:',
+    drinks: '🍻 Cervezas | 🍹 Tequila | 🥃 Ron | 🥂 Whisky',
+    fun: '🎲 Juegos | 🎖️ Rifas | 💃 Baile',
+    waze: '📍 Cómo llegar con Waze',
+    gmaps: '📍 Cómo llegar con Google Maps',
+    confirmBtn: '✅ Confirmar asistencia',
+    liverpool: '🎁 Mesa de regalos Liverpool',
+    amazon: '📦 Mesa de regalos Amazon',
+    calendarG: '📅 Google Calendar',
+    calendarA: '🍎 Apple Calendar',
+    thanks: '💕 ¡Gracias por acompañarnos! 💕',
+    gifFinal: '✨ ¡Será un día mágico para celebrar juntos! ✨',
+    esEn: 'ES / EN',
+    confirmMsg: '¡Gracias por confirmar tu asistencia! 🎉',
+    joyMsg: '¡Gracias por tu alegría! 💜',
+    loading: 'Cargando invitación...',
+  },
+  en: {
+    mainTitle: "🎀 Baby Shower 🎀",
+    subTitle: "🎀 AITANA 🎀",
+    qrBtn: "💬 Share by WhatsApp",
+    listenMusic: "🎵 Click the button to listen to music 🎶",
+    musicBtn: "▶️ Music ON/OFF",
+    scroll: "Scroll down for all the details!",
+    countdown: "🎈 X days left for the big day! 🎈",
+    today: "🎉 Today is the big day! 🎉",
+    timer: "00d : 00h : 00m : 00s",
+    infoDate: "📅 <strong>Saturday, September 20</strong>",
+    infoTime: "⏰ <strong>2:00 PM – 11:00 PM</strong>",
+    infoPlace: "🏘️ <strong>Residencial Sendero Santa Fe</strong>",
+    infoRSVP: "⚠️ <strong>Confirm before September 14</strong>",
+    partyTitle: "We'll be waiting with:",
+    food: "🌮 Guisado tacos",
+    bar: "🍸 Open bar:",
+    drinks: "🍻 Beer | 🍹 Tequila | 🥃 Rum | 🥂 Whisky",
+    fun: "🎲 Games | 🎖️ Raffles | 💃 Dancing",
+    waze: "📍 Waze Directions",
+    gmaps: "📍 Google Maps Directions",
+    confirmBtn: "✅ Confirm attendance",
+    liverpool: "🎁 Liverpool Gift Table",
+    amazon: "📦 Amazon Gift Table",
+    calendarG: "📅 Google Calendar",
+    calendarA: "🍎 Apple Calendar",
+    thanks: "💕 Thank you for joining us! 💕",
+    gifFinal: "✨ It'll be a magical day to celebrate together! ✨",
+    esEn: "EN / ES",
+    confirmMsg: "Thanks for confirming! 🎉",
+    joyMsg: "Thanks for your joy! 💜",
+    loading: "Loading invitation...",
+  }
+};
+
 // Modo oscuro/claro automático por horario + botón manual
 function autoThemeByHour() {
   const hour = new Date().getHours();
   const isNight = (hour >= 19 || hour < 7); // 7pm a 7am
-  // Solo cambiar si el usuario NO ha usado el botón manual antes
   if (!localStorage.getItem('theme')) {
     if (isNight) {
       document.body.classList.add('dark');
@@ -363,13 +432,34 @@ function toggleLanguage() {
   renderLanguage();
 }
 function renderLanguage() {
-  // Cambia sólo los textos principales
-  document.querySelector('.main-title').innerText = lang === 'es' ? '🎀 Baby Shower 🎀' : '🎀 Baby Shower 🎀';
-  document.querySelector('.sub-title').innerText = lang === 'es' ? '🎀 AITANA 🎀' : '🎀 AITANA 🎀';
-  document.getElementById('countdown').innerText = lang === 'es' ? '🎈 ¡Faltan X días para el gran día! 🎈' : '🎈 X days left for the big day! 🎈';
-  document.querySelector('.typewriter').innerText = lang === 'es' ? '💕 ¡Gracias por acompañarnos! 💕' : '💕 Thank you for joining us! 💕';
-  document.querySelector('.language-switch').innerText = lang === 'es' ? 'ES / EN' : 'EN / ES';
-  // Agrega más si quieres traducir más partes
+  document.querySelector('.main-title').innerText = translations[lang].mainTitle;
+  document.querySelector('.sub-title').innerText = translations[lang].subTitle;
+  document.querySelector('.language-switch').innerText = translations[lang].esEn;
+  document.querySelector('.music-btn').innerText = translations[lang].musicBtn;
+  document.querySelector('.scroll-indicator').innerHTML = `<span class="scroll-arrow">⬇️</span> ${translations[lang].scroll} <span class="scroll-arrow">⬇️</span>`;
+  document.getElementById('countdown').innerText = translations[lang].countdown;
+  document.getElementById('timer').innerText = translations[lang].timer;
+  document.getElementById('qrBtn').innerText = translations[lang].qrBtn;
+  document.getElementById('listenMusic').innerText = translations[lang].listenMusic;
+  document.getElementById('infoDate').innerHTML = translations[lang].infoDate;
+  document.getElementById('infoTime').innerHTML = translations[lang].infoTime;
+  document.getElementById('infoPlace').innerHTML = translations[lang].infoPlace;
+  document.getElementById('infoRSVP').innerHTML = translations[lang].infoRSVP;
+  document.getElementById('partyTitle').innerText = translations[lang].partyTitle;
+  document.getElementById('food').innerText = translations[lang].food;
+  document.getElementById('bar').innerText = translations[lang].bar;
+  document.getElementById('drinks').innerText = translations[lang].drinks;
+  document.getElementById('fun').innerText = translations[lang].fun;
+  document.getElementById('waze').innerText = translations[lang].waze;
+  document.getElementById('gmaps').innerText = translations[lang].gmaps;
+  document.getElementById('confirmar-btn').innerText = translations[lang].confirmBtn;
+  document.getElementById('liverpool').innerText = translations[lang].liverpool;
+  document.getElementById('amazon').innerText = translations[lang].amazon;
+  document.getElementById('calendarG').innerText = translations[lang].calendarG;
+  document.getElementById('calendarA').innerText = translations[lang].calendarA;
+  document.querySelector('.typewriter').innerText = translations[lang].thanks;
+  document.getElementById('gifFinal').innerText = translations[lang].gifFinal;
+  document.getElementById('loaderText').innerText = translations[lang].loading;
 }
 document.addEventListener('DOMContentLoaded', renderLanguage);
 
@@ -399,9 +489,9 @@ for(let i=0;i<10;i++){
   <section class="fade-in">
     <div class="qr-container">
       <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://dannzanetti.github.io/invitacion-aitana/" alt="QR Invitación"/>
-      <a href="https://api.whatsapp.com/send?text=¡Te%20invito%20al%20Baby%20Shower%20de%20Aitana!%20https://dannzanetti.github.io/invitacion-aitana/" target="_blank" class="btn-3d" style="font-size:1rem;width:auto;padding:8px 14px;display:inline-block;margin-top:4px;">💬 Compartir por WhatsApp</a>
+      <a href="https://api.whatsapp.com/send?text=¡Te%20invito%20al%20Baby%20Shower%20de%20Aitana!%20https://dannzanetti.github.io/invitacion-aitana/" target="_blank" class="btn-3d" id="qrBtn" style="font-size:1rem;width:auto;padding:8px 14px;display:inline-block;margin-top:4px;">💬 Compartir por WhatsApp</a>
     </div>
-    <p style="margin-bottom:10px;">🎵 Haz clic en el botón para escuchar música 🎶</p>
+    <p style="margin-bottom:10px;" id="listenMusic">🎵 Haz clic en el botón para escuchar música 🎶</p>
     <button onclick="toggleMusic()" class="music-btn">▶️ Música ON/OFF</button>
     <p class="scroll-indicator"><span class="scroll-arrow">⬇️</span> ¡Sigue bajando para ver todos los detalles! <span class="scroll-arrow">⬇️</span></p>
     <audio id="music" loop>
@@ -425,36 +515,36 @@ for(let i=0;i<10;i++){
   </section>
 
   <section class="info-block fade-in">
-    <p>📅 <strong>Sábado 20 de Septiembre</strong></p>
-    <p>⏰ <strong>2:00 PM – 11:00 PM</strong></p>
-    <p>🏘️ <strong>Residencial Sendero Santa Fe</strong></p>
-    <p>⚠️ <strong>Confirma antes del 14 de septiembre</strong></p>
+    <p id="infoDate">📅 <strong>Sábado 20 de Septiembre</strong></p>
+    <p id="infoTime">⏰ <strong>2:00 PM – 11:00 PM</strong></p>
+    <p id="infoPlace">🏘️ <strong>Residencial Sendero Santa Fe</strong></p>
+    <p id="infoRSVP">⚠️ <strong>Confirma antes del 14 de septiembre</strong></p>
   </section>
 
   <section class="fade-in">
-    <div class="highlight-container">¡Te esperamos con!</div>
+    <div class="highlight-container" id="partyTitle">¡Te esperamos con!</div>
     <div style="margin-top:20px;">
-      <p>🌮 Tacos de guisado</p>
-      <p>🍸 Barra libre:</p>
-      <p>🍻 Cervezas | 🍹 Tequila | 🥃 Ron | 🥂 Whisky</p>
-      <p>🎲 Juegos | 🎖️ Rifas | 💃 Baile</p>
+      <p id="food">🌮 Tacos de guisado</p>
+      <p id="bar">🍸 Barra libre:</p>
+      <p id="drinks">🍻 Cervezas | 🍹 Tequila | 🥃 Ron | 🥂 Whisky</p>
+      <p id="fun">🎲 Juegos | 🎖️ Rifas | 💃 Baile</p>
     </div>
   </section>
 
   <section class="fade-in">
     <div class="btn-container">
-      <a href="https://waze.com/ul/h9g3qhubmq" target="_blank" class="btn-3d">📍 Cómo llegar con Waze</a>
-      <a href="https://maps.app.goo.gl/aJot9z4Qja81DHsw8?g_st=aw" target="_blank" class="btn-3d">📍 Cómo llegar con Google Maps</a>
+      <a href="https://waze.com/ul/h9g3qhubmq" target="_blank" class="btn-3d" id="waze">📍 Cómo llegar con Waze</a>
+      <a href="https://maps.app.goo.gl/aJot9z4Qja81DHsw8?g_st=aw" target="_blank" class="btn-3d" id="gmaps">📍 Cómo llegar con Google Maps</a>
       <a href="https://docs.google.com/forms/d/e/1FAIpQLSd-vY-AAhe7GGVQdxJmZvxr-5m6rQh7PgrfKwXY0Dn1-ksgRw/viewform" target="_blank" class="btn-3d confirmar" id="confirmar-btn">✅ Confirmar asistencia</a>
-      <a href="https://mesaderegalos.liverpool.com.mx/milistaderegalos/51734815" target="_blank" class="btn-3d">🎁 Mesa de regalos Liverpool</a>
-      <a href="https://www.amazon.com.mx/baby-reg/waldodanielalvarez-martinez-diciembre-2025-ciudaddemexico/187ABTMWV8E8D" target="_blank" class="btn-3d">📦 Mesa de regalos Amazon</a>
+      <a href="https://mesaderegalos.liverpool.com.mx/milistaderegalos/51734815" target="_blank" class="btn-3d" id="liverpool">🎁 Mesa de regalos Liverpool</a>
+      <a href="https://www.amazon.com.mx/baby-reg/waldodanielalvarez-martinez-diciembre-2025-ciudaddemexico/187ABTMWV8E8D" target="_blank" class="btn-3d" id="amazon">📦 Mesa de regalos Amazon</a>
     </div>
   </section>
 
   <section class="fade-in">
     <div style="display:flex;justify-content:space-between;gap:10px;">
-      <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Baby+Shower+Aitana&dates=20250920T200000Z/20250921T050000Z&details=Baby+Shower+de+Aitana&location=Residencial+Sendero+Santa+Fe" target="_blank" class="btn-3d" style="width:48%;">📅 Google Calendar</a>
-      <a href="https://dannzanetti.github.io/invitacion-aitana/babyshower.ics" class="btn-3d" style="width:48%;">🍎 Apple Calendar</a>
+      <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Baby+Shower+Aitana&dates=20250920T200000Z/20250921T050000Z&details=Baby+Shower+de+Aitana&location=Residencial+Sendero+Santa+Fe" target="_blank" class="btn-3d" id="calendarG" style="width:48%;">📅 Google Calendar</a>
+      <a href="https://dannzanetti.github.io/invitacion-aitana/babyshower.ics" class="btn-3d" id="calendarA" style="width:48%;">🍎 Apple Calendar</a>
     </div>
   </section>
 
@@ -463,7 +553,7 @@ for(let i=0;i<10;i++){
     <div class="gif-container">
       <img id="finalGif" src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExeWV0NDMza3c2eXVsM2VrMnNhdHcyMG0yN2Z5YzN5aWV2bHJpdjk1OSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/QMkPpxPDYY0fu/giphy.gif" alt="GIF Final">
     </div>
-    <p style="margin-top:20px;font-size:1.4rem;color:#b47ae0;font-weight:bold;">✨ ¡Será un día mágico para celebrar juntos! ✨</p>
+    <p id="gifFinal" style="margin-top:20px;font-size:1.4rem;color:#b47ae0;font-weight:bold;">✨ ¡Será un día mágico para celebrar juntos! ✨</p>
   </section>
 </main>
 
@@ -506,12 +596,16 @@ const timerEl=document.getElementById('timer');
 const eventDate=new Date('2025-09-20T14:00:00');
 function updateCountdown(){
   const now=new Date();const diff=eventDate-now;
-  if(diff<=0){countdownEl.textContent=lang==='es'?"🎉 ¡Hoy es el gran día! 🎉":"🎉 Today is the big day! 🎉";timerEl.textContent="00d : 00h : 00m : 00s";return;}
+  if(diff<=0){
+    countdownEl.textContent=translations[lang].today;
+    timerEl.textContent=translations[lang].timer;
+    return;
+  }
   const d=Math.floor(diff/(1000*60*60*24));
   const h=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
   const m=Math.floor((diff%(1000*60*60))/(1000*60));
   const s=Math.floor((diff%(1000*60))/1000);
-  countdownEl.textContent=lang==='es'?`🎈 ¡Faltan ${d} días para el gran día! 🎈`:`🎈 ${d} days left for the big day! 🎈`;
+  countdownEl.textContent=translations[lang].countdown.replace('X',d);
   timerEl.textContent=`${d}d : ${h}h : ${m}m : ${s}s`;
 }
 updateCountdown();
@@ -533,7 +627,7 @@ document.getElementById('confirmar-btn').addEventListener('click', function(e){
       setTimeout(()=>confetti.remove(),3000);
     }
     playPop();
-    alert(lang==='es'?"¡Gracias por confirmar tu asistencia! 🎉":"Thanks for confirming! 🎉");
+    alert(translations[lang].confirmMsg);
   },100);
 });
 
@@ -578,7 +672,7 @@ document.getElementById('finalGif').addEventListener('click',function(){
   }
   setTimeout(()=>{this.classList.remove('active');},1600);
   playPop();
-  setTimeout(()=>{alert(lang==='es'?"¡Gracias por tu alegría! 💜":"Thanks for your joy! 💜");},800);
+  setTimeout(()=>{alert(translations[lang].joyMsg);},800);
 });
 </script>
 </body>
