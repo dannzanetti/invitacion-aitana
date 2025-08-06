@@ -31,7 +31,7 @@
     z-index: 10;
     text-align: center;
     position: relative;
-    overflow: hidden; /* Para que las notas no salgan del bloque */
+    overflow: hidden;
   }
   .main-title {
     font-family: 'Dancing Script', cursive;
@@ -49,7 +49,6 @@
     border: 8px solid #fff;
     box-shadow: 0 0 30px rgba(255,182,230,0.5);
   }
-  /* Botones */
   .btn-3d {
     background: linear-gradient(270deg, #ffb6e6, #ffe8ae, #e6d0fa);
     background-size: 400% 400%;
@@ -76,7 +75,22 @@
     gap: 14px;
     margin-top: 20px;
   }
-  /* Botón flotante música */
+  .music-btn {
+    background: linear-gradient(90deg,#e6d0fa,#ffb6e6);
+    color: #fff;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    padding: 12px 24px;
+    margin: 10px 0;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  .music-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
   .music-float {
     position: fixed;
     bottom: 20px;
@@ -95,40 +109,35 @@
     box-shadow: 0 4px 14px rgba(0,0,0,0.2);
     animation: gradientMove 6s infinite alternate;
     z-index: 100;
-    transition: transform 0.3s ease;
   }
-  .music-float:hover {
-    transform: scale(1.15);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-  }
-  /* Confeti */
   .confetti {
     position: fixed;
-    width: 8px;
-    height: 8px;
-    background: #ffb6e6;
-    animation: fall linear infinite;
-    opacity: 0.7;
-    z-index: 1;
     border-radius: 50%;
+    animation: fall linear infinite;
+    z-index: 1;
   }
   @keyframes fall {
-    0% {transform: translateY(-10px) rotate(0deg);}
-    100% {transform: translateY(100vh) rotate(360deg);}
+    0% {transform: translateY(-10px);}
+    100% {transform: translateY(100vh);}
   }
-  /* Notas musicales en el fondo */
+  #floating-notes {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
   .music-note {
     position: absolute;
-    font-size: 22px;
     opacity: 0.5;
-    animation: floatNote 8s linear infinite;
+    animation: floatNote linear infinite;
   }
   @keyframes floatNote {
     0% { transform: translateY(100%) scale(0.8);}
     50% { transform: translateY(50%) scale(1.2);}
     100% { transform: translateY(-120%) scale(0.9);}
   }
-  /* Contador */
   #countdown {
     font-size: 1.3rem;
     color: #ff69b4;
@@ -145,46 +154,39 @@
 </head>
 <body>
 
-<!-- Botón flotante -->
 <div class="music-float" onclick="toggleMusic()">🎵</div>
 
-<!-- Confeti dinámico -->
 <script>
+// Confeti dinámico
 for(let i=0;i<50;i++){
   const confetti=document.createElement('div');
   confetti.className='confetti';
   confetti.style.left=Math.random()*100+'vw';
-  confetti.style.animationDuration=(3+Math.random()*3)+'s';
-  confetti.style.animationDelay=(Math.random()*5)+'s';
   confetti.style.background=['#ffb6e6','#ffe8ae','#b795fc'][Math.floor(Math.random()*3)];
-  confetti.style.width=(6+Math.random()*8)+'px';
+  confetti.style.width=(6+Math.random()*6)+'px';
   confetti.style.height=confetti.style.width;
+  confetti.style.animationDuration=(3+Math.random()*4)+'s';
+  confetti.style.animationDelay=(Math.random()*5)+'s';
   document.body.appendChild(confetti);
 }
 </script>
 
 <main class="flex flex-col items-center justify-center min-h-screen px-4 py-8 relative z-10">
-<section class="glass-card w-full max-w-3xl fadeInUp">
-  <!-- Notas dentro del bloque -->
+<section class="glass-card w-full max-w-3xl">
   <div id="floating-notes"></div>
-
   <p>🎵 Haz clic en el botón para escuchar música 🎶</p>
   <button onclick="toggleMusic()" class="music-btn">▶️ Música ON/OFF</button>
   
   <audio id="music" loop>
     <source src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/jump.mp3" type="audio/mpeg">
   </audio>
-  <audio id="popSound">
-    <source src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/pop.mp3" type="audio/mpeg">
-  </audio>
 
-  <img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/68ce7c08261045db668ca023ce4f2f2acd1a6499/Baby.png" alt="Baby" class="baby-photo" />
+  <img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/Baby.png" alt="Baby" class="baby-photo" />
 
   <h1 class="main-title">🎀 Baby Shower de Aitana 🎀</h1>
   <div id="countdown">🎈 Faltan X días para el gran día 🎈</div>
   <div id="timer">00d : 00h : 00m : 00s</div>
 
-  <!-- Bloque fecha/hora -->
   <div class="text-left bg-white/80 rounded-2xl p-5 mb-5 shadow-md">
     <p>📅 Sábado 20 de Septiembre</p>
     <p>⏰ 2:00 PM – 11:00 PM</p>
@@ -192,7 +194,7 @@ for(let i=0;i<50;i++){
     <p>⚠️ Confirma antes del 14 de septiembre</p>
   </div>
 
-  <div class="text-left bg-white/80 rounded-2xl p-5 mb-6 shadow-md fadeInUp">
+  <div class="text-left bg-white/80 rounded-2xl p-5 mb-6 shadow-md">
     <p class="text-xl font-semibold mb-4" style="color:#ffb6e6;">¡Te esperamos con!</p>
     <ul>
       <li>🌮 Tacos de guisado</li>
@@ -207,7 +209,6 @@ for(let i=0;i<50;i++){
     </ul>
   </div>
 
-  <!-- Botones -->
   <div class="btn-container">
     <a href="https://waze.com/ul/h9g3qhubmq" target="_blank" class="btn-3d">📍 Cómo llegar con Waze</a>
     <a href="https://maps.app.goo.gl/aJot9z4Qja81DHsw8?g_st=aw" target="_blank" class="btn-3d">📍 Cómo llegar con Google Maps</a>
@@ -221,22 +222,10 @@ for(let i=0;i<50;i++){
 </main>
 
 <script>
-// Música
 function toggleMusic(){
   const audio=document.getElementById('music');
   if(audio.paused){ audio.play(); } else { audio.pause(); }
 }
-// Pop
-function playPop(){
-  const pop = document.getElementById('popSound');
-  pop.currentTime = 0;
-  pop.play();
-}
-document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll('.btn-3d, .music-btn, .music-float').forEach(btn=>{
-    btn.addEventListener('click', playPop);
-  });
-});
 // Contador
 const countdownEl=document.getElementById('countdown');
 const timerEl=document.getElementById('timer');
@@ -261,12 +250,11 @@ setInterval(updateCountdown,1000);
 
 // Notas dentro del bloque
 const notesContainer=document.getElementById('floating-notes');
-for(let i=0;i<10;i++){
+for(let i=0;i<12;i++){
   const note=document.createElement('div');
   note.className='music-note';
   note.innerHTML=Math.random()>0.5?'🎵':'🎶';
   note.style.left=Math.random()*90+'%';
-  note.style.top='100%';
   note.style.fontSize=(18+Math.random()*16)+'px';
   note.style.animationDuration=(6+Math.random()*5)+'s';
   note.style.animationDelay=(Math.random()*4)+'s';
