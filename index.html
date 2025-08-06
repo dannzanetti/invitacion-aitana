@@ -22,7 +22,7 @@ body {
   100%{background-position:0% 50%}
 }
 
-/* ===== Loader ===== */
+/* Loader */
 #loader {
   position: fixed; top:0; left:0; width:100%; height:100%;
   background: linear-gradient(135deg,#ffe8f3,#e6d0fa,#ffe8ae);
@@ -32,7 +32,7 @@ body {
 .loader-note { font-size:2rem; animation: float 1.5s ease-in-out infinite; }
 @keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-15px);} }
 
-/* ===== Secciones ===== */
+/* Secciones */
 section {
   max-width: 650px;
   margin: 50px auto;
@@ -46,7 +46,7 @@ section {
 }
 section.visible { opacity: 1; transform: translateY(0); }
 
-/* ===== Títulos ===== */
+/* Títulos */
 .main-title {
   font-family: 'Dancing Script', cursive;
   font-size: 2.8rem;
@@ -76,7 +76,7 @@ section.visible { opacity: 1; transform: translateY(0); }
   50% {transform:translateY(-8px);}
 }
 
-/* ===== Imagen ===== */
+/* Imagen */
 .baby-photo {
   width: 100%; max-width: 400px; border-radius: 16px;
   margin: 20px auto;
@@ -87,7 +87,7 @@ section.visible { opacity: 1; transform: translateY(0); }
   100% {transform:scale(1.05); box-shadow:0 0 45px rgba(183,149,252,0.6);}
 }
 
-/* ===== Contador ===== */
+/* Contador */
 #countdown, #timer {
   font-size: 1.6rem; font-weight: bold; margin: 8px 0;
   background: linear-gradient(90deg,#ff69b4,#ffb6e6,#b47ae0);
@@ -100,16 +100,16 @@ section.visible { opacity: 1; transform: translateY(0); }
   100% {text-shadow:0 0 18px #ff69b4;}
 }
 
-/* ===== Info bloque ===== */
+/* Info */
 .info-block p {text-align:left; font-weight:bold; margin:10px 0; font-size:1.2rem;}
 
-/* ===== Texto destacado ===== */
+/* Texto destacado */
 .highlight-container {
   font-size:1.8rem; font-weight:bold; color:#ff69b4;
   animation: shimmer 3s infinite linear;
 }
 
-/* ===== Botones ===== */
+/* Botones */
 .btn-container {display:flex; flex-direction:column; gap:18px; margin-top:25px;}
 .btn-3d, .music-btn {
   width:100%; background:linear-gradient(270deg,#ffb6e6,#ffe8ae,#e6d0fa);
@@ -129,7 +129,7 @@ section.visible { opacity: 1; transform: translateY(0); }
   75%{transform:translateX(-2px);}
 }
 
-/* ===== Botón flotante ===== */
+/* Botón flotante */
 .music-float {
   position:fixed; bottom:20px; right:20px;
   background:linear-gradient(270deg,#ffb6e6,#ffe8ae,#e6d0fa);
@@ -141,7 +141,7 @@ section.visible { opacity: 1; transform: translateY(0); }
 }
 @keyframes bounce {0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
 
-/* ===== Confetti & Notas ===== */
+/* Confetti & Notas */
 .confetti,.music-drop {
   position:fixed; z-index:1; animation: fall linear infinite;
 }
@@ -237,6 +237,14 @@ for(let i=0;i<12;i++){
       <a href="https://docs.google.com/forms/d/e/1FAIpQLSd-vY-AAhe7GGVQdxJmZvxr-5m6rQh7PgrfKwXY0Dn1-ksgRw/viewform" target="_blank" class="btn-3d">✅ Confirmar asistencia</a>
       <a href="https://mesaderegalos.liverpool.com.mx/milistaderegalos/51734815" target="_blank" class="btn-3d">🎁 Mesa de regalos Liverpool</a>
       <a href="https://www.amazon.com.mx/baby-reg/waldodanielalvarez-martinez-diciembre-2025-ciudaddemexico/187ABTMWV8E8D" target="_blank" class="btn-3d">📦 Mesa de regalos Amazon</a>
+    </div>
+  </section>
+
+  <!-- Botones Extra -->
+  <section>
+    <div class="btn-container">
+      <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Baby+Shower+de+Aitana&details=Celebramos+juntos+el+baby+shower&location=Residencial+Sendero+Santa+Fe&dates=20250920T200000Z/20250921T040000Z" target="_blank" class="btn-3d">📅 Agregar a Google Calendar</a>
+      <a href="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/babyshower.ics" download class="btn-3d">📅 Agregar a Apple Calendar (.ICS)</a>
     </div>
   </section>
 
