@@ -165,10 +165,10 @@
 <main class="flex flex-col items-center justify-center min-h-screen px-4 py-8 relative z-10">
 <section class="glass-card w-full max-w-2xl py-8 px-6 text-center">
 
-  <!-- Botón Música ARRIBA -->
+  <!-- Botón Música -->
   <button onclick="toggleMusic()" class="btn-3d mb-4">🎵 Música ON/OFF</button>
   <audio id="music" loop>
-    <source src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/adf23669b26577984ec30ecc7cfdbe5e07bd1655/jump.mp3" type="audio/mpeg">
+    <source src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/jump.mp3" type="audio/mpeg">
   </audio>
 
   <!-- Imagen Baby -->
@@ -221,7 +221,7 @@ function toggleMusic(){
 // Contador dinámico y cronómetro
 const countdownEl=document.getElementById('countdown');
 const timerEl=document.getElementById('timer');
-const eventDate=new Date('2025-09-20T14:00:00'); // fecha y hora exacta
+const eventDate=new Date('2025-09-20T14:00:00');
 
 function updateCountdown(){
   const now=new Date();
