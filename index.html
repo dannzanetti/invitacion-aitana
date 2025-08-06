@@ -13,41 +13,70 @@
     background-size: 600% 600%;
     animation: gradientMove 12s ease infinite;
     min-height: 100vh;
-    overflow: hidden;
-    position: relative;
+    overflow-x: hidden;
+    margin: 0;
   }
   @keyframes gradientMove {
     0%{background-position:0% 50%}
     50%{background-position:100% 50%}
     100%{background-position:0% 50%}
   }
-  .glass-card {
-    backdrop-filter: blur(16px);
-    background: rgba(255,255,255,0.85);
-    border-radius: 40px;
-    box-shadow: 0 4px 36px rgba(183,149,252,0.24);
-    border: 1.5px solid rgba(245,206,250,0.3);
+  main {
     padding: 20px;
-    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  .glass-card {
+    width: 100%;
+    max-width: 480px;
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(14px);
+    border-radius: 28px;
+    padding: 20px;
+    box-shadow: 0 4px 30px rgba(183,149,252,0.25);
     text-align: center;
     position: relative;
-    overflow: hidden;
   }
   .main-title {
     font-family: 'Dancing Script', cursive;
-    font-size: 3.4rem;
+    font-size: 2.4rem;
     color: #000;
-    margin-bottom: 12px;
+    margin: 10px 0;
   }
   .baby-photo {
-    width: 340px;
-    height: 340px;
-    display: block;
-    margin: 0 auto 20px auto;
+    width: 85%;
+    max-width: 320px;
+    margin: 0 auto;
     border-radius: 50%;
-    object-fit: cover;
-    border: 8px solid #fff;
+    border: 6px solid #fff;
     box-shadow: 0 0 30px rgba(255,182,230,0.5);
+    display: block;
+  }
+  #countdown, #timer {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #b47ae0;
+    margin: 8px 0;
+  }
+  .info-block {
+    text-align: left;
+    background: rgba(255,255,255,0.85);
+    border-radius: 20px;
+    padding: 16px;
+    margin: 12px 0;
+    font-size: 1rem;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  }
+  .info-block p {
+    margin-bottom: 6px;
+  }
+  .btn-container {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 14px;
   }
   .btn-3d {
     background: linear-gradient(270deg, #ffb6e6, #ffe8ae, #e6d0fa);
@@ -55,33 +84,25 @@
     animation: gradientMove 6s infinite alternate;
     color: #000;
     font-weight: bold;
-    border: none;
-    border-radius: 14px;
-    padding: 16px 22px;
-    font-size: 1.05rem;
-    display: block;
+    border-radius: 16px;
+    padding: 18px;
+    font-size: 1.1rem;
     text-align: center;
-    cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
     text-decoration: none;
+    transition: transform 0.3s ease;
   }
   .btn-3d:hover {
     transform: scale(1.08);
     box-shadow: 0 6px 20px rgba(0,0,0,0.2);
   }
-  .btn-container {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    margin-top: 20px;
-  }
   .music-btn {
+    display: block;
+    margin: 12px auto;
     background: linear-gradient(90deg,#e6d0fa,#ffb6e6);
     color: #fff;
     border-radius: 12px;
-    font-size: 1.1rem;
-    padding: 12px 24px;
-    margin: 10px 0;
+    font-size: 1.2rem;
+    padding: 14px 30px;
     font-weight: bold;
     border: none;
     cursor: pointer;
@@ -89,8 +110,8 @@
   }
   .music-btn:hover {
     transform: scale(1.05);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
   }
+  /* Botón flotante */
   .music-float {
     position: fixed;
     bottom: 20px;
@@ -99,17 +120,18 @@
     background-size: 400% 400%;
     color: #fff;
     border-radius: 50%;
-    width: 60px;
-    height: 60px;
+    width: 65px;
+    height: 65px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 28px;
+    font-size: 30px;
     cursor: pointer;
     box-shadow: 0 4px 14px rgba(0,0,0,0.2);
     animation: gradientMove 6s infinite alternate;
     z-index: 100;
   }
+  /* Confeti */
   .confetti {
     position: fixed;
     border-radius: 50%;
@@ -120,6 +142,7 @@
     0% {transform: translateY(-10px);}
     100% {transform: translateY(100vh);}
   }
+  /* Notas musicales */
   #floating-notes {
     position: absolute;
     top: 0;
@@ -138,26 +161,15 @@
     50% { transform: translateY(50%) scale(1.2);}
     100% { transform: translateY(-120%) scale(0.9);}
   }
-  #countdown {
-    font-size: 1.3rem;
-    color: #ff69b4;
-    font-weight: bold;
-    margin-bottom: 6px;
-  }
-  #timer {
-    font-size: 1.5rem;
-    color: #b47ae0;
-    font-weight: bold;
-    margin-bottom: 18px;
-  }
 </style>
 </head>
 <body>
 
+<!-- Botón música flotante -->
 <div class="music-float" onclick="toggleMusic()">🎵</div>
 
+<!-- Confeti dinámico -->
 <script>
-// Confeti dinámico
 for(let i=0;i<50;i++){
   const confetti=document.createElement('div');
   confetti.className='confetti';
@@ -171,9 +183,10 @@ for(let i=0;i<50;i++){
 }
 </script>
 
-<main class="flex flex-col items-center justify-center min-h-screen px-4 py-8 relative z-10">
-<section class="glass-card w-full max-w-3xl">
+<main>
+<section class="glass-card">
   <div id="floating-notes"></div>
+
   <p>🎵 Haz clic en el botón para escuchar música 🎶</p>
   <button onclick="toggleMusic()" class="music-btn">▶️ Música ON/OFF</button>
   
@@ -187,14 +200,16 @@ for(let i=0;i<50;i++){
   <div id="countdown">🎈 Faltan X días para el gran día 🎈</div>
   <div id="timer">00d : 00h : 00m : 00s</div>
 
-  <div class="text-left bg-white/80 rounded-2xl p-5 mb-5 shadow-md">
+  <!-- Bloque info -->
+  <div class="info-block">
     <p>📅 Sábado 20 de Septiembre</p>
     <p>⏰ 2:00 PM – 11:00 PM</p>
     <p>🏘️ Residencial Sendero Santa Fe</p>
     <p>⚠️ Confirma antes del 14 de septiembre</p>
   </div>
 
-  <div class="text-left bg-white/80 rounded-2xl p-5 mb-6 shadow-md">
+  <!-- Lista -->
+  <div class="info-block">
     <p class="text-xl font-semibold mb-4" style="color:#ffb6e6;">¡Te esperamos con!</p>
     <ul>
       <li>🌮 Tacos de guisado</li>
@@ -209,6 +224,7 @@ for(let i=0;i<50;i++){
     </ul>
   </div>
 
+  <!-- Botones -->
   <div class="btn-container">
     <a href="https://waze.com/ul/h9g3qhubmq" target="_blank" class="btn-3d">📍 Cómo llegar con Waze</a>
     <a href="https://maps.app.goo.gl/aJot9z4Qja81DHsw8?g_st=aw" target="_blank" class="btn-3d">📍 Cómo llegar con Google Maps</a>
@@ -248,9 +264,9 @@ function updateCountdown(){
 updateCountdown();
 setInterval(updateCountdown,1000);
 
-// Notas dentro del bloque
+// Notas musicales flotando
 const notesContainer=document.getElementById('floating-notes');
-for(let i=0;i<12;i++){
+for(let i=0;i<10;i++){
   const note=document.createElement('div');
   note.className='music-note';
   note.innerHTML=Math.random()>0.5?'🎵':'🎶';
