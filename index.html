@@ -4,7 +4,6 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Baby Shower de Aitana</title>
-<script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 <style>
 body {
@@ -24,7 +23,7 @@ body.dark {
   50%{background-position:100% 50%}
   100%{background-position:0% 50%}
 }
-/* === Lluvia de emojis (corazones, estrellas, mariposas) === */
+/* === Lluvia de emojis === */
 .rain-emoji {
   position:fixed;top:-64px;z-index:1;font-size:2.2rem;pointer-events:none;animation:emojiFall linear infinite;
 }
@@ -34,33 +33,49 @@ body.dark {
   100%{top:100vh;opacity:0;}
 }
 
-  <!-- QR y compartir -->
-<section class="fade-in">
-  <div class="qr-container">
-    <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://dannzanetti.github.io/invitacion-aitana/" alt="QR Invitación"/>
-    
-    <!-- Botón WhatsApp agregado aquí -->
-    <a href="https://api.whatsapp.com/send?text=¡Te%20invito%20al%20Baby%20Shower%20de%20Aitana!%20https://dannzanetti.github.io/invitacion-aitana/" 
-       target="_blank" 
-       class="btn-3d" 
-       style="font-size:1rem;width:auto;padding:8px 14px;display:inline-block;margin-top:4px;">
-       💬 Compartir por WhatsApp
-    
-/* === Botón modo oscuro/claro y idioma === */
-.theme-switch, .language-switch {
-  position:fixed;top:20px;z-index:200;
-  background:#fff2;color:#b47ae0;border-radius:10px;padding:10px 18px;font-weight:bold;cursor:pointer;
-  box-shadow:0 2px 10px #b47ae033;
-  transition:background 0.3s,color 0.3s;
+/* === Botones flotantes (lado izquierdo abajo) === */
+.floating-controls {
+  position: fixed;
+  left: 24px;
+  bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  z-index: 500;
 }
-.theme-switch { left:20px; }
-.language-switch { right:20px; }
-body.dark .theme-switch, body.dark .language-switch {
-  background:#232333bb;color:#ffe8ae;
-  box-shadow:0 2px 10px #23233388;
+.floating-controls .fc-btn {
+  background: linear-gradient(270deg,#ffb6e6,#ffe8ae,#e6d0fa);
+  border-radius: 50%;
+  width: 54px;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: #b47ae0;
+  font-weight: bold;
+  box-shadow: 0 2px 18px #b47ae033;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: background 0.3s,color 0.3s,transform 0.16s;
 }
-.theme-switch:hover, .language-switch:hover {background:#ffe8ae44;color:#b47ae0;}
-/* === Globos animados y fade-in === */
+.floating-controls .fc-btn:hover {
+  background: linear-gradient(270deg,#ffe8ae,#ffb6e6,#b795fc);
+  color: #ff69b4;
+  transform: scale(1.1);
+}
+body.dark .floating-controls .fc-btn {
+  background: linear-gradient(270deg,#47386e,#232333,#ffe8ae);
+  color: #ffe8ae;
+  box-shadow: 0 2px 10px #23233388;
+}
+@media (max-width:700px) {
+  .floating-controls {left:10px;bottom:10px;}
+  .floating-controls .fc-btn {width:45px;height:45px;font-size:1.7rem;}
+}
+
+/* El resto de tu CSS igual... */
 .balloon {
   position: fixed;
   width: 60px; height: 80px;
@@ -83,8 +98,6 @@ body.dark .theme-switch, body.dark .language-switch {
   0% { opacity:0; transform:scale(.97) translateY(50px);}
   100%{ opacity:1; transform:scale(1) translateY(0);}
 }
-
-/* === Loader === */
 #loader {
   position: fixed; top:0; left:0; width:100%; height:100%;
   background: linear-gradient(135deg,#ffe8f3,#e6d0fa,#ffe8ae);
@@ -93,8 +106,6 @@ body.dark .theme-switch, body.dark .language-switch {
 }
 .loader-note { font-size:2.5rem; animation: float 1.5s ease-in-out infinite; }
 @keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-15px);} }
-
-/* === Secciones glassmorphism y fade-in === */
 section {
   max-width:700px;margin:40px auto;background:rgba(255,255,255,0.80);
   padding:20px;border-radius:26px;text-align:center;
@@ -112,7 +123,6 @@ body.dark section {
 }
 section.visible {opacity:1;transform:translateY(0);}
 section.fade-in { opacity:1; animation: fadeIn 2.2s cubic-bezier(.5,.1,.25,1.2) both; }
-
 .main-title,.sub-title {
   font-family:'Dancing Script',cursive;
   background:linear-gradient(90deg,#ff69b4,#ffb6e6,#b47ae0);
@@ -134,9 +144,10 @@ body.dark .main-title,body.dark .sub-title {
   50% {text-shadow:0 0 14px #b47ae0;}
   100% {text-shadow:0 0 6px #ff69b4;}
 }
-@keyframes bounceSlow {0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
-@keyframes hueRotate {0%{filter:hue-rotate(0deg);}100%{filter:hue-rotate(360deg);}}
-
+@keyframes bounceSlow {0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}
+}
+@keyframes hueRotate {0%{filter:hue-rotate(0deg);}100%{filter:hue-rotate(360deg);}
+}
 .halo-title {
   position:absolute;left:50%;top:0;transform:translateX(-50%);
   width:340px;height:90px;
@@ -144,11 +155,9 @@ body.dark .main-title,body.dark .sub-title {
   z-index:1;filter:blur(16px);
   pointer-events:none;
 }
-
-/* FOTO MÁS GRANDE */
 .baby-photo {
   width:100%;
-  max-width:600px;  /* <<-- ¡más grande! */
+  max-width:600px; 
   border-radius:12px;
   margin:20px auto;
   animation: zoomGlow 3s ease-in-out infinite alternate;
@@ -157,7 +166,6 @@ body.dark .main-title,body.dark .sub-title {
   0%{transform:scale(1);box-shadow:0 0 15px rgba(255,182,230,0.3);}
   100%{transform:scale(1.05);box-shadow:0 0 45px rgba(183,149,252,0.5);}
 }
-
 #countdown {
   font-size:1.6rem;font-weight:bold;margin:8px 0;
   background:linear-gradient(90deg,#ff69b4,#ffb6e6,#b47ae0);
@@ -171,16 +179,14 @@ body.dark .main-title,body.dark .sub-title {
   animation:heartbeat 1.4s infinite ease-in-out;
 }
 @keyframes pulseGlow {0%{text-shadow:0 0 6px #ffe8ae;}100%{text-shadow:0 0 16px #ff69b4;}}
-@keyframes heartbeat {0%,100%{transform:scale(1);}50%{transform:scale(1.1);}}
-
+@keyframes heartbeat {0%,100%{transform:scale(1);}50%{transform:scale(1.1);}
+}
 .info-block p {text-align:center;font-weight:bold;margin:10px 0;font-size:1.2rem;}
-
 .highlight-container {
   font-size:1.8rem;font-weight:bold;color:#ff69b4;margin-bottom:20px;
   animation: shimmer 3s infinite linear;
 }
 @keyframes shimmer {0%{opacity:.6;}50%{opacity:1;}100%{opacity:.6;}}
-
 .btn-container {display:flex;flex-direction:column;gap:18px;margin-top:25px;}
 .btn-3d,.music-btn {
   width:100%;background:linear-gradient(270deg,#ffb6e6,#ffe8ae,#e6d0fa);
@@ -237,55 +243,37 @@ body.dark .btn-3d.confirmar {
   0% { box-shadow: 0 0 60px 20px #ffe8aecc, 0 2px 30px #ffb6e6cc;}
   100% { box-shadow: 0 0 90px 30px #ffb6e6aa, 0 2px 40px #ffe8aecc;}
 }
-
-.music-float {
-  position:fixed;bottom:20px;right:20px;background:linear-gradient(270deg,#ffb6e6,#ffe8ae,#e6d0fa);
-  background-size:400% 400%;color:#fff;border-radius:50%;width:65px;height:65px;
-  display:flex;align-items:center;justify-content:center;font-size:30px;cursor:pointer;z-index:100;
-  animation:gradientMove 6s infinite alternate,bounce 1.8s ease-in-out infinite;
-}
-body.dark .music-float {
-  background:linear-gradient(270deg,#47386e,#232333,#ffe8ae);
-  border-color:#b795fc;
-  box-shadow:0 2px 10px #23233388;
-}
-@keyframes bounce {0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}
-
-}
-
 .confetti,.music-drop {position:fixed;z-index:1;animation:fall linear infinite;}
-@keyframes fall {0%{transform:translateY(-10px);}100%{transform:translateY(100vh);}}
+@keyframes fall {0%{transform:translateY(-10px);}100%{transform:translateY(100vh);}
+}
 .music-drop {font-size:22px;opacity:0.6;}
-
 .qr-container {
   display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 12px; margin-bottom: 14px;
 }
 .qr-container img {
   width: 90px; height: 90px; border-radius: 12px; box-shadow: 0 2px 14px #b47ae033;
 }
-
 .scroll-indicator {
   margin-top:15px;font-size:1.2rem;color:#ff69b4;font-weight:bold;animation:blink 1.5s infinite;
 }
-@keyframes blink {0%,100%{opacity:1;}50%{opacity:0.4;}}
+@keyframes blink {0%,100%{opacity:1;}50%{opacity:0.4;}
+}
 .scroll-arrow {display:block;font-size:2rem;color:#ff69b4;animation:bounceArrow 1.4s infinite;}
 @keyframes bounceArrow {0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}
 }
-
 .equalizer {display:inline-flex;gap:4px;position:absolute;right:20px;bottom:20px;}
 .bar {width:6px;height:18px;background:#fff;border-radius:2px;animation:equalize 1s infinite;}
 .bar:nth-child(1){animation-delay:0s;}
 .bar:nth-child(2){animation-delay:.2s;}
 .bar:nth-child(3){animation-delay:.4s;}
 @keyframes equalize {0%{height:6px;}50%{height:18px;}100%{height:6px;}}
-
 .typewriter {
   font-size:1.5rem;font-weight:bold;color:#b47ae0;border-right:.15em solid #b47ae0;
   white-space:nowrap;overflow:hidden;width:0;animation:type 4s steps(40,end) forwards,blinkCursor .75s step-end infinite;
 }
 @keyframes type {to{width:100%;}}
-@keyframes blinkCursor {50%{border-color:transparent;}}
-
+@keyframes blinkCursor {50%{border-color:transparent;}
+}
 .gif-container {
   display:flex;justify-content:center;align-items:center;margin-top:30px;position:relative;
 }
@@ -303,14 +291,14 @@ body.dark .music-float {
   background:radial-gradient(circle,rgba(255,182,230,0.6),transparent);
   animation:pulseGlow 2s infinite alternate;z-index:1;
 }
-@keyframes pulseGlow {0%{box-shadow:0 0 10px #b47ae0;}100%{box-shadow:0 0 40px #ffe8ae99;}}
-
+@keyframes pulseGlow {0%{box-shadow:0 0 10px #b47ae0;}100%{box-shadow:0 0 40px #ffe8ae99;}
+}
 @media (max-width: 700px) {
   section {padding:10px;}
   .main-title {font-size:2.1rem;}
   .sub-title {font-size:2rem;}
   .baby-photo {
-    max-width:95vw; /* siempre cabe en la pantalla móvil */
+    max-width:95vw;
   }
 }
 @keyframes miniConfetti {
@@ -321,46 +309,108 @@ body.dark .music-float {
 </head>
 <body>
 
-<!-- Botón modo oscuro/claro -->
-<div class="theme-switch" onclick="toggleTheme()">🌙 / ☀️</div>
-<!-- Botón idioma -->
-<div class="language-switch" onclick="toggleLanguage()">ES / EN</div>
-<!-- Lluvia animada de emojis -->
-<div id="emojiRain"></div>
+<!-- Botones flotantes lado izquierdo -->
+<div class="floating-controls">
+  <button class="fc-btn" id="theme-btn" title="Modo oscuro/claro">🌙</button>
+  <button class="fc-btn" id="lang-btn" title="Idioma">🇲🇽</button>
+  <button class="fc-btn" id="music-btn" title="Música">🎵</button>
+</div>
 
-<!-- Globos fondo y pop sound -->
+<div id="emojiRain"></div>
 <div class="balloon balloon1" onclick="popBalloon(this)"></div>
 <div class="balloon balloon2" onclick="popBalloon(this)"></div>
 <div class="balloon balloon3" onclick="popBalloon(this)"></div>
 <audio id="popBalloonSound" src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/pop.mp3"></audio>
-
 <div id="loader">
   <p id="loaderText" style="font-size:1.5rem;font-weight:bold;color:#b47ae0;">Cargando invitación...</p>
   <div class="loader-note">🎵 🎶 🎵</div>
 </div>
-
-<div class="music-float" onclick="toggleMusic()">🎵</div>
 <div class="equalizer" id="equalizer" style="display:none;">
   <div class="bar"></div><div class="bar"></div><div class="bar"></div>
 </div>
+
+<main style="display:none;" id="main-content">
+  <section class="fade-in">
+    <div class="qr-container">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://dannzanetti.github.io/invitacion-aitana/" alt="QR Invitación"/>
+      <a href="https://api.whatsapp.com/send?text=¡Te%20invito%20al%20Baby%20Shower%20de%20Aitana!%20https://dannzanetti.github.io/invitacion-aitana/" target="_blank" class="btn-3d" id="qrBtn" style="font-size:1rem;width:auto;padding:8px 14px;display:inline-block;margin-top:4px;">💬 Compartir por WhatsApp</a>
+    </div>
+    <p style="margin-bottom:10px;" id="listenMusic">🎵 Haz clic en el botón para escuchar música 🎶</p>
+    <button onclick="toggleMusic()" class="music-btn">▶️ Música ON/OFF</button>
+    <p class="scroll-indicator"><span class="scroll-arrow">⬇️</span> ¡Sigue bajando para ver todos los detalles! <span class="scroll-arrow">⬇️</span></p>
+    <audio id="music" loop>
+      <source src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/jump.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="popSound">
+      <source src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/pop.mp3" type="audio/mpeg">
+    </audio>
+  </section>
+  <section class="fade-in" style="position:relative;">
+    <div class="halo-title"></div>
+    <h1 class="main-title">🎀 Baby Shower 🎀</h1>
+    <h2 class="sub-title">🎀 AITANA 🎀</h2>
+    <img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/Baby.png" alt="Baby" class="baby-photo"/>
+  </section>
+  <section class="fade-in">
+    <div id="countdown">🎈 ¡Faltan X días para el gran día! 🎈</div>
+    <div id="timer">00d : 00h : 00m : 00s</div>
+  </section>
+  <section class="info-block fade-in">
+    <p id="infoDate">📅 <strong>Sábado 20 de Septiembre</strong></p>
+    <p id="infoTime">⏰ <strong>2:00 PM – 11:00 PM</strong></p>
+    <p id="infoPlace">🏘️ <strong>Residencial Sendero Santa Fe</strong></p>
+    <p id="infoRSVP">⚠️ <strong>Confirma antes del 14 de septiembre</strong></p>
+  </section>
+  <section class="fade-in">
+    <div class="highlight-container" id="partyTitle">¡Te esperamos con!</div>
+    <div style="margin-top:20px;">
+      <p id="food">🌮 Tacos de guisado</p>
+      <p id="bar">🍸 Barra libre:</p>
+      <p id="drinks">🍻 Cervezas | 🍹 Tequila | 🥃 Ron | 🥂 Whisky</p>
+      <p id="fun">🎲 Juegos | 🎖️ Rifas | 💃 Baile</p>
+    </div>
+  </section>
+  <section class="fade-in">
+    <div class="btn-container">
+      <a href="https://waze.com/ul/h9g3qhubmq" target="_blank" class="btn-3d" id="waze">📍 Cómo llegar con Waze</a>
+      <a href="https://maps.app.goo.gl/aJot9z4Qja81DHsw8?g_st=aw" target="_blank" class="btn-3d" id="gmaps">📍 Cómo llegar con Google Maps</a>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSd-vY-AAhe7GGVQdxJmZvxr-5m6rQh7PgrfKwXY0Dn1-ksgRw/viewform" target="_blank" class="btn-3d confirmar" id="confirmar-btn">✅ Confirmar asistencia</a>
+      <a href="https://mesaderegalos.liverpool.com.mx/milistaderegalos/51734815" target="_blank" class="btn-3d" id="liverpool">🎁 Mesa de regalos Liverpool</a>
+      <a href="https://www.amazon.com.mx/baby-reg/waldodanielalvarez-martinez-diciembre-2025-ciudaddemexico/187ABTMWV8E8D" target="_blank" class="btn-3d" id="amazon">📦 Mesa de regalos Amazon</a>
+    </div>
+  </section>
+  <section class="fade-in">
+    <div style="display:flex;justify-content:space-between;gap:10px;">
+      <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Baby+Shower+Aitana&dates=20250920T200000Z/20250921T050000Z&details=Baby+Shower+de+Aitana&location=Residencial+Sendero+Santa+Fe" target="_blank" class="btn-3d" id="calendarG" style="width:48%;">📅 Google Calendar</a>
+      <a href="https://dannzanetti.github.io/invitacion-aitana/babyshower.ics" class="btn-3d" id="calendarA" style="width:48%;">🍎 Apple Calendar</a>
+    </div>
+  </section>
+  <section class="fade-in">
+    <p class="typewriter">💕 ¡Gracias por acompañarnos! 💕</p>
+    <div class="gif-container">
+      <img id="finalGif" src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExeWV0NDMza3c2eXVsM2VrMnNhdHcyMG0yN2Z5YzN5aWV2bHJpdjk1OSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/QMkPpxPDYY0fu/giphy.gif" alt="GIF Final">
+    </div>
+    <p id="gifFinal" style="margin-top:20px;font-size:1.4rem;color:#b47ae0;font-weight:bold;">✨ ¡Será un día mágico para celebrar juntos! ✨</p>
+  </section>
+</main>
 
 <script>
 // Lluvia animada de emojis
 const emojiRain = document.getElementById('emojiRain');
 const emojis = ['💖','✨','🦋','⭐','💫','💜','🌈','🎉'];
 function rainEmojis() {
-  for(let i=0;i<15;i++){
+  for(let i=0;i<7;i++){
     const e = document.createElement('span');
     e.className='rain-emoji';
     e.textContent=emojis[Math.floor(Math.random()*emojis.length)];
     e.style.left=Math.random()*98+'vw';
-    e.style.animationDuration=(2.5+Math.random()*2.5)+'s';
+    e.style.animationDuration=(4.5+Math.random()*2.5)+'s';
     e.style.animationDelay=(Math.random()*2)+'s';
     emojiRain.appendChild(e);
-    setTimeout(()=>e.remove(),5000);
+    setTimeout(()=>e.remove(),7000);
   }
 }
-setInterval(rainEmojis,1800);
+setInterval(rainEmojis,3200);
 rainEmojis();
 
 // Traducción completa
@@ -393,7 +443,7 @@ const translations = {
     calendarA: '🍎 Apple Calendar',
     thanks: '💕 ¡Gracias por acompañarnos! 💕',
     gifFinal: '✨ ¡Será un día mágico para celebrar juntos! ✨',
-    esEn: 'ES / EN',
+    esEn: '🇲🇽',
     confirmMsg: '¡Gracias por confirmar tu asistencia! 🎉',
     joyMsg: '¡Gracias por tu alegría! 💜',
     loading: 'Cargando invitación...',
@@ -426,50 +476,26 @@ const translations = {
     calendarA: "🍎 Apple Calendar",
     thanks: "💕 Thank you for joining us! 💕",
     gifFinal: "✨ It'll be a magical day to celebrate together! ✨",
-    esEn: "EN / ES",
+    esEn: "🇺🇸",
     confirmMsg: "Thanks for confirming! 🎉",
     joyMsg: "Thanks for your joy! 💜",
     loading: "Loading invitation...",
   }
 };
 
-// Modo oscuro/claro automático por horario + botón manual
-function autoThemeByHour() {
-  const hour = new Date().getHours();
-  const isNight = (hour >= 19 || hour < 7); // 7pm a 7am
-  if (!localStorage.getItem('theme')) {
-    if (isNight) {
-      document.body.classList.add('dark');
-    } else {
-      document.body.classList.remove('dark');
-    }
-  }
-}
-autoThemeByHour();
-
-function toggleTheme() {
-  document.body.classList.toggle('dark');
-  localStorage.setItem('theme',document.body.classList.contains('dark') ? 'dark' : 'light');
-}
-if(localStorage.getItem('theme')==='dark') document.body.classList.add('dark');
-
-// Idioma ES/EN
+// Función para mostrar traducción
 let lang = localStorage.getItem('lang') || 'es';
-function toggleLanguage() {
-  lang = lang==='es'?'en':'es';
-  localStorage.setItem('lang',lang);
-  renderLanguage();
-}
 function renderLanguage() {
   document.querySelector('.main-title').innerText = translations[lang].mainTitle;
   document.querySelector('.sub-title').innerText = translations[lang].subTitle;
-  document.querySelector('.language-switch').innerText = translations[lang].esEn;
+  document.getElementById('lang-btn').innerText = translations[lang].esEn;
+  document.getElementById('loaderText').innerText = translations[lang].loading;
+  document.getElementById('qrBtn').innerText = translations[lang].qrBtn;
+  document.getElementById('listenMusic').innerText = translations[lang].listenMusic;
   document.querySelector('.music-btn').innerText = translations[lang].musicBtn;
   document.querySelector('.scroll-indicator').innerHTML = `<span class="scroll-arrow">⬇️</span> ${translations[lang].scroll} <span class="scroll-arrow">⬇️</span>`;
   document.getElementById('countdown').innerText = translations[lang].countdown;
   document.getElementById('timer').innerText = translations[lang].timer;
-  document.getElementById('qrBtn').innerText = translations[lang].qrBtn;
-  document.getElementById('listenMusic').innerText = translations[lang].listenMusic;
   document.getElementById('infoDate').innerHTML = translations[lang].infoDate;
   document.getElementById('infoTime').innerHTML = translations[lang].infoTime;
   document.getElementById('infoPlace').innerHTML = translations[lang].infoPlace;
@@ -488,12 +514,51 @@ function renderLanguage() {
   document.getElementById('calendarA').innerText = translations[lang].calendarA;
   document.querySelector('.typewriter').innerText = translations[lang].thanks;
   document.getElementById('gifFinal').innerText = translations[lang].gifFinal;
-  document.getElementById('loaderText').innerText = translations[lang].loading;
 }
-document.addEventListener('DOMContentLoaded', renderLanguage);
 
-// Glow y rebote en TODOS los botones interactivos + mini confetti
-document.addEventListener('DOMContentLoaded', () => {
+// Tema oscuro/claro con emoji
+function toggleTheme() {
+  document.body.classList.toggle('dark');
+  localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+  document.getElementById('theme-btn').innerText = document.body.classList.contains('dark') ? '☀️' : '🌙';
+}
+
+// Idioma con banderas
+function toggleLang() {
+  lang = lang === 'es' ? 'en' : 'es';
+  localStorage.setItem('lang', lang);
+  document.getElementById('lang-btn').innerText = translations[lang].esEn;
+  renderLanguage();
+}
+
+// Música
+function toggleMusic() {
+  const audio = document.getElementById('music');
+  const eq = document.getElementById('equalizer');
+  if (audio.paused) {
+    audio.play();
+    eq.style.display = 'inline-flex';
+  } else {
+    audio.pause();
+    eq.style.display = 'none';
+  }
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  document.getElementById('theme-btn').onclick = toggleTheme;
+  document.getElementById('lang-btn').onclick = toggleLang;
+  document.getElementById('music-btn').onclick = toggleMusic;
+  document.getElementById('theme-btn').innerText = document.body.classList.contains('dark') ? '☀️' : '🌙';
+  document.getElementById('lang-btn').innerText = translations[lang].esEn;
+  renderLanguage();
+
+  setTimeout(()=>{
+    document.getElementById('loader').style.display='none';
+    document.getElementById('main-content').style.display='block';
+    document.querySelectorAll('section').forEach(s=>s.classList.add('fade-in'));
+  },2500);
+
+  // Glow y rebote en TODOS los botones interactivos + mini confetti
   document.querySelectorAll('.btn-3d, .music-btn').forEach(btn => {
     btn.addEventListener('click', function(e) {
       btn.classList.add('magic');
@@ -527,117 +592,28 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.appendChild(spark);
     }
   });
+
+  for(let i=0;i<80;i++){
+    const confetti=document.createElement('div');
+    confetti.className='confetti';
+    confetti.style.left=Math.random()*100+'vw';
+    confetti.style.background=['#ffb6e6','#ffe8ae','#b795fc'][Math.floor(Math.random()*3)];
+    confetti.style.width=(6+Math.random()*8)+'px';
+    confetti.style.height=confetti.style.width;
+    confetti.style.animationDuration=(4+Math.random()*5)+'s';
+    confetti.style.animationDelay=(Math.random()*6)+'s';
+    document.body.appendChild(confetti);
+  }
+  for(let i=0;i<10;i++){
+    const note=document.createElement('div');
+    note.className='music-drop';
+    note.innerHTML=Math.random()>0.5?'🎵':'🎶';
+    note.style.left=Math.random()*95+'vw';
+    note.style.animationDuration=(10+Math.random()*5)+'s';
+    note.style.animationDelay=(Math.random()*4)+'s';
+    document.body.appendChild(note);
+  }
 });
-
-// Confetti y música original
-for(let i=0;i<80;i++){
-  const confetti=document.createElement('div');
-  confetti.className='confetti';
-  confetti.style.left=Math.random()*100+'vw';
-  confetti.style.background=['#ffb6e6','#ffe8ae','#b795fc'][Math.floor(Math.random()*3)];
-  confetti.style.width=(6+Math.random()*8)+'px';
-  confetti.style.height=confetti.style.width;
-  confetti.style.animationDuration=(4+Math.random()*5)+'s';
-  confetti.style.animationDelay=(Math.random()*6)+'s';
-  document.body.appendChild(confetti);
-}
-for(let i=0;i<10;i++){
-  const note=document.createElement('div');
-  note.className='music-drop';
-  note.innerHTML=Math.random()>0.5?'🎵':'🎶';
-  note.style.left=Math.random()*95+'vw';
-  note.style.animationDuration=(10+Math.random()*5)+'s';
-  note.style.animationDelay=(Math.random()*4)+'s';
-  document.body.appendChild(note);
-}
-</script>
-
-<main style="display:none;" id="main-content">
-  <section class="fade-in">
-    <div class="qr-container">
-      <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://dannzanetti.github.io/invitacion-aitana/" alt="QR Invitación"/>
-      <a href="https://api.whatsapp.com/send?text=¡Te%20invito%20al%20Baby%20Shower%20de%20Aitana!%20https://dannzanetti.github.io/invitacion-aitana/" target="_blank" class="btn-3d" id="qrBtn" style="font-size:1rem;width:auto;padding:8px 14px;display:inline-block;margin-top:4px;">💬 Compartir por WhatsApp</a>
-    </div>
-    <p style="margin-bottom:10px;" id="listenMusic">🎵 Haz clic en el botón para escuchar música 🎶</p>
-    <button onclick="toggleMusic()" class="music-btn">▶️ Música ON/OFF</button>
-    <p class="scroll-indicator"><span class="scroll-arrow">⬇️</span> ¡Sigue bajando para ver todos los detalles! <span class="scroll-arrow">⬇️</span></p>
-    <audio id="music" loop>
-      <source src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/jump.mp3" type="audio/mpeg">
-    </audio>
-    <audio id="popSound">
-      <source src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/pop.mp3" type="audio/mpeg">
-    </audio>
-  </section>
-
-  <section class="fade-in" style="position:relative;">
-    <div class="halo-title"></div>
-    <h1 class="main-title">🎀 Baby Shower 🎀</h1>
-    <h2 class="sub-title">🎀 AITANA 🎀</h2>
-    <img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/Baby.png" alt="Baby" class="baby-photo"/>
-  </section>
-
-  <section class="fade-in">
-    <div id="countdown">🎈 ¡Faltan X días para el gran día! 🎈</div>
-    <div id="timer">00d : 00h : 00m : 00s</div>
-  </section>
-
-  <section class="info-block fade-in">
-    <p id="infoDate">📅 <strong>Sábado 20 de Septiembre</strong></p>
-    <p id="infoTime">⏰ <strong>2:00 PM – 11:00 PM</strong></p>
-    <p id="infoPlace">🏘️ <strong>Residencial Sendero Santa Fe</strong></p>
-    <p id="infoRSVP">⚠️ <strong>Confirma antes del 14 de septiembre</strong></p>
-  </section>
-
-  <section class="fade-in">
-    <div class="highlight-container" id="partyTitle">¡Te esperamos con!</div>
-    <div style="margin-top:20px;">
-      <p id="food">🌮 Tacos de guisado</p>
-      <p id="bar">🍸 Barra libre:</p>
-      <p id="drinks">🍻 Cervezas | 🍹 Tequila | 🥃 Ron | 🥂 Whisky</p>
-      <p id="fun">🎲 Juegos | 🎖️ Rifas | 💃 Baile</p>
-    </div>
-  </section>
-
-  <section class="fade-in">
-    <div class="btn-container">
-      <a href="https://waze.com/ul/h9g3qhubmq" target="_blank" class="btn-3d" id="waze">📍 Cómo llegar con Waze</a>
-      <a href="https://maps.app.goo.gl/aJot9z4Qja81DHsw8?g_st=aw" target="_blank" class="btn-3d" id="gmaps">📍 Cómo llegar con Google Maps</a>
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSd-vY-AAhe7GGVQdxJmZvxr-5m6rQh7PgrfKwXY0Dn1-ksgRw/viewform" target="_blank" class="btn-3d confirmar" id="confirmar-btn">✅ Confirmar asistencia</a>
-      <a href="https://mesaderegalos.liverpool.com.mx/milistaderegalos/51734815" target="_blank" class="btn-3d" id="liverpool">🎁 Mesa de regalos Liverpool</a>
-      <a href="https://www.amazon.com.mx/baby-reg/waldodanielalvarez-martinez-diciembre-2025-ciudaddemexico/187ABTMWV8E8D" target="_blank" class="btn-3d" id="amazon">📦 Mesa de regalos Amazon</a>
-    </div>
-  </section>
-
-  <section class="fade-in">
-    <div style="display:flex;justify-content:space-between;gap:10px;">
-      <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Baby+Shower+Aitana&dates=20250920T200000Z/20250921T050000Z&details=Baby+Shower+de+Aitana&location=Residencial+Sendero+Santa+Fe" target="_blank" class="btn-3d" id="calendarG" style="width:48%;">📅 Google Calendar</a>
-      <a href="https://dannzanetti.github.io/invitacion-aitana/babyshower.ics" class="btn-3d" id="calendarA" style="width:48%;">🍎 Apple Calendar</a>
-    </div>
-  </section>
-
-  <section class="fade-in">
-    <p class="typewriter">💕 ¡Gracias por acompañarnos! 💕</p>
-    <div class="gif-container">
-      <img id="finalGif" src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExeWV0NDMza3c2eXVsM2VrMnNhdHcyMG0yN2Z5YzN5aWV2bHJpdjk1OSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/QMkPpxPDYY0fu/giphy.gif" alt="GIF Final">
-    </div>
-    <p id="gifFinal" style="margin-top:20px;font-size:1.4rem;color:#b47ae0;font-weight:bold;">✨ ¡Será un día mágico para celebrar juntos! ✨</p>
-  </section>
-</main>
-
-<script>
-window.onload=()=>{setTimeout(()=>{
-  document.getElementById('loader').style.display='none';
-  document.getElementById('main-content').style.display='block';
-  document.querySelectorAll('section').forEach(s=>s.classList.add('fade-in'));
-},2500);};
-
-function toggleMusic(){
-  const audio=document.getElementById('music');
-  const eq=document.getElementById('equalizer');
-  if(audio.paused){audio.play();eq.style.display='inline-flex';}else{audio.pause();eq.style.display='none';}
-}
-function playPop(){const pop=document.getElementById('popSound');pop.volume=0.4;pop.currentTime=0;pop.play();}
-document.querySelectorAll('.btn-3d,.music-btn').forEach(btn=>btn.addEventListener('click',playPop));
 
 const sections=document.querySelectorAll('section');
 const observer=new IntersectionObserver(entries=>{
@@ -680,7 +656,6 @@ document.getElementById('confirmar-btn').addEventListener('click', function(e){
       document.body.appendChild(confetti);
       setTimeout(()=>confetti.remove(),3000);
     }
-    playPop();
     alert(translations[lang].confirmMsg);
   },100);
 });
@@ -725,7 +700,6 @@ document.getElementById('finalGif').addEventListener('click',function(){
     setTimeout(()=>confetti.remove(),2500);
   }
   setTimeout(()=>{this.classList.remove('active');},1600);
-  playPop();
   setTimeout(()=>{alert(translations[lang].joyMsg);},800);
 });
 </script>
