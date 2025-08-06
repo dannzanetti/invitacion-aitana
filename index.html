@@ -200,6 +200,11 @@ for(let i=0;i<40;i++){
     <source src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/jump.mp3" type="audio/mpeg">
   </audio>
 
+  <!-- Sonido POP -->
+  <audio id="popSound">
+    <source src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/pop.mp3" type="audio/mpeg">
+  </audio>
+
   <img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/Baby.png" alt="Baby" class="baby-photo fadeInUp" style="animation-delay:0.6s;" />
   
   <h1 class="main-title fadeInUp" style="animation-delay:0.8s;">🎀 Baby Shower de Aitana 🎀</h1>
@@ -250,6 +255,20 @@ function toggleMusic(){
   const audio=document.getElementById('music');
   if(audio.paused){ audio.play(); } else { audio.pause(); }
 }
+
+// Efecto POP
+function playPop(){
+  const pop = document.getElementById('popSound');
+  pop.currentTime = 0;
+  pop.play();
+}
+
+// Agregar evento a botones
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll('.btn-3d, .music-btn, .music-float').forEach(btn=>{
+    btn.addEventListener('click', playPop);
+  });
+});
 
 // Contadores
 const countdownEl=document.getElementById('countdown');
