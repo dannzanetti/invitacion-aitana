@@ -49,7 +49,7 @@ section.visible {opacity:1;transform:translateY(0);}
   animation: rainbowBorder 3s linear infinite, bounceSlow 4s ease-in-out infinite;
 }
 .main-title {font-size:3rem;margin-bottom:10px;}
-.sub-title {font-size:3.6rem;font-weight:bold;}
+.sub-title {font-size:3.8rem;font-weight:bold;}
 @keyframes rainbowBorder {
   0% {text-shadow:0 0 6px #ff69b4;}
   50% {text-shadow:0 0 14px #b47ae0;}
@@ -95,13 +95,14 @@ section.visible {opacity:1;transform:translateY(0);}
 
 /* ===== Botones ===== */
 .btn-container {display:flex;flex-direction:column;gap:18px;margin-top:25px;}
-.btn-3d,.music-btn {
+.btn-3d,.music-btn,.calendar-btn {
   width:100%;background:linear-gradient(270deg,#ffb6e6,#ffe8ae,#e6d0fa);
   background-size:400% 400%;animation:gradientMove 6s infinite alternate;
   color:#000;font-weight:bold;border-radius:16px;padding:18px;
   font-size:1.1rem;text-align:center;text-decoration:none;transition:transform 0.3s ease;
+  display:block;
 }
-.btn-3d:hover,.music-btn:hover {animation:vibrate 0.4s linear infinite;transform:scale(1.05);}
+.btn-3d:hover,.music-btn:hover,.calendar-btn:hover {animation:vibrate 0.4s linear infinite;transform:scale(1.05);}
 @keyframes vibrate {0%,100%{transform:translateX(0);}25%{transform:translateX(-2px);}50%{transform:translateX(2px);}75%{transform:translateX(-2px);}}
 
 /* ===== Botón flotante música ===== */
@@ -126,30 +127,13 @@ section.visible {opacity:1;transform:translateY(0);}
 .scroll-arrow {display:block;font-size:2rem;color:#ff69b4;animation:bounceArrow 1.4s infinite;}
 @keyframes bounceArrow {0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
 
-/* ===== Equalizer (Música ON) ===== */
-.equalizer {
-  display:inline-flex;gap:4px;position:absolute;right:20px;bottom:20px;
+/* ===== Mensaje final con typewriter ===== */
+.typewriter {
+  font-size:1.5rem;font-weight:bold;color:#b47ae0;border-right:.15em solid #b47ae0;
+  white-space:nowrap;overflow:hidden;width:0;animation:type 4s steps(40,end) forwards,blinkCursor .75s step-end infinite;
 }
-.bar {
-  width:6px;height:18px;background:#fff;border-radius:2px;animation:equalize 1s infinite;
-}
-.bar:nth-child(1){animation-delay:0s;}
-.bar:nth-child(2){animation-delay:.2s;}
-.bar:nth-child(3){animation-delay:.4s;}
-@keyframes equalize {0%{height:6px;}50%{height:18px;}100%{height:6px;}}
-
-/* ===== Mensaje final ===== */
-.final-message {
-  font-size:1.6rem;font-weight:bold;color:#b47ae0;margin-bottom:15px;
-  animation: shimmer 2.5s infinite linear;
-}
-/* GIF animación */
-.gif-animated {
-  width:180px;margin:20px auto;border-radius:12px;
-  display:block;opacity:0;animation:fadeIn 1.5s forwards,pulseGif 2s infinite alternate;
-}
-@keyframes fadeIn {to{opacity:1;}}
-@keyframes pulseGif {0%{transform:scale(1);}100%{transform:scale(1.08);}}
+@keyframes type {to{width:100%;}}
+@keyframes blinkCursor {50%{border-color:transparent;}}
 </style>
 </head>
 <body>
@@ -162,11 +146,6 @@ section.visible {opacity:1;transform:translateY(0);}
 
 <!-- Botón flotante música -->
 <div class="music-float" onclick="toggleMusic()">🎵</div>
-
-<!-- Equalizer -->
-<div class="equalizer" id="equalizer" style="display:none;">
-  <div class="bar"></div><div class="bar"></div><div class="bar"></div>
-</div>
 
 <!-- Confetti + Notas musicales -->
 <script>
@@ -181,12 +160,12 @@ for(let i=0;i<60;i++){
   confetti.style.animationDelay=(Math.random()*6)+'s';
   document.body.appendChild(confetti);
 }
-for(let i=0;i<12;i++){
+for(let i=0;i<10;i++){
   const note=document.createElement('div');
   note.className='music-drop';
   note.innerHTML=Math.random()>0.5?'🎵':'🎶';
   note.style.left=Math.random()*95+'vw';
-  note.style.animationDuration=(9+Math.random()*5)+'s';
+  note.style.animationDuration=(10+Math.random()*6)+'s';
   note.style.animationDelay=(Math.random()*4)+'s';
   document.body.appendChild(note);
 }
@@ -200,9 +179,6 @@ for(let i=0;i<12;i++){
     <p class="scroll-indicator"><span class="scroll-arrow">⬇️</span> ¡Sigue bajando para ver todos los detalles! <span class="scroll-arrow">⬇️</span></p>
     <audio id="music" loop>
       <source src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/jump.mp3" type="audio/mpeg">
-    </audio>
-    <audio id="popSound">
-      <source src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/pop.mp3" type="audio/mpeg">
     </audio>
   </section>
 
@@ -249,16 +225,20 @@ for(let i=0;i<12;i++){
     </div>
   </section>
 
-  <!-- Mensaje final -->
+  <!-- Apartado Agregar Calendario -->
   <section>
-    <p class="final-message">Gracias por acompañarnos 💕</p>
+    <h3 style="color:#b47ae0;font-size:1.5rem;margin-bottom:18px;">🗓 ¡Agrega este evento a tu calendario!</h3>
+    <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;">
+      <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=Baby+Shower+Aitana&dates=20250920T190000Z/20250921T040000Z&details=Baby+Shower+de+Aitana+%F0%9F%92%95&location=Residencial+Sendero+Santa+Fe" target="_blank" class="calendar-btn" style="flex:1;">📅 Google Calendar</a>
+      <a href="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/babyshower.ics" target="_blank" class="calendar-btn" style="flex:1;">🍎 Apple Calendar</a>
+    </div>
   </section>
 
-  <!-- Último apartado con GIF -->
+  <!-- Mensaje final -->
   <section>
-    <p class="final-message">✨ ¡Será un día mágico para celebrar juntos! ✨</p>
-    <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExZXI3ODgwNWJzbnhmbzMwemdieDE5cnA2aTZkZXhvMXdubzdxN3dnZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/cKbLJzS0cOTklEmzto/giphy.gif"
-         alt="Celebración" class="gif-animated"/>
+    <p class="typewriter">¡Gracias por acompañarnos! 💕</p>
+    <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExZXI3ODgwNWJzbnhmbzMwemdieDE5cnA2aTZkZXhvMXdubzdxN3dnZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/cKbLJzS0cOTklEmzto/giphy.gif" alt="baby gif" style="width:180px;margin-top:15px;"/>
+    <p style="margin-top:20px;font-size:1.3rem;font-weight:bold;color:#b47ae0;">✨ ¡Será un día mágico para celebrar juntos! ✨</p>
   </section>
 </main>
 
@@ -269,11 +249,8 @@ window.onload=()=>{setTimeout(()=>{document.getElementById('loader').style.displ
 // Música
 function toggleMusic(){
   const audio=document.getElementById('music');
-  const eq=document.getElementById('equalizer');
-  if(audio.paused){audio.play();eq.style.display='inline-flex';}else{audio.pause();eq.style.display='none';}
+  if(audio.paused){audio.play();}else{audio.pause();}
 }
-function playPop(){const pop=document.getElementById('popSound');pop.volume=0.4;pop.currentTime=0;pop.play();}
-document.querySelectorAll('.btn-3d,.music-btn').forEach(btn=>btn.addEventListener('click',playPop));
 
 // Animación scroll
 const sections=document.querySelectorAll('section');
