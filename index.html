@@ -37,7 +37,7 @@
     color: #000;
     margin-bottom: 12px;
   }
-  /* Imagen sin animación */
+  /* Imagen */
   .baby-photo {
     width: 340px;
     height: 340px;
@@ -48,6 +48,7 @@
     border: 8px solid #fff;
     box-shadow: 0 0 30px rgba(255,182,230,0.5);
   }
+  /* Botones */
   .btn-3d {
     background: linear-gradient(270deg, #ffb6e6, #e6d0fa, #ffe8ae);
     background-size: 400% 400%;
@@ -62,10 +63,36 @@
     display: block;
     margin-bottom: 10px;
   }
+  /* Botón flotante música */
+  .music-float {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: linear-gradient(270deg, #ffb6e6, #ffe8ae, #e6d0fa);
+    background-size: 400% 400%;
+    color: #fff;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+    animation: gradientMove 6s infinite alternate;
+    z-index: 100;
+  }
+  .music-float:hover {
+    transform: scale(1.15);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  }
 </style>
 </head>
 <body>
-<div class="music-float" onclick="toggleMusic()" style="position:fixed;bottom:20px;right:20px;cursor:pointer;font-size:30px;">🎵</div>
+
+<!-- Botón música flotante -->
+<div class="music-float" onclick="toggleMusic()">🎵</div>
 
 <main class="flex flex-col items-center justify-center min-h-screen px-4 py-8 relative z-10">
 <section class="glass-card w-full max-w-3xl">
@@ -79,7 +106,7 @@
     <source src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/pop.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- Imagen SIN animación -->
+  <!-- Imagen -->
   <img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/68ce7c08261045db668ca023ce4f2f2acd1a6499/Baby.png" alt="Baby" class="baby-photo" />
 
   <h1 class="main-title">🎀 Baby Shower de Aitana 🎀</h1>
