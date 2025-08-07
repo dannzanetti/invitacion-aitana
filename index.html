@@ -66,125 +66,6 @@ body.dark .floating-controls .fc-btn {
   .floating-controls .fc-btn {width:54px;height:54px;font-size:2rem;}
 }
 
-/* --- Resto igual --- */
-.rain-emoji {
-  position:fixed;top:-64px;z-index:1;font-size:2.2rem;pointer-events:none;animation:emojiFall linear infinite;
-}
-@keyframes emojiFall {
-  0%{top:-64px;opacity:.8;}
-  90%{opacity:.8;}
-  100%{top:100vh;opacity:0;}
-}
-.floating-info-module {
-  max-width: 510px;
-  margin: 42px auto 28px auto;
-  background: rgba(255,255,255,0.9);
-  border-radius: 22px;
-  box-shadow: 0 6px 24px #b47ae055;
-  padding: 28px 20px 24px 20px;
-  text-align: center;
-  position: relative;
-  z-index: 5;
-  backdrop-filter: blur(6px);
-  font-size: 1rem;
-}
-body.dark .floating-info-module {
-  background: rgba(44,44,54,0.87);
-  color: #ffe8ae;
-  box-shadow: 0 6px 24px #23233377;
-}
-.floating-info-title {
-  font-family: 'Dancing Script', cursive;
-  font-size: 1.5rem;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 14px;
-  color: #b47ae0;
-  background: linear-gradient(90deg,#ff69b4,#ffb6e6,#b47ae0);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-}
-body.dark .floating-info-title {
-  background: linear-gradient(90deg,#ffe8ae,#b795fc,#ffb6e6);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-}
-.floating-info-list {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 8px 0;
-  text-align: center;
-  font-size: 0.95rem;
-  display: inline-block;
-}
-.floating-info-list li {
-  margin-bottom: 11px;
-  font-size: 0.98rem;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  justify-content: center;
-}
-.floating-info-list .icon {
-  font-size: 1.25rem;
-  margin-right: 7px;
-  transition: transform .2s;
-}
-.floating-info-list li:hover .icon {
-  transform: scale(1.18) rotate(-10deg);
-}
-.floating-info-note {
-  font-size: 0.95rem;
-  color: #b47ae0;
-  margin-top: 12px;
-  text-align: center;
-  font-weight: bold;
-}
-body.dark .floating-info-note { color: #ffe8ae; }
-
-/* --- Imagen de Fer: efecto igual que la primera imagen --- */
-.baby-photo {
-  width:100%;
-  max-width:600px;
-  border-radius:12px;
-  margin:20px auto;
-  animation: zoomGlow 3s ease-in-out infinite alternate;
-  box-shadow:0 0 15px rgba(255,182,230,0.3);
-  display: block;
-}
-@keyframes zoomGlow {
-  0%{transform:scale(1);box-shadow:0 0 15px rgba(255,182,230,0.3);}
-  100%{transform:scale(1.05);box-shadow:0 0 45px rgba(183,149,252,0.5);}
-}
-
-/* --- Resto igual --- */
-.balloon {
-  position: fixed;
-  width: 60px; height: 80px;
-  border-radius: 50% 50% 45% 45% / 60% 60% 80% 80%;
-  opacity: .18;
-  z-index: 0;
-  animation: float 9s infinite ease-in-out, fadeIn 2.3s cubic-bezier(.5,.1,.25,1.2) both;
-  transition: opacity .4s;
-  cursor: pointer;
-}
-.balloon1 { left: 6vw; top: 70vh; background: linear-gradient(120deg,#ffb6e6,#ffe8ae); animation-delay: 0s;}
-.balloon2 { left: 80vw; top: 85vh; background: linear-gradient(120deg,#b795fc,#ffb6e6); animation-delay: 2s;}
-.balloon3 { left: 25vw; top: 93vh; background: linear-gradient(120deg,#ffe8ae,#b795fc); animation-delay: 1.2s;}
-@keyframes float {
-  0% { transform: translateY(0);}
-  50% { transform: translateY(-40px);}
-  100% { transform: translateY(0);}
-}
-@keyframes fadeIn {
-  0% { opacity:0; transform:scale(.97) translateY(50px);}
-  100%{ opacity:1; transform:scale(1) translateY(0);}
-}
-#loader {
-  position: fixed; top:0; left:0; width:100%; height:100%;
-  background: linear-gradient(135deg,#ffe8f3,#e6d0fa,#ffe8ae);
-  display:flex; flex-direction:column; justify-content:center; align-items:center;
-  z-index:9999; animation: gradientMove 8s infinite alternate;
-}
-
 /* ========== Gender Reveal Slider ========== */
 .gender-section {
   max-width: 700px;
@@ -315,6 +196,125 @@ body.dark .gender-title {
   letter-spacing: 1px;
 }
 body.dark .slider-counter { color: #ffe8ae; }
+
+/* --- El resto igual --- */
+.rain-emoji {
+  position:fixed;top:-64px;z-index:1;font-size:2.2rem;pointer-events:none;animation:emojiFall linear infinite;
+}
+@keyframes emojiFall {
+  0%{top:-64px;opacity:.8;}
+  90%{opacity:.8;}
+  100%{top:100vh;opacity:0;}
+}
+.floating-info-module {
+  max-width: 510px;
+  margin: 42px auto 28px auto;
+  background: rgba(255,255,255,0.9);
+  border-radius: 22px;
+  box-shadow: 0 6px 24px #b47ae055;
+  padding: 28px 20px 24px 20px;
+  text-align: center;
+  position: relative;
+  z-index: 5;
+  backdrop-filter: blur(6px);
+  font-size: 1rem;
+}
+body.dark .floating-info-module {
+  background: rgba(44,44,54,0.87);
+  color: #ffe8ae;
+  box-shadow: 0 6px 24px #23233377;
+}
+.floating-info-title {
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 14px;
+  color: #b47ae0;
+  background: linear-gradient(90deg,#ff69b4,#ffb6e6,#b47ae0);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+body.dark .floating-info-title {
+  background: linear-gradient(90deg,#ffe8ae,#b795fc,#ffb6e6);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.floating-info-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 8px 0;
+  text-align: center;
+  font-size: 0.95rem;
+  display: inline-block;
+}
+.floating-info-list li {
+  margin-bottom: 11px;
+  font-size: 0.98rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+}
+.floating-info-list .icon {
+  font-size: 1.25rem;
+  margin-right: 7px;
+  transition: transform .2s;
+}
+.floating-info-list li:hover .icon {
+  transform: scale(1.18) rotate(-10deg);
+}
+.floating-info-note {
+  font-size: 0.95rem;
+  color: #b47ae0;
+  margin-top: 12px;
+  text-align: center;
+  font-weight: bold;
+}
+body.dark .floating-info-note { color: #ffe8ae; }
+
+/* --- Imagen de Fer: efecto igual que la primera imagen --- */
+.baby-photo {
+  width:100%;
+  max-width:600px;
+  border-radius:12px;
+  margin:20px auto;
+  animation: zoomGlow 3s ease-in-out infinite alternate;
+  box-shadow:0 0 15px rgba(255,182,230,0.3);
+  display: block;
+}
+@keyframes zoomGlow {
+  0%{transform:scale(1);box-shadow:0 0 15px rgba(255,182,230,0.3);}
+  100%{transform:scale(1.05);box-shadow:0 0 45px rgba(183,149,252,0.5);}
+}
+
+/* --- Resto igual --- */
+.balloon {
+  position: fixed;
+  width: 60px; height: 80px;
+  border-radius: 50% 50% 45% 45% / 60% 60% 80% 80%;
+  opacity: .18;
+  z-index: 0;
+  animation: float 9s infinite ease-in-out, fadeIn 2.3s cubic-bezier(.5,.1,.25,1.2) both;
+  transition: opacity .4s;
+  cursor: pointer;
+}
+.balloon1 { left: 6vw; top: 70vh; background: linear-gradient(120deg,#ffb6e6,#ffe8ae); animation-delay: 0s;}
+.balloon2 { left: 80vw; top: 85vh; background: linear-gradient(120deg,#b795fc,#ffb6e6); animation-delay: 2s;}
+.balloon3 { left: 25vw; top: 93vh; background: linear-gradient(120deg,#ffe8ae,#b795fc); animation-delay: 1.2s;}
+@keyframes float {
+  0% { transform: translateY(0);}
+  50% { transform: translateY(-40px);}
+  100% { transform: translateY(0);}
+}
+@keyframes fadeIn {
+  0% { opacity:0; transform:scale(.97) translateY(50px);}
+  100%{ opacity:1; transform:scale(1) translateY(0);}
+}
+#loader {
+  position: fixed; top:0; left:0; width:100%; height:100%;
+  background: linear-gradient(135deg,#ffe8f3,#e6d0fa,#ffe8ae);
+  display:flex; flex-direction:column; justify-content:center; align-items:center;
+  z-index:9999; animation: gradientMove 8s infinite alternate;
+}
 </style>
 </head>
 <body>
@@ -337,20 +337,6 @@ body.dark .slider-counter { color: #ffe8ae; }
   <div class="floating-info-note">¡Haz clic en los botones de abajo a la izquierda y disfruta la experiencia como tú quieras!</div>
 </div>
 
-<!-- Slider Gender Reveal -->
-<section class="gender-section">
-  <div class="gender-title">¡Así vivimos el Gender Reveal! 🎉💗</div>
-  <div class="slider-container" id="genderSlider">
-    <!-- Imágenes del slider, se generan con JS abajo -->
-    <div class="slider-arrow left" id="sliderPrev">&#60;</div>
-    <div class="slider-arrow right" id="sliderNext">&#62;</div>
-  </div>
-  <div class="slider-counter" id="sliderCounter"></div>
-  <div class="slider-dots" id="sliderDots"></div>
-</section>
-
-<!-- ... el resto de tu código igual ... -->
-
 <div id="emojiRain"></div>
 <div class="balloon balloon1" onclick="popBalloon(this)"></div>
 <div class="balloon balloon2" onclick="popBalloon(this)"></div>
@@ -364,7 +350,86 @@ body.dark .slider-counter { color: #ffe8ae; }
   <div class="bar"></div><div class="bar"></div><div class="bar"></div>
 </div>
 
-<!-- ... el resto igual ... -->
+<main style="display:none;" id="main-content">
+  <section class="fade-in">
+    <div class="qr-container">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://dannzanetti.github.io/invitacion-aitana/" alt="QR Invitación"/>
+      <a href="https://api.whatsapp.com/send?text=¡Te%20invito%20al%20Baby%20Shower%20de%20Aitana!%20https://dannzanetti.github.io/invitacion-aitana/" target="_blank" class="btn-3d" id="qrBtn" style="font-size:1rem;width:auto;padding:8px 14px;display:inline-block;margin-top:4px;">💬 Compartir por WhatsApp</a>
+    </div>
+    <p style="margin-bottom:10px;" id="listenMusic">🎵 Haz clic en el botón para escuchar música 🎶</p>
+    <button onclick="toggleMusic()" class="music-btn">▶️ Música ON/OFF</button>
+    <p class="scroll-indicator"><span class="scroll-arrow">⬇️</span> ¡Sigue bajando para ver todos los detalles! <span class="scroll-arrow">⬇️</span></p>
+    <audio id="music" loop>
+      <source src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/jump.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="popSound">
+      <source src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/pop.mp3" type="audio/mpeg">
+    </audio>
+  </section>
+  <section class="fade-in" style="position:relative;">
+    <div class="halo-title"></div>
+    <h1 class="main-title">🎀 Baby Shower 🎀</h1>
+    <h2 class="sub-title">🎀 AITANA 🎀</h2>
+    <img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/Baby.png" alt="Baby" class="baby-photo"/>
+    <img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/0.JPG" alt="La futura Mamá, Fer" class="baby-photo" style="margin-top:24px;max-width:480px;">
+    <p style="font-size:1.18rem;color:#b47ae0;font-weight:bold;margin-bottom:18px;">La futura Mamá, Fer</p>
+  </section>
+
+  <!-- Slider Gender Reveal -->
+  <section class="gender-section fade-in">
+    <div class="gender-title">¡Así vivimos el Gender Reveal! 🎉💗</div>
+    <div class="slider-container" id="genderSlider">
+      <!-- Imágenes del slider, se generan con JS abajo -->
+      <div class="slider-arrow left" id="sliderPrev">&#60;</div>
+      <div class="slider-arrow right" id="sliderNext">&#62;</div>
+    </div>
+    <div class="slider-counter" id="sliderCounter"></div>
+    <div class="slider-dots" id="sliderDots"></div>
+  </section>
+
+  <!-- El resto de tu contenido igual -->
+  <section class="fade-in">
+    <div id="countdown">🎈 ¡Faltan X días para el gran día! 🎈</div>
+    <div id="timer">00d : 00h : 00m : 00s</div>
+  </section>
+  <section class="info-block fade-in">
+    <p id="infoDate">📅 <strong>Sábado 20 de Septiembre</strong></p>
+    <p id="infoTime">⏰ <strong>2:00 PM – 11:00 PM</strong></p>
+    <p id="infoPlace">🏘️ <strong>Residencial Sendero Santa Fe</strong></p>
+    <p id="infoRSVP">⚠️ <strong>Confirma antes del 14 de septiembre</strong></p>
+  </section>
+  <section class="fade-in">
+    <div class="highlight-container" id="partyTitle">¡Te esperamos con!</div>
+    <div style="margin-top:20px;">
+      <p id="food">🌮 Tacos de guisado</p>
+      <p id="bar">🍸 Barra libre:</p>
+      <p id="drinks">🍻 Cervezas | 🍹 Tequila | 🥃 Ron | 🥂 Whisky</p>
+      <p id="fun">🎲 Juegos | 🎖️ Rifas | 💃 Baile</p>
+    </div>
+  </section>
+  <section class="fade-in">
+    <div class="btn-container">
+      <a href="https://waze.com/ul/h9g3qhubmq" target="_blank" class="btn-3d" id="waze">📍 Cómo llegar con Waze</a>
+      <a href="https://maps.app.goo.gl/aJot9z4Qja81DHsw8?g_st=aw" target="_blank" class="btn-3d" id="gmaps">📍 Cómo llegar con Google Maps</a>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSd-vY-AAhe7GGVQdxJmZvxr-5m6rQh7PgrfKwXY0Dn1-ksgRw/viewform" target="_blank" class="btn-3d confirmar" id="confirmar-btn">✅ Confirmar asistencia</a>
+      <a href="https://mesaderegalos.liverpool.com.mx/milistaderegalos/51734815" target="_blank" class="btn-3d" id="liverpool">🎁 Mesa de regalos Liverpool</a>
+      <a href="https://www.amazon.com.mx/baby-reg/waldodanielalvarez-martinez-diciembre-2025-ciudaddemexico/187ABTMWV8E8D" target="_blank" class="btn-3d" id="amazon">📦 Mesa de regalos Amazon</a>
+    </div>
+  </section>
+  <section class="fade-in">
+    <div style="display:flex;justify-content:space-between;gap:10px;">
+      <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Baby+Shower+Aitana&dates=20250920T200000Z/20250921T050000Z&details=Baby+Shower+de+Aitana&location=Residencial+Sendero+Santa+Fe" target="_blank" class="btn-3d" id="calendarG" style="width:48%;">📅 Google Calendar</a>
+      <a href="https://dannzanetti.github.io/invitacion-aitana/babyshower.ics" class="btn-3d" id="calendarA" style="width:48%;">🍎 Apple Calendar</a>
+    </div>
+  </section>
+  <section class="fade-in">
+    <p class="typewriter">💕 ¡Gracias por acompañarnos! 💕</p>
+    <div class="gif-container">
+      <img id="finalGif" src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExeWV0NDMza3c2eXVsM2VrMnNhdHcyMG0yN2Z5YzN5aWV2bHJpdjk1OSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/QMkPpxPDYY0fu/giphy.gif" alt="GIF Final">
+    </div>
+    <p id="gifFinal" style="margin-top:20px;font-size:1.4rem;color:#b47ae0;font-weight:bold;">✨ ¡Será un día mágico para celebrar juntos! ✨</p>
+  </section>
+</main>
 
 <script>
 // Slider Gender Reveal
@@ -413,26 +478,7 @@ slider.addEventListener('touchend',e=>{
 });
 
 // --- El resto de tu JS igual ---
-
-// Lluvia animada de emojis
-const emojiRain = document.getElementById('emojiRain');
-const emojis = ['💖','✨','🦋','⭐','💫','💜','🌈','🎉'];
-function rainEmojis() {
-  for(let i=0;i<7;i++){
-    const e = document.createElement('span');
-    e.className='rain-emoji';
-    e.textContent=emojis[Math.floor(Math.random()*emojis.length)];
-    e.style.left=Math.random()*98+'vw';
-    e.style.animationDuration=(4.5+Math.random()*2.5)+'s';
-    e.style.animationDelay=(Math.random()*2)+'s';
-    emojiRain.appendChild(e);
-    setTimeout(()=>e.remove(),7000);
-  }
-}
-setInterval(rainEmojis,3200);
-rainEmojis();
-
-// ... el resto de tu JS sin cambios ...
+/* ... Tu JS de emojis, lenguaje, música, countdown, globos, etc ... */
 </script>
 </body>
 </html>
