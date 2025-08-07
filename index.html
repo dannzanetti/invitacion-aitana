@@ -468,6 +468,152 @@ body.dark .btn-3d.confirmar {
       <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Baby+Shower+Aitana&dates=20250920T200000Z/20250921T050000Z&details=Baby+Shower+de+Aitana&location=Residencial+Sendero+Santa+Fe" target="_blank" class="btn-3d" id="calendarG" style="width:48%;">📅 Google Calendar</a>
       <a href="https://dannzanetti.github.io/invitacion-aitana/babyshower.ics" class="btn-3d" id="calendarA" style="width:48%;">🍎 Apple Calendar</a>
     </div>
+
+    <section class="fade-in">
+  <h2 style="text-align:center; font-size:2rem; color:#b47ae0; margin-bottom:18px;">¡Así vivimos el Gender Reveal! 🎉💗</h2>
+
+  <style>
+    .slider-container {
+      position: relative;
+      max-width: 720px;
+      margin: 0 auto;
+      overflow: hidden;
+      border-radius: 14px;
+      box-shadow: 0 6px 20px rgba(180,122,224,0.2);
+    }
+
+    .slider {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .slide {
+      min-width: 100%;
+      box-sizing: border-box;
+    }
+
+    .slide img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 12px;
+    }
+
+    .prev, .next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: #ffffffcc;
+      color: #b47ae0;
+      font-weight: bold;
+      font-size: 2rem;
+      border: none;
+      cursor: pointer;
+      padding: 8px 14px;
+      border-radius: 50%;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      z-index: 10;
+    }
+
+    .prev:hover, .next:hover {
+      background-color: #ffe8ae;
+    }
+
+    .prev { left: 10px; }
+    .next { right: 10px; }
+
+    .dots {
+      text-align: center;
+      margin-top: 12px;
+    }
+
+    .dots span {
+      height: 12px;
+      width: 12px;
+      margin: 0 4px;
+      background-color: #ddd;
+      border-radius: 50%;
+      display: inline-block;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .dots .active {
+      background-color: #b47ae0;
+    }
+  </style>
+
+  <div class="slider-container">
+    <div class="slider" id="photoSlider">
+      <!-- 21 fotos -->
+      <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/fotos/1.JPG" alt="Foto 1"></div>
+      <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/fotos/2.JPG" alt="Foto 2"></div>
+      <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/fotos/3.JPG" alt="Foto 3"></div>
+      <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/fotos/4.JPG" alt="Foto 4"></div>
+      <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/fotos/5.JPG" alt="Foto 5"></div>
+      <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/fotos/6.JPG" alt="Foto 6"></div>
+      <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/fotos/7.JPG" alt="Foto 7"></div>
+      <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/fotos/8.JPG" alt="Foto 8"></div>
+      <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/fotos/9.JPG" alt="Foto 9"></div>
+      <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/fotos/10.JPG" alt="Foto 10"></div>
+      <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/fotos/11.JPG" alt="Foto 11"></div>
+      <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/fotos/12.JPG" alt="Foto 12"></div>
+      <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/fotos/13.JPG" alt="Foto 13"></div>
+      <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/fotos/14.JPG" alt="Foto 14"></div>
+      <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/fotos/15.JPG" alt="Foto 15"></div>
+      <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/fotos/16.JPG" alt="Foto 16"></div>
+      <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/fotos/17.JPG" alt="Foto 17"></div>
+      <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/fotos/18.JPG" alt="Foto 18"></div>
+      <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/fotos/19.JPG" alt="Foto 19"></div>
+      <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/fotos/20.JPG" alt="Foto 20"></div>
+      <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/fotos/21.JPG" alt="Foto 21"></div>
+    </div>
+
+    <button class="prev" onclick="prevSlide()">❮</button>
+    <button class="next" onclick="nextSlide()">❯</button>
+    <div class="dots" id="dotsContainer"></div>
+  </div>
+
+  <script>
+    let currentIndex = 0;
+    const slides = document.querySelectorAll('.slide');
+    const slider = document.getElementById('photoSlider');
+    const dotsContainer = document.getElementById('dotsContainer');
+
+    // Crear puntos
+    slides.forEach((_, i) => {
+      const dot = document.createElement('span');
+      dot.onclick = () => goToSlide(i);
+      dotsContainer.appendChild(dot);
+    });
+    const dots = dotsContainer.querySelectorAll('span');
+
+    function updateSlider() {
+      slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+      dots.forEach(dot => dot.classList.remove('active'));
+      dots[currentIndex].classList.add('active');
+    }
+
+    function nextSlide() {
+      currentIndex = (currentIndex + 1) % slides.length;
+      updateSlider();
+    }
+
+    function prevSlide() {
+      currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+      updateSlider();
+    }
+
+    function goToSlide(index) {
+      currentIndex = index;
+      updateSlider();
+    }
+
+    updateSlider();
+    setInterval(() => nextSlide(), 4000);
+  </script>
+</section>
+    
   </section>
   <section class="fade-in">
     <p class="typewriter">💕 ¡Gracias por acompañarnos! 💕</p>
