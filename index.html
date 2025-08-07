@@ -772,6 +772,15 @@ function toggleMusic() {
   }
 }
 
+  // Activar modo oscuro automáticamente después de las 7pm, si el usuario no eligió antes
+const savedTheme = localStorage.getItem('theme');
+if (!savedTheme) {
+  const hour = new Date().getHours();
+  if (hour >= 19 || hour < 6) {
+    document.body.classList.add('dark');
+    localStorage.setItem('theme', 'dark');
+  }
+}
 document.addEventListener('DOMContentLoaded',()=>{
   document.getElementById('theme-btn').onclick = toggleTheme;
   document.getElementById('lang-btn').onclick = toggleLang;
