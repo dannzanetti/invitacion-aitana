@@ -623,9 +623,9 @@ body.dark .section-title{
 <script>
 // Lluvia animada de emojis
 const emojiRain = document.getElementById('emojiRain');
-const emojis = ['💖','✨','🦋','⭐','💫','💜','🌈','🎉'];
+const emojis = ['💖','✨','🦋','🌸','🐣','🙈','🙉','🙊','🐝','🐶','⭐','💫','🎊','🍼','🎉'];
 function rainEmojis() {
-  for(let i=0;i<7;i++){
+  for(let i=0;i<20;i++){
     const e = document.createElement('span');
     e.className='rain-emoji';
     e.textContent=emojis[Math.floor(Math.random()*emojis.length)];
@@ -636,7 +636,7 @@ function rainEmojis() {
     setTimeout(()=>e.remove(),7000);
   }
 }
-setInterval(rainEmojis,3200);
+setInterval(rainEmojis,2000);
 rainEmojis();
 
 const translations = {
