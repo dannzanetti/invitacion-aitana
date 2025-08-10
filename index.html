@@ -642,6 +642,7 @@ function rainEmojis() {
 }
 setInterval(rainEmojis,3200);
 rainEmojis();
+  
 const translations = {
   es: {
     mainTitle: '🎀 Baby Shower 🎀',
@@ -732,44 +733,78 @@ const translations = {
 };
 
 let lang = localStorage.getItem('lang') || 'es';
+
 function renderLanguage() {
-  document.querySelector('.main-title').innerText = translations[lang].mainTitle;
-  document.querySelector('.sub-title').innerText = translations[lang].subTitle;
-  document.getElementById('lang-btn').innerText = translations[lang].esEn;
-  document.getElementById('loaderText').innerText = translations[lang].loading;
-  document.getElementById('qrBtn').innerText = translations[lang].qrBtn;
-  document.getElementById('listenMusic').innerText = translations[lang].listenMusic;
-  document.querySelector('.music-btn').innerText = translations[lang].musicBtn;
-  document.querySelector('.scroll-indicator').innerHTML = `<span class="scroll-arrow">⬇️</span> ${translations[lang].scroll} <span class="scroll-arrow">⬇️</span>`;
-  document.getElementById('countdown').innerText = translations[lang].countdown;
-  document.getElementById('timer').innerText = translations[lang].timer;
-  document.getElementById('infoDate').innerHTML = translations[lang].infoDate;
-  document.getElementById('infoTime').innerHTML = translations[lang].infoTime;
-  document.getElementById('infoPlace').innerHTML = translations[lang].infoPlace;
-  document.getElementById('infoRSVP').innerHTML = translations[lang].infoRSVP;
-  document.getElementById('partyTitle').innerText = translations[lang].partyTitle;
-  document.getElementById('food').innerText = translations[lang].food;
-  document.getElementById('bar').innerText = translations[lang].bar;
-  document.getElementById('drinks').innerText = translations[lang].drinks;
-  document.getElementById('fun').innerText = translations[lang].fun;
-  document.getElementById('waze').innerText = translations[lang].waze;
-  document.getElementById('gmaps').innerText = translations[lang].gmaps;
-  document.getElementById('confirmar-btn').innerText = translations[lang].confirmBtn;
-  document.getElementById('liverpool').innerText = translations[lang].liverpool;
-  document.getElementById('amazon').innerText = translations[lang].amazon;
-  document.getElementById('calendarG').innerText = translations[lang].calendarG;
-  document.getElementById('calendarA').innerText = translations[lang].calendarA;
-  document.querySelector('.typewriter').innerText = translations[lang].thanks;
-  document.getElementById('gifFinal').innerText = translations[lang].gifFinal;
-  // Nuevos elementos traducibles
-document.querySelector('.floating-info-title').innerText = translations[lang].floatingInfoTitle;
-const infoItems = document.querySelectorAll('.floating-info-list li');
-infoItems.forEach((li, index) => {
-  li.innerHTML = translations[lang].floatingInfoList[index];
-});
-document.querySelector('.floating-info-note').innerText = translations[lang].floatingInfoNote;
-document.getElementById('futureMom').innerText = translations[lang].futureMom;
-document.getElementById('genderRevealTitle').innerText = translations[lang].genderRevealTitle;
+  const t = translations[lang];
+
+  // Helpers seguros
+  const q = (sel) => document.querySelector(sel);
+  const byId = (id) => document.getElementById(id);
+  const setText = (sel, txt) => { const el = q(sel); if (el && txt != null) el.innerText = txt; };
+  const setHTML = (id, html) => { const el = byId(id); if (el && html != null) el.innerHTML = html; };
+
+  // Títulos
+  setText('.main-title', t.mainTitle);
+  setText('.sub-title', t.subTitle);
+
+  // Botón idioma y loader
+  const langBtn = byId('lang-btn'); if (langBtn) langBtn.innerText = t.esEn || langBtn.innerText;
+  const loaderText = byId('loaderText'); if (loaderText) loaderText.innerText = t.loading || loaderText.innerText;
+
+  // QR y música
+  const qrBtn = byId('qrBtn'); if (qrBtn) qrBtn.innerText = t.qrBtn || qrBtn.innerText;
+  setText('#listenMusic', t.listenMusic);
+  setText('.music-btn', t.musicBtn);
+
+  // Indicador scroll
+  const scrollIndicator = q('.scroll-indicator');
+  if (scrollIndicator && t.scroll) {
+    scrollIndicator.innerHTML = `<span class="scroll-arrow">⬇️</span> ${t.scroll} <span class="scroll-arrow">⬇️</span>`;
+  }
+
+  // Countdown y timer
+  setText('#countdown', t.countdown);
+  setText('#timer', t.timer);
+
+  // Info con <strong>
+  setHTML('infoDate', t.infoDate);
+  setHTML('infoTime', t.infoTime);
+  setHTML('infoPlace', t.infoPlace);
+  setHTML('infoRSVP', t.infoRSVP);
+
+  // “Te esperamos con”
+  setText('#partyTitle', t.partyTitle);
+  setText('#food', t.food);
+  setText('#bar', t.bar);
+  setText('#drinks', t.drinks);
+  setText('#fun', t.fun);
+
+  // Botones enlaces
+  setText('#waze', t.waze);
+  setText('#gmaps', t.gmaps);
+  setText('#confirmar-btn', t.confirmBtn);
+  setText('#liverpool', t.liverpool);
+  setText('#amazon', t.amazon);
+  setText('#calendarG', t.calendarG);
+  setText('#calendarA', t.calendarA);
+
+  // Mensaje final
+  setText('.typewriter', t.thanks);
+  setText('#gifFinal', t.gifFinal);
+
+  // Módulo info flotante
+  setText('.floating-info-title', t.floatingInfoTitle);
+  const infoItems = document.querySelectorAll('.floating-info-list li');
+  if (infoItems && infoItems.length && Array.isArray(t.floatingInfoList)) {
+    infoItems.forEach((li, i) => {
+      if (t.floatingInfoList[i] !== undefined) li.innerHTML = t.floatingInfoList[i];
+    });
+  }
+  setText('.floating-info-note', t.floatingInfoNote);
+
+  // Textos nuevos
+  setText('#futureMom', t.futureMom);
+  setText('#genderRevealTitle', t.genderRevealTitle);
 }
 
 // Tema oscuro/claro con emoji
