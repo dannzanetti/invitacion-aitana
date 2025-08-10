@@ -22,6 +22,31 @@ body.dark {
 }
 @keyframes gradientMove { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
 
+/* ===== Fondos premium (blobs + líneas suaves) ===== */
+.bg-stage{position:fixed; inset:0; z-index:-2; overflow:hidden; pointer-events:none;}
+.blobs{position:absolute; inset:-20% -10% -10% -10%; filter: blur(40px) saturate(120%)}
+.blob{
+  position:absolute; width:48vmax; height:48vmax; border-radius:50%;
+  background: radial-gradient( circle at 30% 30%, #ffb6e6, transparent 60%),
+              radial-gradient( circle at 70% 60%, #b795fc, transparent 60%),
+              radial-gradient( circle at 50% 50%, #ffe8ae, transparent 65%);
+  opacity:.35; mix-blend-mode: screen; animation:blobDrift 28s ease-in-out infinite;
+}
+.blob.b2{ left:55%; top:10%; animation-delay:-8s; transform:scale(.8); opacity:.28}
+.blob.b3{ left:-10%; top:45%; animation-delay:-14s; transform:scale(1.1); opacity:.3}
+@keyframes blobDrift{
+  0%{transform:translate3d(0,0,0) scale(1)}
+  50%{transform:translate3d(4%, -3%, 0) scale(1.08)}
+  100%{transform:translate3d(0,0,0) scale(1)}
+}
+.lines{position:absolute; inset:0; z-index:-1; opacity:.45}
+body.dark .lines{ opacity:.6 }
+.lines svg{ width:140%; height:140%; position:absolute; left:-20%; top:-20% }
+.stroke1{ stroke:url(#grad1); stroke-width:1.2; fill:none; stroke-linecap:round; opacity:.7; animation:dash 22s linear infinite}
+.stroke2{ stroke:url(#grad2); stroke-width:1.2; fill:none; stroke-linecap:round; opacity:.55; animation:dash 28s linear infinite reverse}
+@keyframes dash{ from{ stroke-dasharray:3 320; stroke-dashoffset:0 } to{ stroke-dasharray:3 320; stroke-dashoffset:-320 } }
+
+/* (Se mantiene el estilo antiguo de emojis por compatibilidad, pero ya no se usa) */
 .rain-emoji{position:fixed;top:-64px;z-index:1;font-size:2.2rem;pointer-events:none;animation:emojiFall linear infinite;}
 @keyframes emojiFall {0%{top:-64px;opacity:.8;}90%{opacity:.8;}100%{top:100vh;opacity:0;}}
 
@@ -69,10 +94,12 @@ body.dark .floating-info-note{color:#ffe8ae;}
 @keyframes float{0%{transform:translateY(0);}50%{transform:translateY(-40px);}100%{transform:translateY(0);}}
 @keyframes fadeIn{0%{opacity:0;transform:scale(.97) translateY(50px);}100%{opacity:1;transform:scale(1) translateY(0);}}
 
+/* Loader */
 #loader{position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,#ffe8f3,#e6d0fa,#ffe8ae);display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:9999;animation:gradientMove 8s infinite alternate;}
 .loader-note{font-size:2.5rem;animation:float 1.5s ease-in-out infinite;}
 @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-15px);}}
 
+/* Secciones */
 section{
   max-width:700px;margin:40px auto;background:rgba(255,255,255,0.80);
   padding:20px;border-radius:26px;text-align:center;box-shadow:0 4px 30px rgba(183,149,252,0.22);
@@ -157,7 +184,7 @@ body.dark .btn-3d.confirmar{box-shadow:0 0 60px 20px #b795fc88,0 2px 30px #ffe8a
 
 /* ===== Estilos nuevos para títulos específicos ===== */
 .future-mom-title{
-  font-family:'Dancing Script',cursive;font-size:2.1rem;font-weight:700;margin:28px 0 22px;line-height:1.15;text-align:center;
+  font-family:'Dancing+Script',cursive;font-size:2.1rem;font-weight:700;margin:28px 0 22px;line-height:1.15;text-align:center;
   background:linear-gradient(90deg,#ff69b4,#ffb6e6,#b47ae0);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
   text-shadow:0 0 10px rgba(180,122,224,.25);animation:futureGlow 3.2s ease-in-out infinite alternate;
 }
@@ -210,11 +237,36 @@ body.dark .progress{background:#3b3950;}
 }
 .mute-btn.active{background:#b47ae0;color:#fff;border-color:#b47ae0;}
 .vol{width:120px;}
+.vol[disabled]{opacity:.5;filter:grayscale(20%);cursor:not-allowed;}
 body.dark .mute-btn{background:#2c2c36;color:#ffe8ae;border-color:#ffe8ae;}
 body.dark .mute-btn.active{background:#ffe8ae;color:#232333;border-color:#ffe8ae;}
+.vol-note{display:none;font-size:.82rem;opacity:.75;margin-left:6px;}
 </style>
 </head>
 <body>
+
+<!-- Fondos premium -->
+<div class="bg-stage" aria-hidden="true">
+  <div class="blobs">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="blob b3"></div>
+  </div>
+  <div class="lines">
+    <svg viewBox="0 0 1200 800" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#ffb6e6"/><stop offset="50%" stop-color="#ffe8ae"/><stop offset="100%" stop-color="#b795fc"/>
+        </linearGradient>
+        <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#ffe8ae"/><stop offset="50%" stop-color="#b795fc"/><stop offset="100%" stop-color="#ffb6e6"/>
+        </linearGradient>
+      </defs>
+      <path class="stroke1" d="M-50,200 C150,120 250,320 450,240 C650,160 750,360 950,280 C1150,200 1250,380 1350,300" />
+      <path class="stroke2" d="M-50,520 C120,600 300,480 520,560 C740,640 880,500 1080,560 C1280,620 1350,520 1400,600" />
+    </svg>
+  </div>
+</div>
 
 <!-- Botones flotantes lado derecho -->
 <div class="floating-controls">
@@ -234,7 +286,9 @@ body.dark .mute-btn.active{background:#ffe8ae;color:#232333;border-color:#ffe8ae
   <div class="floating-info-note">¡Haz clic en los botones de abajo a la izquierda y disfruta la experiencia como tú quieras!</div>
 </div>
 
+<!-- (contenedor de emojis ya no se usa, lo dejamos por compatibilidad) -->
 <div id="emojiRain"></div>
+
 <div class="balloon balloon1" onclick="popBalloon(this)"></div>
 <div class="balloon balloon2" onclick="popBalloon(this)"></div>
 <div class="balloon balloon3" onclick="popBalloon(this)"></div>
@@ -271,6 +325,7 @@ body.dark .mute-btn.active{background:#ffe8ae;color:#232333;border-color:#ffe8ae
           <div class="controls">
             <button class="mute-btn" data-key="jump" id="mute-jump" title="Silenciar/Activar sonido">🔊</button>
             <input class="vol" type="range" min="0" max="100" value="80" id="vol-jump" title="Volumen">
+            <span class="vol-note" id="vnote-jump">📱 Usa los botones físicos</span>
           </div>
         </div>
       </div>
@@ -285,6 +340,7 @@ body.dark .mute-btn.active{background:#ffe8ae;color:#232333;border-color:#ffe8ae
           <div class="controls">
             <button class="mute-btn" data-key="coldplay" id="mute-coldplay" title="Silenciar/Activar sonido">🔊</button>
             <input class="vol" type="range" min="0" max="100" value="80" id="vol-coldplay" title="Volumen">
+            <span class="vol-note" id="vnote-coldplay">📱 Usa los botones físicos</span>
           </div>
         </div>
       </div>
@@ -299,6 +355,7 @@ body.dark .mute-btn.active{background:#ffe8ae;color:#232333;border-color:#ffe8ae
           <div class="controls">
             <button class="mute-btn" data-key="bruno" id="mute-bruno" title="Silenciar/Activar sonido">🔊</button>
             <input class="vol" type="range" min="0" max="100" value="80" id="vol-bruno" title="Volumen">
+            <span class="vol-note" id="vnote-bruno">📱 Usa los botones físicos</span>
           </div>
         </div>
       </div>
@@ -435,22 +492,25 @@ body.dark .mute-btn.active{background:#ffe8ae;color:#232333;border-color:#ffe8ae
 </main>
 
 <script>
-/* ===== Lluvia de emojis ===== */
-const emojiRain = document.getElementById('emojiRain');
-const emojis = ['💖','✨','🦋','🌸','🐣','🙈','🙉','🙊','🐝','🐶','⭐','💫','🎊','🍼','🎉'];
-function rainEmojis(){
-  for(let i=0;i<20;i++){
-    const e=document.createElement('span');
-    e.className='rain-emoji';
-    e.textContent=emojis[Math.floor(Math.random()*emojis.length)];
-    e.style.left=Math.random()*98+'vw';
-    e.style.animationDuration=(4.5+Math.random()*2.5)+'s';
-    e.style.animationDelay=(Math.random()*2)+'s';
-    emojiRain.appendChild(e);
-    setTimeout(()=>e.remove(),7000);
+/* ===== Lluvia de emojis: DESACTIVADA para look premium ===== */
+const ENABLE_EMOJI_RAIN = false;
+if(ENABLE_EMOJI_RAIN){
+  const emojiRain = document.getElementById('emojiRain');
+  const emojis = ['💖','✨','🦋','🌸','🐣','🙈','🙉','🙊','🐝','🐶','⭐','💫','🎊','🍼','🎉'];
+  function rainEmojis(){
+    for(let i=0;i<20;i++){
+      const e=document.createElement('span');
+      e.className='rain-emoji';
+      e.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+      e.style.left=Math.random()*98+'vw';
+      e.style.animationDuration=(4.5+Math.random()*2.5)+'s';
+      e.style.animationDelay=(Math.random()*2)+'s';
+      emojiRain.appendChild(e);
+      setTimeout(()=>e.remove(),7000);
+    }
   }
+  setInterval(rainEmojis,2000); rainEmojis();
 }
-setInterval(rainEmojis,2000); rainEmojis();
 
 /* ===== Traducciones ===== */
 const translations = {
@@ -498,6 +558,7 @@ const translations = {
     playPause:"🎵 Toca para reproducir / pausar",
     muteTitle:"Silenciar/Activar sonido",
     volumeTitle:"Volumen",
+    volumeUnsupported:"📱 Usa los botones físicos",
     songs:{
       jump:{artist:"The Outfield",title:"All The Love In The World"},
       coldplay:{artist:"Coldplay",title:"A Sky Full Of Stars"},
@@ -513,7 +574,7 @@ const translations = {
     scroll:"Scroll down for all the details!",
     countdown:"🎈 X days left for the big day! 🎈",
     today:"🎉 Today is the big day! 🎉",
-    timer:"00d : 00h : 00m : 00s",
+    timer:"00d : 00h : 00s",
     infoDate:"📅 <strong>Saturday, September 20</strong>",
     infoTime:"⏰ <strong>2:00 PM – 11:00 PM</strong>",
     infoPlace:"🏘️ <strong>Residencial Sendero Santa Fe</strong>",
@@ -548,6 +609,7 @@ const translations = {
     playPause:"🎵 Tap to play / pause",
     muteTitle:"Mute/Unmute",
     volumeTitle:"Volume",
+    volumeUnsupported:"📱 Use hardware buttons",
     songs:{
       jump:{artist:"The Outfield",title:"All The Love In The World"},
       coldplay:{artist:"Coldplay",title:"A Sky Full Of Stars"},
@@ -574,16 +636,18 @@ function renderLanguage(){
   const qrBtn = byId('qrBtn'); if(qrBtn) qrBtn.innerText = t.qrBtn || qrBtn.innerText;
   setText('#listenMusic',t.listenMusic);
 
-  // Hints + títulos de música + tooltips de volumen/mute
+  // Hints + títulos de música + tooltips + nota de volumen
   ['jump','coldplay','bruno'].forEach(k=>{
     setText('#song-'+k, `${t.songs[k].artist} — ${t.songs[k].title}`);
     setText('#hint-'+k, t.playPause);
-    const btn = document.querySelector(`.track-btn[data-key="${k}"]`);
+    const btn  = document.querySelector(`.track-btn[data-key="${k}"]`);
     const mute = document.getElementById(`mute-${k}`);
     const vol  = document.getElementById(`vol-${k}`);
-    if(btn) btn.title = t.playPause;
+    const note = document.getElementById(`vnote-${k}`);
+    if(btn)  btn.title  = t.playPause;
     if(mute) mute.title = t.muteTitle;
     if(vol)  vol.title  = t.volumeTitle;
+    if(note) note.innerText = t.volumeUnsupported;
   });
 
   const scrollIndicator = q('.scroll-indicator');
@@ -674,9 +738,7 @@ function getSavedVolume(){
   const vol = v!==null ? Math.max(0, Math.min(1, parseFloat(v))) : 0.8;
   return isNaN(vol) ? 0.8 : vol;
 }
-function setSavedVolume(v){
-  localStorage.setItem('musicVolume', String(v));
-}
+function setSavedVolume(v){ localStorage.setItem('musicVolume', String(v)); }
 
 function syncVolumeUI(){
   const volPercent = Math.round(audio.volume*100);
@@ -778,6 +840,7 @@ document.addEventListener('DOMContentLoaded',()=>{
         if(currentKey !== k) return; // solo controla si es la pista actual
         audio.muted = false;
         const vol = Math.max(0, Math.min(1, slider.value/100));
+        // iOS ignora audio.volume; lo manejamos más abajo con detección
         audio.volume = vol;
         setSavedVolume(vol);
         syncVolumeUI();
@@ -819,7 +882,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     document.getElementById('loader').style.display='none';
     document.getElementById('main-content').style.display='block';
     document.querySelectorAll('section').forEach(s=>s.classList.add('fade-in'));
-  },2500);
+  },1200);
 
   // Sparkles/mini confetti en botones grandes
   document.querySelectorAll('.btn-3d, .music-btn').forEach(btn=>{
@@ -868,6 +931,17 @@ document.addEventListener('DOMContentLoaded',()=>{
     note.style.animationDuration=(10+Math.random()*5)+'s';
     note.style.animationDelay=(Math.random()*4)+'s';
     document.body.appendChild(note);
+  }
+
+  /* ===== Detección iOS: desactivar slider de volumen (limitación del sistema) ===== */
+  const IS_IOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform==='MacIntel' && navigator.maxTouchPoints>1);
+  if(IS_IOS){
+    ['jump','coldplay','bruno'].forEach(k=>{
+      const vol = document.getElementById(`vol-${k}`);
+      const note = document.getElementById(`vnote-${k}`);
+      if(vol){ vol.disabled = true; }
+      if(note){ note.style.display='inline'; }
+    });
   }
 });
 
