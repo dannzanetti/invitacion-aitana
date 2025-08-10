@@ -6,9 +6,74 @@
 <title>Baby Shower de Aitana</title>
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 <style>
-/* ... todo tu CSS igual ... */
-
-/* --- Cambios para "La futura Mamá, Fer" --- */
+body {
+  font-family:'Montserrat',sans-serif;
+  background:linear-gradient(270deg,#fde8f3,#e6d0fa,#ffe8ae);
+  background-size:600% 600%;
+  animation:gradientMove 20s ease infinite;
+  margin:0;overflow-x:hidden;
+  transition:background 1s, color 1s;
+}
+body.dark {
+  background:linear-gradient(270deg,#232333,#2c2c36,#47386e);
+  color:#f6f6f6;
+}
+/* ... el resto de tu CSS igual ... */
+@keyframes gradientMove {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+.rain-emoji {
+  position:fixed;top:-64px;z-index:1;font-size:2.2rem;pointer-events:none;animation:emojiFall linear infinite;
+}
+@keyframes emojiFall {
+  0%{top:-64px;opacity:.8;}
+  90%{opacity:.8;}
+  100%{top:100vh;opacity:0;}
+}
+/* Botones flotantes */
+.floating-controls {
+  position: fixed;
+  left: 24px;
+  bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  z-index: 500;
+}
+.floating-controls .fc-btn {
+  background: linear-gradient(270deg,#ffb6e6,#ffe8ae,#e6d0fa);
+  border-radius: 50%;
+  width: 68px;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.55rem;
+  color: #b47ae0;
+  font-weight: bold;
+  box-shadow: 0 2px 22px #b47ae033;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: background 0.3s,color 0.3s,transform 0.16s;
+}
+.floating-controls .fc-btn:hover {
+  background: linear-gradient(270deg,#ffe8ae,#ffb6e6,#b795fc);
+  color: #ff69b4;
+  transform: scale(1.13);
+}
+body.dark .floating-controls .fc-btn {
+  background: linear-gradient(270deg,#47386e,#232333,#ffe8ae);
+  color: #ffe8ae;
+  box-shadow: 0 2px 10px #23233388;
+}
+@media (max-width:700px) {
+  .floating-controls {left:8px;bottom:8px;}
+  .floating-controls .fc-btn {width:54px;height:54px;font-size:2rem;}
+}
+/* --- Estilos para "La futura Mamá, Fer" --- */
 #futureMom {
   font-family: 'Dancing Script', cursive;
   font-size: 2rem;
@@ -30,56 +95,260 @@ body.dark #futureMom {
   -webkit-text-fill-color:transparent;
   text-shadow: 0 2px 12px #23233344;
 }
+@keyframes rainbowBorder {
+  0% {text-shadow:0 0 6px #ff69b4;}
+  50% {text-shadow:0 0 14px #b47ae0;}
+  100% {text-shadow:0 0 6px #ff69b4;}
+}
+/* --- Estilos para el título Gender Reveal --- */
+#genderRevealTitle {
+  text-align:center;
+  font-size:2rem;
+  margin-bottom:18px;
+  font-family:'Dancing Script',cursive;
+  font-weight:bold;
+  background:linear-gradient(90deg,#ffb6e6,#ffe8ae,#b47ae0);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  letter-spacing:1px;
+  animation:rainbowBorder 5s linear infinite;
+}
+body.dark #genderRevealTitle {
+  background: linear-gradient(90deg,#ffe8ae,#b795fc,#ffb6e6);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
 /* ... el resto igual ... */
 </style>
 </head>
 <body>
-<!-- ... controles flotantes, módulo explicativo, etc ... -->
-
+<div class="floating-controls">
+  <button class="fc-btn" id="theme-btn" title="Modo oscuro/claro">🌙</button>
+  <button class="fc-btn" id="lang-btn" title="Idioma">🇲🇽</button>
+  <button class="fc-btn" id="music-btn" title="Música">🎵</button>
+</div>
+<div class="floating-info-module">
+  <div class="floating-info-title">👋 Personaliza la invitación</div>
+  <ul class="floating-info-list">
+    <li><span class="icon">🌙</span> Cambia el modo de luz, por si prefieres la invitación clarita o oscura.</li>
+    <li><span class="icon">🇲🇽</span><span class="icon">🇺🇸</span> Elige tu idioma favorito: español o inglés.</li>
+    <li><span class="icon">🎵</span> Ponle música de fondo para ambientar el momento.</li>
+  </ul>
+  <div class="floating-info-note">¡Haz clic en los botones de abajo a la izquierda y disfruta la experiencia como tú quieras!</div>
+</div>
+<div id="emojiRain"></div>
+<div class="balloon balloon1" onclick="popBalloon(this)"></div>
+<div class="balloon balloon2" onclick="popBalloon(this)"></div>
+<div class="balloon balloon3" onclick="popBalloon(this)"></div>
+<audio id="popBalloonSound" src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/pop.mp3"></audio>
+<div id="loader">
+  <p id="loaderText" style="font-size:1.5rem;font-weight:bold;color:#b47ae0;">Cargando invitación...</p>
+  <div class="loader-note">🎵 🎶 🎵</div>
+</div>
+<div class="equalizer" id="equalizer" style="display:none;">
+  <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+</div>
 <main style="display:none;" id="main-content">
+  <section class="fade-in">
+    <div class="qr-container">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://dannzanetti.github.io/invitacion-aitana/" alt="QR Invitación"/>
+      <a href="https://api.whatsapp.com/send?text=¡Te%20invito%20al%20Baby%20Shower%20de%20Aitana!%20https://dannzanetti.github.io/invitacion-aitana/" target="_blank" class="btn-3d" id="qrBtn" style="font-size:1rem;width:auto;padding:8px 14px;display:inline-block;margin-top:4px;">💬 Compartir por WhatsApp</a>
+    </div>
+    <p style="margin-bottom:10px;" id="listenMusic">🎵 Haz clic en el botón para escuchar música 🎶</p>
+    <button onclick="toggleMusic()" class="music-btn">▶️ Música ON/OFF</button>
+    <p class="scroll-indicator"><span class="scroll-arrow">⬇️</span> ¡Sigue bajando para ver todos los detalles! <span class="scroll-arrow">⬇️</span></p>
+    <audio id="music" loop>
+      <source src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/jump.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="popSound">
+      <source src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/pop.mp3" type="audio/mpeg">
+    </audio>
+  </section>
   <section class="fade-in" style="position:relative;">
     <div class="halo-title"></div>
     <h1 class="main-title">🎀 Baby Shower 🎀</h1>
     <h2 class="sub-title">🎀 AITANA 🎀</h2>
     <img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/Baby.png" alt="Baby" class="baby-photo"/>
-    <!-- Aquí va la foto de Fer, debajo de la imagen principal -->
     <img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/0.JPG" alt="La futura Mamá, Fer" class="baby-photo" style="margin-top:12px;max-width:480px;">
     <p id="futureMom">La futura Mamá, Fer</p>
   </section>
-  <!-- ... resto igual ... -->
+  <section class="fade-in">
+    <div id="countdown">🎈 ¡Faltan X días para el gran día! 🎈</div>
+    <div id="timer">00d : 00h : 00m : 00s</div>
+  </section>
+  <section class="info-block fade-in">
+    <p id="infoDate">📅 <strong>Sábado 20 de Septiembre</strong></p>
+    <p id="infoTime">⏰ <strong>2:00 PM – 11:00 PM</strong></p>
+    <p id="infoPlace">🏘️ <strong>Residencial Sendero Santa Fe</strong></p>
+    <p id="infoRSVP">⚠️ <strong>Confirma antes del 14 de septiembre</strong></p>
+  </section>
+  <section class="fade-in">
+    <div class="highlight-container" id="partyTitle">¡Te esperamos con!</div>
+    <div style="margin-top:20px;">
+      <p id="food">🌮 Tacos de guisado</p>
+      <p id="bar">🍸 Barra libre:</p>
+      <p id="drinks">🍻 Cervezas | 🍹 Tequila | 🥃 Ron | 🥂 Whisky</p>
+      <p id="fun">🎲 Juegos | 🎖️ Rifas | 💃 Baile</p>
+    </div>
+  </section>
   <section class="fade-in">
     <div class="btn-container">
-      <!-- ... tus botones ... -->
+      <a href="https://waze.com/ul/h9g3qhubmq" target="_blank" class="btn-3d" id="waze">📍 Cómo llegar con Waze</a>
+      <a href="https://maps.app.goo.gl/aJot9z4Qja81DHsw8?g_st=aw" target="_blank" class="btn-3d" id="gmaps">📍 Cómo llegar con Google Maps</a>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSd-vY-AAhe7GGVQdxJmZvxr-5m6rQh7PgrfKwXY0Dn1-ksgRw/viewform" target="_blank" class="btn-3d confirmar" id="confirmar-btn">✅ Confirmar asistencia</a>
+      <a href="https://mesaderegalos.liverpool.com.mx/milistaderegalos/51734815" target="_blank" class="btn-3d" id="liverpool">🎁 Mesa de regalos Liverpool</a>
+      <a href="https://www.amazon.com.mx/baby-reg/waldodanielalvarez-martinez-diciembre-2025-ciudaddemexico/187ABTMWV8E8D" target="_blank" class="btn-3d" id="amazon">📦 Mesa de regalos Amazon</a>
     </div>
     <section class="fade-in">
-      <!-- Cambiado a h2 con id para traducción -->
-      <h2 id="genderRevealTitle" style="text-align:center; font-size:2rem; margin-bottom:18px; font-family:'Dancing Script',cursive; font-weight:bold; background:linear-gradient(90deg,#ffb6e6,#ffe8ae,#b47ae0);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:1px;animation:rainbowBorder 5s linear infinite;">
-        ¡Así vivimos el Gender Reveal! 🎉💗
-      </h2>
-      <!-- ... slider igual ... -->
+      <h2 id="genderRevealTitle">¡Así vivimos el Gender Reveal! 🎉💗</h2>
+      <style>
+      .slider-container {
+        position: relative;
+        max-width: 720px;
+        margin: 0 auto;
+        overflow: hidden;
+        border-radius: 14px;
+        box-shadow: 0 6px 20px rgba(180,122,224,0.2);
+      }
+      .slider {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+      }
+      .slide {
+        min-width: 100%;
+        box-sizing: border-box;
+      }
+      .slide img {
+        width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 12px;
+      }
+      .prev, .next {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: #ffffffcc;
+        color: #b47ae0;
+        font-weight: bold;
+        font-size: 2rem;
+        border: none;
+        cursor: pointer;
+        padding: 8px 14px;
+        border-radius: 50%;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        z-index: 10;
+      }
+      .prev:hover, .next:hover {
+        background-color: #ffe8ae;
+      }
+      .prev { left: 10px; }
+      .next { right: 10px; }
+      .dots {
+        text-align: center;
+        margin-top: 12px;
+      }
+      .dots span {
+        height: 12px;
+        width: 12px;
+        margin: 0 4px;
+        background-color: #ddd;
+        border-radius: 50%;
+        display: inline-block;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      .dots .active {
+        background-color: #b47ae0;
+      }
+      </style>
       <div class="slider-container">
         <div class="slider" id="photoSlider">
-          <!-- ... tus slides ... -->
+          <!-- Fotos del Gender Reveal -->
+          <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/1.JPG" alt="Foto 1"></div>
+          <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/2.JPG" alt="Foto 2"></div>
+          <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/3.JPG" alt="Foto 3"></div>
+          <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/4.JPG" alt="Foto 4"></div>
+          <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/5.JPG" alt="Foto 5"></div>
+          <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/6.JPG" alt="Foto 6"></div>
+          <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/7.JPG" alt="Foto 7"></div>
+          <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/8.JPG" alt="Foto 8"></div>
+          <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/9.JPG" alt="Foto 9"></div>
+          <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/10.JPG" alt="Foto 10"></div>
+          <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/11.JPG" alt="Foto 11"></div>
+          <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/12.JPG" alt="Foto 12"></div>
+          <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/13.JPG" alt="Foto 13"></div>
+          <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/14.JPG" alt="Foto 14"></div>
+          <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/15.JPG" alt="Foto 15"></div>
+          <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/16.JPG" alt="Foto 16"></div>
+          <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/17.JPG" alt="Foto 17"></div>
+          <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/18.JPG" alt="Foto 18"></div>
+          <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/19.JPG" alt="Foto 19"></div>
+          <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/20.JPG" alt="Foto 20"></div>
+          <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/21.JPG" alt="Foto 21"></div>
         </div>
         <button class="prev" onclick="prevSlide()">❮</button>
         <button class="next" onclick="nextSlide()">❯</button>
         <div class="dots" id="dotsContainer"></div>
       </div>
-      <!-- ... slider JS igual ... -->
       <script>
-        // ... slider JS igual ...
+        let currentIndex = 0;
+        const slides = document.querySelectorAll('.slide');
+        const slider = document.getElementById('photoSlider');
+        const dotsContainer = document.getElementById('dotsContainer');
+        slides.forEach((_, i) => {
+          const dot = document.createElement('span');
+          dot.onclick = () => goToSlide(i);
+          dotsContainer.appendChild(dot);
+        });
+        const dots = dotsContainer.querySelectorAll('span');
+        function updateSlider() {
+          slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+          dots.forEach(dot => dot.classList.remove('active'));
+          dots[currentIndex].classList.add('active');
+        }
+        function nextSlide() {
+          currentIndex = (currentIndex + 1) % slides.length;
+          updateSlider();
+        }
+        function prevSlide() {
+          currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+          updateSlider();
+        }
+        function goToSlide(index) {
+          currentIndex = index;
+          updateSlider();
+        }
+        updateSlider();
+        setInterval(() => nextSlide(), 4000);
       </script>
     </section>
   </section>
-  <!-- ... resto igual ... -->
+  <section class="fade-in">
+    <p class="typewriter">💕 ¡Gracias por acompañarnos! 💕</p>
+    <div class="gif-container">
+      <img id="finalGif" src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExeWV0NDMza3c2eXVsM2VrMnNhdHcyMG0yN2Z5YzN5aWV2bHJpdjk1OSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/QMkPpxPDYY0fu/giphy.gif" alt="GIF Final">
+    </div>
+    <p id="gifFinal" style="margin-top:20px;font-size:1.4rem;color:#b47ae0;font-weight:bold;">✨ ¡Será un día mágico para celebrar juntos! ✨</p>
+  </section>
 </main>
 <script>
-// ... todo tu JS igual ...
-
-// Solo agrego el renderLanguage modificado para traducir el título del Gender Reveal y el "La futura Mamá, Fer"
+// ... tu JS igual arriba ...
+const translations = {
+  es: {
+    // ... igual ...
+    futureMom: "La futura Mamá, Fer",
+    genderRevealTitle: "¡Así vivimos el Gender Reveal! 🎉💗"
+  },
+  en: {
+    // ... igual ...
+    futureMom: "The future mom, Fer",
+    genderRevealTitle: "This is how we enjoyed the Gender Reveal! 🎉💗"
+  }
+};
+let lang = localStorage.getItem('lang') || 'es';
 function renderLanguage() {
   const t = translations[lang];
-  // ... resto igual ...
   document.querySelector('.main-title').innerText = t.mainTitle;
   document.querySelector('.sub-title').innerText = t.subTitle;
   document.getElementById('lang-btn').innerText = t.esEn;
@@ -108,11 +377,19 @@ function renderLanguage() {
   document.getElementById('calendarA').innerText = t.calendarA;
   document.querySelector('.typewriter').innerText = t.thanks;
   document.getElementById('gifFinal').innerText = t.gifFinal;
-  // Cambios agregados:
   document.getElementById('futureMom').innerText = t.futureMom;
   document.getElementById('genderRevealTitle').innerText = t.genderRevealTitle;
 }
-// ... resto igual ...
+// ... el resto de tu JS igual ...
+document.getElementById('lang-btn').onclick = function() {
+  lang = lang === 'es' ? 'en' : 'es';
+  localStorage.setItem('lang', lang);
+  renderLanguage();
+};
+document.addEventListener('DOMContentLoaded', () => {
+  renderLanguage();
+  // ... el resto igual ...
+});
 </script>
 </body>
 </html>
