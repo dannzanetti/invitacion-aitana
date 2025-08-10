@@ -192,7 +192,6 @@ body.dark .track-card{background:rgba(44,44,54,0.85);}
 @keyframes btnPulse{0%{transform:scale(1);}100%{transform:scale(1.06);}}
 
 .track-title{font-weight:700;}
-.track-artist{opacity:.85;font-size:.95rem;}
 .track-hint{font-size:.85rem;opacity:.8;}
 
 /* Mini player */
@@ -201,6 +200,18 @@ body.dark .track-card{background:rgba(44,44,54,0.85);}
 .progress{width:100%;height:7px;background:#eceaf4;border-radius:999px;overflow:hidden;position:relative;cursor:pointer;}
 .progress .fill{height:100%;width:0%;background:linear-gradient(90deg,#ff69b4,#b47ae0,#ffe8ae);transition:width .2s;}
 body.dark .progress{background:#3b3950;}
+
+/* Volumen */
+.controls{display:flex;align-items:center;gap:8px;margin-top:2px;}
+.mute-btn{
+  background:#fff;border:2px solid #b47ae0;border-radius:10px;cursor:pointer;
+  padding:6px 10px;font-size:1rem;color:#b47ae0;
+  transition:transform .15s, background .3s, color .3s, border-color .3s;
+}
+.mute-btn.active{background:#b47ae0;color:#fff;border-color:#b47ae0;}
+.vol{width:120px;}
+body.dark .mute-btn{background:#2c2c36;color:#ffe8ae;border-color:#ffe8ae;}
+body.dark .mute-btn.active{background:#ffe8ae;color:#232333;border-color:#ffe8ae;}
 </style>
 </head>
 <body>
@@ -209,7 +220,7 @@ body.dark .progress{background:#3b3950;}
 <div class="floating-controls">
   <button class="fc-btn" id="theme-btn" title="Modo oscuro/claro">🌙</button>
   <button class="fc-btn" id="lang-btn" title="Idioma">🇲🇽</button>
-  <button class="fc-btn" id="music-btn" title="Música">⏯️</button>
+  <button class="fc-btn" id="music-btn" title="Música">🎵</button>
 </div>
 
 <!-- Módulo explicativo -->
@@ -218,7 +229,7 @@ body.dark .progress{background:#3b3950;}
   <ul class="floating-info-list">
     <li><span class="icon">🌙</span> Cambia el modo de luz, por si prefieres la invitación clarita o oscura.</li>
     <li><span class="icon">🇲🇽</span><span class="icon">🇺🇸</span> Elige tu idioma favorito: español o inglés.</li>
-    <li><span class="icon">⏯️</span> Ponle música de fondo para ambientar el momento.</li>
+    <li><span class="icon">🎵</span> Ponle música de fondo para ambientar el momento.</li>
   </ul>
   <div class="floating-info-note">¡Haz clic en los botones de abajo a la izquierda y disfruta la experiencia como tú quieras!</div>
 </div>
@@ -257,6 +268,10 @@ body.dark .progress{background:#3b3950;}
         <div class="player">
           <div class="progress" data-key="jump" id="progress-jump"><div class="fill" id="fill-jump"></div></div>
           <div class="time"><span id="elapsed-jump">0:00</span> / <span id="duration-jump">0:00</span></div>
+          <div class="controls">
+            <button class="mute-btn" data-key="jump" id="mute-jump" title="Silenciar/Activar sonido">🔊</button>
+            <input class="vol" type="range" min="0" max="100" value="80" id="vol-jump" title="Volumen">
+          </div>
         </div>
       </div>
       <!-- Coldplay -->
@@ -267,6 +282,10 @@ body.dark .progress{background:#3b3950;}
         <div class="player">
           <div class="progress" data-key="coldplay" id="progress-coldplay"><div class="fill" id="fill-coldplay"></div></div>
           <div class="time"><span id="elapsed-coldplay">0:00</span> / <span id="duration-coldplay">0:00</span></div>
+          <div class="controls">
+            <button class="mute-btn" data-key="coldplay" id="mute-coldplay" title="Silenciar/Activar sonido">🔊</button>
+            <input class="vol" type="range" min="0" max="100" value="80" id="vol-coldplay" title="Volumen">
+          </div>
         </div>
       </div>
       <!-- ROSÉ & Bruno Mars -->
@@ -277,6 +296,10 @@ body.dark .progress{background:#3b3950;}
         <div class="player">
           <div class="progress" data-key="bruno" id="progress-bruno"><div class="fill" id="fill-bruno"></div></div>
           <div class="time"><span id="elapsed-bruno">0:00</span> / <span id="duration-bruno">0:00</span></div>
+          <div class="controls">
+            <button class="mute-btn" data-key="bruno" id="mute-bruno" title="Silenciar/Activar sonido">🔊</button>
+            <input class="vol" type="range" min="0" max="100" value="80" id="vol-bruno" title="Volumen">
+          </div>
         </div>
       </div>
     </div>
@@ -467,12 +490,14 @@ const translations = {
     floatingInfoList:[
       "🌙 Cambia el modo de luz, por si prefieres la invitación clarita o oscura.",
       "🇲🇽 🇺🇸 Elige tu idioma favorito: español o inglés.",
-      "⏯️ Ponle música de fondo para ambientar el momento."
+      "🎵 Ponle música de fondo para ambientar el momento."
     ],
     floatingInfoNote:"¡Haz clic en los botones de abajo a la izquierda y disfruta la experiencia como tú quieras!",
     futureMom:"La futura Mamá, Fer",
     genderRevealTitle:"¡Así vivimos el Gender Reveal! 🎉💗",
     playPause:"🎵 Toca para reproducir / pausar",
+    muteTitle:"Silenciar/Activar sonido",
+    volumeTitle:"Volumen",
     songs:{
       jump:{artist:"The Outfield",title:"All The Love In The World"},
       coldplay:{artist:"Coldplay",title:"A Sky Full Of Stars"},
@@ -515,12 +540,14 @@ const translations = {
     floatingInfoList:[
       "🌙 Change the light mode if you prefer the invitation in light or dark style.",
       "🇲🇽 🇺🇸 Choose your favorite language: Spanish or English.",
-      "⏯️ Add background music to set the mood for the moment."
+      "🎵 Add background music to set the mood for the moment."
     ],
     floatingInfoNote:"Click the buttons at the bottom left and enjoy the experience your way!",
     futureMom:"The future mom, Fer",
     genderRevealTitle:"This is how we enjoyed the Gender Reveal! 🎉💗",
     playPause:"🎵 Tap to play / pause",
+    muteTitle:"Mute/Unmute",
+    volumeTitle:"Volume",
     songs:{
       jump:{artist:"The Outfield",title:"All The Love In The World"},
       coldplay:{artist:"Coldplay",title:"A Sky Full Of Stars"},
@@ -547,12 +574,16 @@ function renderLanguage(){
   const qrBtn = byId('qrBtn'); if(qrBtn) qrBtn.innerText = t.qrBtn || qrBtn.innerText;
   setText('#listenMusic',t.listenMusic);
 
-  // Hints + títulos de música
+  // Hints + títulos de música + tooltips de volumen/mute
   ['jump','coldplay','bruno'].forEach(k=>{
     setText('#song-'+k, `${t.songs[k].artist} — ${t.songs[k].title}`);
     setText('#hint-'+k, t.playPause);
     const btn = document.querySelector(`.track-btn[data-key="${k}"]`);
+    const mute = document.getElementById(`mute-${k}`);
+    const vol  = document.getElementById(`vol-${k}`);
     if(btn) btn.title = t.playPause;
+    if(mute) mute.title = t.muteTitle;
+    if(vol)  vol.title  = t.volumeTitle;
   });
 
   const scrollIndicator = q('.scroll-indicator');
@@ -628,26 +659,52 @@ function resetAllPlayers(){
     const fill = document.getElementById(`fill-${k}`);
     const elap = document.getElementById(`elapsed-${k}`);
     const dur  = document.getElementById(`duration-${k}`);
+    const mute = document.getElementById(`mute-${k}`);
     if(card) card.classList.remove('playing');
     if(btn) btn.classList.remove('active');
     if(fill) fill.style.width = '0%';
     if(elap) elap.innerText = '0:00';
     if(dur && k!==currentKey) dur.innerText = '0:00';
+    if(mute) mute.classList.remove('active');
+  });
+}
+
+function getSavedVolume(){
+  const v = localStorage.getItem('musicVolume');
+  const vol = v!==null ? Math.max(0, Math.min(1, parseFloat(v))) : 0.8;
+  return isNaN(vol) ? 0.8 : vol;
+}
+function setSavedVolume(v){
+  localStorage.setItem('musicVolume', String(v));
+}
+
+function syncVolumeUI(){
+  const volPercent = Math.round(audio.volume*100);
+  ['jump','coldplay','bruno'].forEach(k=>{
+    const slider = document.getElementById(`vol-${k}`);
+    const muteBtn= document.getElementById(`mute-${k}`);
+    if(slider) slider.value = String(volPercent);
+    if(muteBtn){
+      if(audio.muted) muteBtn.classList.add('active'); else muteBtn.classList.remove('active');
+      muteBtn.textContent = audio.muted ? '🔇' : '🔊';
+    }
   });
 }
 
 function playTrackByKey(key, src){
   if(currentKey !== key){
-    // Cambiando de pista
     resetAllPlayers();
     currentKey = key;
     audio.src = src;
+    audio.volume = getSavedVolume();
+    audio.muted = false;
     audio.play();
-    const btn = document.querySelector(`.track-btn[data-key="${key}"]`);
+    const btn  = document.querySelector(`.track-btn[data-key="${key}"]`);
     const card = document.querySelector(`.track-card[data-key="${key}"]`);
     if(btn) btn.classList.add('active');
     if(card) card.classList.add('playing');
     eq.style.display = 'inline-flex';
+    syncVolumeUI();
     return;
   }
   // Misma pista: alternar
@@ -708,6 +765,31 @@ document.addEventListener('DOMContentLoaded',()=>{
   // Listeners para las 3 pistas
   document.querySelectorAll('.track-btn').forEach(btn=>{
     btn.addEventListener('click', ()=>{ playTrackByKey(btn.dataset.key, btn.dataset.src); });
+  });
+
+  // Volumen + mute (por pista, actúan sobre la pista actual)
+  ['jump','coldplay','bruno'].forEach(k=>{
+    const slider = document.getElementById(`vol-${k}`);
+    const muteBtn= document.getElementById(`mute-${k}`);
+
+    if(slider){
+      slider.value = String(Math.round(getSavedVolume()*100));
+      slider.addEventListener('input', ()=>{
+        if(currentKey !== k) return; // solo controla si es la pista actual
+        audio.muted = false;
+        const vol = Math.max(0, Math.min(1, slider.value/100));
+        audio.volume = vol;
+        setSavedVolume(vol);
+        syncVolumeUI();
+      });
+    }
+    if(muteBtn){
+      muteBtn.addEventListener('click', ()=>{
+        if(currentKey !== k) return;
+        audio.muted = !audio.muted;
+        syncVolumeUI();
+      });
+    }
   });
 
   // Seek al hacer click en la barra de progreso (solo de la pista actual)
