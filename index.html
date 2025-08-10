@@ -1203,6 +1203,52 @@ function popBalloon(balloon){
   try{ snd.currentTime=0; snd.play(); }catch(e){}
   setTimeout(()=>{balloon.style.display='none';},600);
 }
+
+   /* ===============================
+   AJUSTES EXTRA NEÓN (FINAL CSS)
+   =============================== */
+
+/* Paleta de neón para modo día (sobre blanco) */
+:root{
+  --day-neon-a:#6a5cff;   /* electric violet */
+  --day-neon-b:#ff4fd8;   /* fucsia */
+  --day-neon-c:#00d4ff;   /* cyan brillante */
+}
+
+/* 1) MODO OSCURO: neón para “¡Así vivimos el Gender Reveal!” */
+body.dark #genderRevealTitle{
+  background: linear-gradient(90deg, var(--neon-yellow), var(--neon-magenta), var(--neon-cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 10px rgba(255,244,79,.28));
+}
+
+/* 2) MODO DÍA: títulos con neón legible sobre blanco
+   (los 7 que pediste) */
+body:not(.dark) .floating-info-title,
+body:not(.dark) #countdown,
+body:not(.dark) #timer,
+body:not(.dark) #partyTitle,
+body:not(.dark) #genderRevealTitle,
+body:not(.dark) .typewriter,
+body:not(.dark) #gifFinal{
+  background: linear-gradient(90deg, var(--day-neon-a), var(--day-neon-b), var(--day-neon-c));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  /* Glow suave multicolor para que “salte” en blanco */
+  text-shadow:
+    0 0 8px rgba(106,92,255,.35),
+    0 0 10px rgba(255,79,216,.25),
+    0 0 10px rgba(0,212,255,.25);
+}
+
+/* Opcional: un poquito más de énfasis en el contador */
+body:not(.dark) #timer{
+  text-shadow:
+    0 0 10px rgba(106,92,255,.40),
+    0 0 12px rgba(255,79,216,.28),
+    0 0 12px rgba(0,212,255,.28);
+}
 </script>
 </body>
 </html>
