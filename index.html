@@ -642,7 +642,6 @@ function rainEmojis() {
 }
 setInterval(rainEmojis,3200);
 rainEmojis();
-
 const translations = {
   es: {
     mainTitle: '🎀 Baby Shower 🎀',
@@ -676,6 +675,16 @@ const translations = {
     confirmMsg: '¡Gracias por confirmar tu asistencia! 🎉',
     joyMsg: '¡Gracias por tu alegría! 💜',
     loading: 'Cargando invitación...',
+    // Nuevos
+    floatingInfoTitle: "👋 Personaliza la invitación",
+    floatingInfoList: [
+      "🌙 Cambia el modo de luz, por si prefieres la invitación clarita o oscura.",
+      "🇲🇽 🇺🇸 Elige tu idioma favorito: español o inglés.",
+      "🎵 Ponle música de fondo para ambientar el momento."
+    ],
+    floatingInfoNote: "¡Haz clic en los botones de abajo a la izquierda y disfruta la experiencia como tú quieras!",
+    futureMom: "La futura Mamá, Fer",
+    genderRevealTitle: "¡Así vivimos el Gender Reveal! 🎉💗"
   },
   en: {
     mainTitle: "🎀 Baby Shower 🎀",
@@ -709,6 +718,16 @@ const translations = {
     confirmMsg: "Thanks for confirming! 🎉",
     joyMsg: "Thanks for your joy! 💜",
     loading: "Loading invitation...",
+    // Nuevos
+    floatingInfoTitle: "👋 Customize the invitation",
+    floatingInfoList: [
+      "🌙 Change the light mode if you prefer the invitation in light or dark style.",
+      "🇲🇽 🇺🇸 Choose your favorite language: Spanish or English.",
+      "🎵 Add background music to set the mood for the moment."
+    ],
+    floatingInfoNote: "Click the buttons at the bottom left and enjoy the experience your way!",
+    futureMom: "The future mom, Fer",
+    genderRevealTitle: "This is how we enjoyed the Gender Reveal! 🎉💗"
   }
 };
 
@@ -742,6 +761,15 @@ function renderLanguage() {
   document.getElementById('calendarA').innerText = translations[lang].calendarA;
   document.querySelector('.typewriter').innerText = translations[lang].thanks;
   document.getElementById('gifFinal').innerText = translations[lang].gifFinal;
+  // Nuevos elementos traducibles
+document.querySelector('.floating-info-title').innerText = translations[lang].floatingInfoTitle;
+const infoItems = document.querySelectorAll('.floating-info-list li');
+infoItems.forEach((li, index) => {
+  li.innerHTML = translations[lang].floatingInfoList[index];
+});
+document.querySelector('.floating-info-note').innerText = translations[lang].floatingInfoNote;
+document.getElementById('futureMom').innerText = translations[lang].futureMom;
+document.getElementById('genderRevealTitle').innerText = translations[lang].genderRevealTitle;
 }
 
 // Tema oscuro/claro con emoji
