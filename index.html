@@ -5,877 +5,806 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Baby Shower de Aitana</title>
 
-<!-- Fonts -->
+<!-- Fuentes -->
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
-/* ==========================================================================
-   BASE VARIABLES
-   ========================================================================== */
+/* =========================================================
+   VARIABLES Y RESETEO
+   ========================================================= */
 :root{
-  /* Mesh base (día) */
-  --mesh-a:#fde8f3;
-  --mesh-b:#e6d0fa;
-  --mesh-c:#ffe8ae;
+  /* Intensidad de brillo global (0 a 3) controlada por ✨- / ✨+  */
+  --glow-intensity: 2;
 
-  /* Mesh base (oscuro) */
-  --mesh-dark-a:#232333;
-  --mesh-dark-b:#2c2c36;
-  --mesh-dark-c:#47386e;
+  /* Paletas base */
+  --pink: #ff69b4;
+  --lavender: #b47ae0;
+  --gold: #ffe8ae;
+  --meshA: #fde8f3;   /* claro */
+  --meshB: #e6d0fa;
+  --meshC: #ffe8ae;
 
-  /* Opacidad premium para módulos */
-  --module-alpha:0.82;
+  /* Modo día: ciclo neon suave */
+  --neon-day-1: #ff6ac6; /* magenta pastel */
+  --neon-day-2: #c59bff; /* lavender */
+  --neon-day-3: #ffd36e; /* warm gold */
 
-  /* Sheen (destello) */
-  --sheen-color: rgba(255,255,255,0.22);
+  /* Modo oscuro: ciclo neon contrastado */
+  --neon-dark-1: #c8ff5d; /* lime neon */
+  --neon-dark-2: #5df6ff; /* aqua */
+  --neon-dark-3: #e3b3ff; /* lilac */
 
-  /* Neones modo oscuro (A – la versión que elegiste) */
-  --neon-yellow:#fff44f; /* amarillo fluorescente */
-  --neon-magenta:#ff4fd8; /* magenta */
-  --neon-cyan:#00f0ff;    /* cyan eléctrico */
-
-  /* Neones modo día (sobre blanco; legibles) */
-  --day-neon-a:#6a5cff;   /* electric violet */
-  --day-neon-b:#ff4fd8;   /* fucsia */
-  --day-neon-c:#00d4ff;   /* cyan brillante */
-
-  /* Acento */
-  --accent-1:#b47ae0;
-  --accent-2:#ff69b4;
-
-  /* Bordes, sombras */
-  --border-strong:#000;
-  --shadow-strong:0 2px 22px #b47ae033;
-
-  /* Texto sobre módulos */
-  --text-dark:#111;
-  --text-light:#f6f6f6;
-
-  /* Z-index capas fondo */
-  --z-mesh: -5;
-  --z-stars: -4;
-  --z-sheen: -3;
-
-  /* Ancho max secciones */
-  --max-w: 700px;
+  /* Vidrio / Glass */
+  --glass-bg-day: rgba(255,255,255,0.82);
+  --glass-bg-dark: rgba(34,34,46,0.82);
+  --glass-ring-day: rgba(180,122,224,0.25);
+  --glass-ring-dark: rgba(255,232,174,0.28);
+  --text-dark: #0e0e12;
+  --text-light: #f6f6f6;
 }
 
-/* ==========================================================================
-   RESETA Y LAYOUT BÁSICO
-   ========================================================================== */
-*{box-sizing:border-box;}
-html,body{height:100%;}
+/* Reset básico */
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+
+/* =========================================================
+   FONDO: MESH + TWINKLE + SHEEN
+   ========================================================= */
 body{
   font-family:'Montserrat',sans-serif;
-  color:var(--text-dark);
-  margin:0; overflow-x:hidden;
-
-  /* Mesh base animado (día) */
-  background:
-    radial-gradient(1200px 900px at 10% 10%, var(--mesh-a), transparent 60%),
-    radial-gradient(1200px 900px at 90% 20%, var(--mesh-b), transparent 60%),
-    radial-gradient(1200px 900px at 50% 90%, var(--mesh-c), transparent 60%),
-    #fff;
-  background-attachment: fixed;
-  animation: meshDrift 26s ease-in-out infinite alternate;
-  transition: background 1s, color 1s;
+  color: var(--text-dark);
+  background: radial-gradient(1200px 800px at 20% 15%, #fff5fb 0%, transparent 40%),
+              radial-gradient(900px 600px  at 80% 20%, #f5f0ff 0%, transparent 42%),
+              linear-gradient(270deg, var(--meshA), var(--meshB), var(--meshC));
+  background-size: 1200px 800px, 900px 600px, 600% 600%;
+  animation: gradientMove 20s ease infinite;
+  overflow-x:hidden;
+  transition: background 1s, color 1s, filter .3s;
 }
 
-/* Sheen (destello suave) */
-body::before{
-  content:"";
-  position:fixed; inset:0;
-  background:
-    radial-gradient(1200px 600px at 20% 30%, rgba(255,255,255,.12), transparent 65%),
-    radial-gradient(1000px 600px at 80% 70%, rgba(255,255,255,.10), transparent 60%);
+/* capa de estrellas */
+.bg-stars, .bg-sheen{
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* lienzo para estrellas */
+.bg-stars canvas{
+  width:100%;
+  height:100%;
+  display:block;
+  filter: blur(0.15px);
+  opacity: .9;
+}
+
+/* sheen suave diagonal */
+.bg-sheen::before{
+  content:'';
+  position:absolute;
+  inset:-20% -20%;
+  background: conic-gradient(from 180deg at 50% 50%,
+              transparent 0 12%,
+              rgba(255,255,255,.15) 13% 17%,
+              transparent 18% 100%);
+  animation: sheenSweep 18s linear infinite;
   mix-blend-mode: screen;
-  pointer-events:none;
-  animation: sheenPan 18s ease-in-out infinite alternate;
-  z-index: var(--z-sheen);
+  opacity:.55;
 }
 
-/* Estrellas (canvas) va detrás del contenido */
-#starsCanvas{
-  position:fixed; inset:0; z-index: var(--z-stars);
-  pointer-events:none;
-}
-
-/* Modo oscuro: malla y texto */
+/* Modo oscuro: fondo */
 body.dark{
-  color:var(--text-light);
-  background:
-    radial-gradient(1100px 800px at 15% 15%, #2b2945 0%, rgba(43,41,69,0) 60%),
-    radial-gradient(1100px 800px at 85% 25%, #3b2f67 0%, rgba(59,47,103,0) 60%),
-    radial-gradient(1100px 800px at 50% 85%, #463971 0%, rgba(70,57,113,0) 60%),
-    linear-gradient(270deg, var(--mesh-dark-a), var(--mesh-dark-b), var(--mesh-dark-c));
-  background-attachment: fixed;
-  animation: meshDriftDark 28s ease-in-out infinite alternate;
+  color: var(--text-light);
+  background: radial-gradient(1200px 800px at 15% 10%, #2c2c36 0%, transparent 45%),
+              radial-gradient(900px 600px  at 85% 15%, #3d2f60 0%, transparent 45%),
+              linear-gradient(270deg,#232333,#2c2c36,#47386e);
+  background-size: 1200px 800px, 900px 600px, 600% 600%;
 }
 
-/* Movimientos suaves del mesh */
-@keyframes meshDrift{
-  0%{ background-position: 0% 0%, 100% 0%, 50% 100%, 0 0; }
-  100%{ background-position: -5% 5%, 95% 5%, 50% 95%, 0 0; }
+/* Animaciones de fondo */
+@keyframes gradientMove{
+  0%{background-position: 0% 50% , 0% 50% , 0% 50%}
+  50%{background-position: 100% 50%, 100% 50%, 100% 50%}
+  100%{background-position: 0% 50% , 0% 50% , 0% 50%}
 }
-@keyframes meshDriftDark{
-  0%{ background-position: 0% 0%, 100% 0%, 50% 100%, 0 0; }
-  100%{ background-position: 3% -3%, 97% 2%, 52% 97%, 0 0; }
-}
-
-/* Destello que se “pasea” */
-@keyframes sheenPan{
-  0%{transform: translateX(0px) translateY(0px);}
-  100%{transform: translateX(18px) translateY(-10px);}
+@keyframes sheenSweep{
+  0%{transform: rotate(0deg)}
+  100%{transform: rotate(360deg)}
 }
 
-/* ==========================================================================
-   LOADER (pantalla única al inicio)
-   ========================================================================== */
+/* Respetar reduce motion */
+@media (prefers-reduced-motion: reduce){
+  body{animation: none}
+  .bg-sheen::before{animation: none}
+}
+
+/* =========================================================
+   LOADER (primero y único visible al inicio)
+   ========================================================= */
 #loader{
-  position:fixed; inset:0;
-  display:flex; flex-direction:column; justify-content:center; align-items:center;
-  z-index:9999;
-  /* Fondo sutil más opaco para tapar todo mientras carga */
-  background: radial-gradient(600px 400px at 50% 40%, rgba(255,255,255,.22), transparent 60%),
-              rgba(10,10,20,.64);
-  backdrop-filter: blur(6px);
+  position: fixed; inset:0; z-index: 9999;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  background:
+    radial-gradient(1000px 700px at 20% 15%, rgba(255,255,255,.65) 0%, transparent 55%),
+    radial-gradient(1000px 700px at 80% 20%, rgba(255,255,255,.45) 0%, transparent 55%),
+    linear-gradient(135deg,#ffe8f3,#e6d0fa,#ffe8ae);
+  animation: gradientMove 12s ease infinite;
 }
 #loaderText{
-  font-size:1.5rem; font-weight:bold; color:#fff;
-  text-shadow: 0 2px 18px rgba(255,255,255,.5);
-  letter-spacing:.3px;
+  font-size:1.5rem; font-weight:700; color: var(--lavender);
+  text-shadow: 0 0 18px rgba(180,122,224,.35);
 }
-.loader-note{ font-size:2.5rem; animation: float 1.6s ease-in-out infinite; }
-@keyframes float{ 0%,100%{transform:translateY(0);} 50%{transform:translateY(-10px);} }
+.loader-note{ font-size:2.2rem; animation: float 1.5s ease-in-out infinite; }
+@keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-12px);} }
 
-/* ==========================================================================
-   SHELL: TODO lo demás se oculta hasta “ready”
-   ========================================================================== */
-.app-shell{ display:none; }
+/* Ocultar TODO lo demás al inicio */
+.hidden-on-load{ display:none !important; }
 
-/* ==========================================================================
-   MODULOS (tarjetas/secciones) 0.82 transparencia + halo premium
-   ========================================================================== */
-section{
-  max-width:var(--max-w);
-  margin:40px auto;
-  padding:20px;
-  border-radius:26px;
+/* =========================================================
+   BOTONES FLOTANTES (lado derecho)
+   ========================================================= */
+.floating-controls{
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  display: flex; flex-direction: column; gap: 16px;
+  z-index: 1100;
+}
+.fc-btn{
+  background:#fff; border:2px solid #000; border-radius:50%;
+  width:64px; height:64px; display:flex; align-items:center; justify-content:center;
+  font-size:2.2rem; color:#000; font-weight:700; cursor:pointer; outline:none;
+  box-shadow: 0 6px 24px rgba(0,0,0,.18);
+  transition: transform .16s, box-shadow .25s;
+}
+.fc-btn:hover{ transform: scale(1.1); box-shadow: 0 10px 28px rgba(0,0,0,.22);}
+body.dark .fc-btn{ background:#fff; color:#000; border-color:#000; }
+
+/* Botoncitos ✨ + / ✨ - (sin texto) */
+.fc-mini{
+  width:48px; height:48px; font-size:1.3rem;
+  border-radius:14px; border:2px solid #000; background:#fff; color:#000;
+  display:flex; align-items:center; justify-content:center; gap:4px;
+  box-shadow: 0 6px 22px rgba(0,0,0,.16);
+}
+.fc-mini span{ font-size:1.2rem; line-height:1; }
+.fc-mini strong{ font-size:1rem; font-weight:900; margin-left:2px; }
+
+/* Responsive controles */
+@media (max-width:700px){
+  .fc-btn{ width:54px; height:54px; font-size:1.9rem; }
+  .fc-mini{ width:44px; height:44px; }
+}
+
+/* =========================================================
+   MÓDULO INFORMATIVO (glass 0.82) + HALO
+   ========================================================= */
+.floating-info-module{
+  max-width: 540px;
+  margin: 38px auto 26px;
+  border-radius: 24px;
+  padding: 24px 18px 20px;
   text-align:center;
-
-  background: rgba(255,255,255,var(--module-alpha));
-  color:#111;
-
+  position: relative; z-index: 10;
+  background: var(--glass-bg-day);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   box-shadow:
-    0 8px 28px rgba(180,122,224,.22),
-    0 0 0 1px rgba(180,122,224,.10);
+    0 8px 34px rgba(0,0,0,.1),
+    0 0 0 1px rgba(255,255,255,.4) inset;
+}
+.floating-info-module::after{
+  /* halo premium */
+  content:'';
+  position:absolute; inset:-2px;
+  border-radius: 26px;
+  pointer-events:none;
+  box-shadow:
+    0 0 0 3px var(--glass-ring-day),
+    0 0 60px 12px rgba(255,232,174,.35);
+  mix-blend-mode: screen;
+}
 
+body.dark .floating-info-module{
+  background: var(--glass-bg-dark);
+  box-shadow:
+    0 10px 36px rgba(0,0,0,.35),
+    0 0 0 1px rgba(255,255,255,.12) inset;
+}
+body.dark .floating-info-module::after{
+  box-shadow:
+    0 0 0 3px var(--glass-ring-dark),
+    0 0 70px 14px rgba(255,232,174,.28);
+}
+
+/* Título neon */
+.floating-info-title{
+  font-family:'Dancing Script',cursive;
+  font-size:1.7rem; font-weight:800; margin-bottom:14px;
+}
+/* Lista */
+.floating-info-list{
+  list-style:none; padding:0; margin: 0 0 10px;
+  display:flex; flex-direction:column; gap:10px; align-items:center;
+}
+.floating-info-list li{
+  display:flex; align-items:center; gap:10px; justify-content:center;
+  font-size: 1rem;
+}
+.floating-info-list .icon{
+  font-size: 1.25rem;
+  display:inline-block;
+  transform: translateZ(0);
+  transition: transform .18s;
+}
+.floating-info-list li:hover .icon{ transform: scale(1.12) rotate(-6deg); }
+
+.floating-info-note{
+  font-size:.98rem; font-weight:700; opacity:.95;
+}
+
+/* =========================================================
+   SECCIONES (glass + halo) Y TITULARES NEON
+   ========================================================= */
+section{
+  max-width:720px;
+  margin:42px auto;
+  background: var(--glass-bg-day);
+  border-radius:26px;
+  padding:22px;
+  text-align:center;
+  position:relative;
+  z-index:5;
+  box-shadow:
+    0 8px 36px rgba(0,0,0,.12),
+    0 0 0 1px rgba(255,255,255,.4) inset;
   opacity:0; transform: translateY(40px);
-  transition: all 1s ease, background .3s;
-
-  backdrop-filter: blur(14px);
-  position:relative; z-index:2;
+  transition: opacity 1s ease, transform 1s ease, background .4s;
 }
 section.visible{ opacity:1; transform: translateY(0); }
 
-/* Halo animado sutil alrededor */
 section::after{
-  content:"";
+  content:'';
   position:absolute; inset:-2px;
-  border-radius:28px;
-  pointer-events:none;
-  background:
-    radial-gradient(220px 120px at 15% 0%, rgba(255,232,174,.28), transparent 70%),
-    radial-gradient(200px 120px at 85% 100%, rgba(180,122,224,.25), transparent 70%);
-  filter: blur(8px);
-  opacity:.8;
-  animation: glowPulse 6s ease-in-out infinite alternate;
+  border-radius:28px; pointer-events:none;
+  box-shadow:
+    0 0 0 3px var(--glass-ring-day),
+    0 0 70px 18px rgba(255,232,174,.34);
+  mix-blend-mode: screen;
 }
-@keyframes glowPulse{
-  0%{ opacity:.55; transform: scale(1); }
-  100%{ opacity:.9; transform: scale(1.01); }
-}
-
-/* Modo oscuro del módulo */
 body.dark section{
-  background: rgba(44,44,54,var(--module-alpha));
-  color:#eee;
+  background: var(--glass-bg-dark);
   box-shadow:
-    0 10px 30px rgba(20,20,28,.55),
-    0 0 0 1px rgba(255,232,174,.10);
+    0 12px 40px rgba(0,0,0,.35),
+    0 0 0 1px rgba(255,255,255,.12) inset;
+}
+body.dark section::after{
+  box-shadow:
+    0 0 0 3px var(--glass-ring-dark),
+    0 0 80px 18px rgba(255,232,174,.25);
 }
 
-/* ==========================================================================
-   TITULARES PRINCIPALES Y GLOW
-   ========================================================================== */
-.main-title,.sub-title{
-  font-family:'Dancing+Script',cursive;
-  background:linear-gradient(90deg, var(--day-neon-a), var(--day-neon-b), var(--day-neon-c));
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-  animation: bounceSlow 4s ease-in-out infinite, hueRotate 7s linear infinite;
-  text-shadow:
-    0 0 8px rgba(106,92,255,.35),
-    0 0 10px rgba(255,79,216,.25),
-    0 0 10px rgba(0,212,255,.25);
-}
-.main-title{ font-size:3rem; margin-bottom:10px; position:relative; z-index:2; }
-.sub-title{ font-size:3.2rem; font-weight:700; z-index:2; }
-
-@keyframes bounceSlow{ 0%,100%{transform:translateY(0);} 50%{transform:translateY(-8px);} }
-@keyframes hueRotate{ 0%{filter:hue-rotate(0deg);}100%{filter:hue-rotate(360deg);} }
-
-/* Modo oscuro: aplica paleta fluorescente A */
-body.dark .main-title,
-body.dark .sub-title{
-  background: linear-gradient(90deg, var(--neon-yellow), var(--neon-magenta), var(--neon-cyan));
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-  text-shadow:
-    0 0 9px rgba(255,244,79,.25),
-    0 0 12px rgba(255,79,216,.22),
-    0 0 12px rgba(0,240,255,.22);
+/* Titulares principales */
+.main-title, .sub-title{
+  font-family:'Dancing Script',cursive;
+  font-size:3rem; margin: 0 0 10px;
+  line-height:1.05;
 }
 
-/* Halito detrás del bloque de títulos */
+/* Holo halo detrás del título */
 .halo-title{
-  position:absolute; left:50%; top:0; transform:translateX(-50%);
-  width:340px; height:90px;
-  background: radial-gradient(circle, rgba(255,232,174,.40) 0%, transparent 80%);
-  z-index:1; filter:blur(16px); pointer-events:none;
+  position:absolute; left:50%; top:-6px; transform:translateX(-50%);
+  width:360px; height:90px;
+  background: radial-gradient(circle, rgba(255,232,174,.5) 0%, transparent 70%);
+  filter: blur(18px);
+  pointer-events:none; z-index:1;
 }
 
-/* ==========================================================================
-   TEXTO TIPO NEÓN — SET GLOBAL PARA LOS 7 TITULARES EN DAY MODE
-   ========================================================================== */
-.neon-day{
-  background: linear-gradient(90deg, var(--day-neon-a), var(--day-neon-b), var(--day-neon-c));
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+/* Subtítulo algo más pequeño */
+.sub-title{ font-size:3.2rem; font-weight:800; }
+
+/* =========================================================
+   NEON PREMIUM: targets y animaciones
+   ========================================================= */
+.neon-target{
+  position: relative;
   text-shadow:
-    0 0 8px rgba(106,92,255,.35),
-    0 0 10px rgba(255,79,216,.25),
-    0 0 10px rgba(0,212,255,.25);
+    0 0 calc(2px * var(--glow-intensity)) rgba(255,255,255,.2),
+    0 0 calc(8px * var(--glow-intensity)) rgba(255,255,255,.25);
 }
 
-/* Versión “plus” para el cronómetro */
-.neon-day-strong{
-  text-shadow:
-    0 0 10px rgba(106,92,255,.40),
-    0 0 12px rgba(255,79,216,.28),
-    0 0 12px rgba(0,212,255,.28);
+/* Aros externos según modo */
+body:not(.dark) .neon-target{
+  animation: neonDay 4.8s ease-in-out infinite alternate;
+}
+body.dark .neon-target{
+  animation: neonDark 4.8s ease-in-out infinite alternate;
 }
 
-/* Modo oscuro – clase neón compartida */
-.neon-dark{
-  background: linear-gradient(90deg, var(--neon-yellow), var(--neon-magenta), var(--neon-cyan));
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-  text-shadow:
-    0 0 9px rgba(255,244,79,.28),
-    0 0 12px rgba(255,79,216,.22),
-    0 0 12px rgba(0,240,255,.22);
+/* Fuerza blanco para textos que se pierden en oscuro */
+.force-white{ color:#fff !important; text-shadow:0 0 8px rgba(255,255,255,.28); }
+
+/* Día: ciclo pastel */
+@keyframes neonDay{
+  0%{ color: var(--neon-day-1); text-shadow: 0 0 calc(6px * var(--glow-intensity)) var(--neon-day-1),
+                                     0 0 calc(16px * var(--glow-intensity)) rgba(255,211,110,.35); }
+  50%{ color: var(--neon-day-2); text-shadow: 0 0 calc(6px * var(--glow-intensity)) var(--neon-day-2),
+                                      0 0 calc(16px * var(--glow-intensity)) rgba(197,155,255,.35); }
+  100%{ color: var(--neon-day-3); text-shadow:0 0 calc(6px * var(--glow-intensity)) var(--neon-day-3),
+                                      0 0 calc(16px * var(--glow-intensity)) rgba(255,211,110,.4); }
+}
+/* Oscuro: ciclo contrastado */
+@keyframes neonDark{
+  0%{ color: var(--neon-dark-1); text-shadow: 0 0 calc(8px * var(--glow-intensity)) rgba(200,255,93,.45),
+                                        0 0 calc(18px * var(--glow-intensity)) rgba(200,255,93,.25); }
+  50%{ color: var(--neon-dark-2); text-shadow: 0 0 calc(8px * var(--glow-intensity)) rgba(93,246,255,.45),
+                                         0 0 calc(18px * var(--glow-intensity)) rgba(93,246,255,.25); }
+  100%{ color: var(--neon-dark-3); text-shadow:0 0 calc(8px * var(--glow-intensity)) rgba(227,179,255,.48),
+                                         0 0 calc(18px * var(--glow-intensity)) rgba(227,179,255,.28); }
 }
 
-/* ==========================================================================
-   INFO MODULE (texto guía arriba)
-   ========================================================================== */
-.floating-info-module{
-  max-width: 510px;
-  margin: 42px auto 28px;
-  padding: 28px 20px 24px;
-  text-align:center;
-  position:relative; z-index:5;
-
-  /* 0.82 transparencia + glass */
-  background: rgba(255,255,255,var(--module-alpha));
-  backdrop-filter: blur(6px);
-  border-radius: 22px;
-
-  box-shadow:
-    0 10px 30px rgba(180,122,224,.22),
-    0 0 0 1px rgba(180,122,224,.10);
-}
-body.dark .floating-info-module{
-  background: rgba(44,44,54,var(--module-alpha));
-  color:#fff;
-  box-shadow:
-    0 10px 30px rgba(20,20,28,.55),
-    0 0 0 1px rgba(255,232,174,.10);
-}
-
-/* brillo vivo del módulo */
-.floating-info-module::after{
-  content:"";
-  position:absolute; inset:-2px; border-radius:24px; pointer-events:none;
-  background:
-    radial-gradient(260px 140px at 30% 0%, rgba(255,232,174,.32), transparent 70%),
-    radial-gradient(220px 130px at 85% 100%, rgba(180,122,224,.26), transparent 70%);
-  filter: blur(10px);
-  opacity:.9; animation: glowPulse 6s ease-in-out infinite alternate;
-}
-
-.floating-info-title{
-  font-family: 'Dancing Script', cursive;
-  font-size: 1.6rem; font-weight: 700; margin-bottom: 14px;
-}
-
-/* La versión neon adaptable (día / noche) */
-body:not(.dark) .floating-info-title{ /* día */
-  /* (1) de tu lista */
-  /* 👋 Personaliza la invitación */
-  /* ya hereda color por clase .neon-day si se la ponemos en HTML */
-}
-body.dark .floating-info-title{ /* noche */
-  /* se verá blanca si no le ponemos clase; si sí, usará neón */
-}
-
-.floating-info-list{
-  list-style:none; padding:0; margin:0 0 8px 0;
-  text-align:center; font-size:.98rem; display:inline-block; color:inherit;
-}
-.floating-info-list li{
-  margin-bottom: 11px; display:flex; align-items:center; gap:12px; justify-content:center;
-}
-.floating-info-list .icon{font-size:1.25rem; margin-right:7px; transition: transform .2s;}
-.floating-info-list li:hover .icon{ transform: scale(1.18) rotate(-10deg); }
-
-.floating-info-note{ font-size:.95rem; margin-top: 12px; font-weight:600; }
-
-/* Cuando pidas “texto blanco en oscuro”, lo forzamos */
-body.dark .force-white{ color:#fff !important; -webkit-text-fill-color: initial; text-shadow:none; }
-
-/* ==========================================================================
-   BOTONES FLOTANTES (lado derecho)
-   ========================================================================== */
-.floating-controls{
-  position: fixed;
-  right: 24px; left:auto; bottom: 24px;
-  display:flex; flex-direction:column; gap: 14px;
-  z-index: 600;
-}
-.floating-controls .fc-btn{
-  background:#fff; border:2px solid var(--border-strong);
-  border-radius:50%; width:68px; height:68px;
-  display:flex; align-items:center; justify-content:center;
-  font-size:2.15rem; color:#000; font-weight:700;
-  box-shadow: var(--shadow-strong);
-  cursor:pointer; outline:none; transition: transform .16s, background .2s;
-}
-.floating-controls .fc-btn:hover{ transform: scale(1.12); }
-body.dark .floating-controls .fc-btn{ background:#f7f7f7; color:#111; }
-@media (max-width:700px){
-  .floating-controls{right:8px; bottom:8px;}
-  .floating-controls .fc-btn{ width:54px; height:54px; font-size:1.8rem; }
-}
-
-/* Pequeño switch para brillo de neón */
-.glow-toggle{
-  width:auto; height:auto; border-radius:14px; padding:8px 12px;
-  font-size:.95rem; font-weight:700; border:2px solid #000; background:#fff; color:#000;
-}
-body.dark .glow-toggle{ background:#fff; color:#111; }
-
-/* ==========================================================================
-   IMAGEN, CONTENIDOS, TIPOGRAFÍA
-   ========================================================================== */
+/* =========================================================
+   IMAGEN, INFO, BOTONES 3D
+   ========================================================= */
 .baby-photo{
-  width:100%; max-width:600px; border-radius:12px; margin:20px auto;
+  width:100%; max-width:600px; border-radius:14px; display:block; margin: 18px auto;
+  box-shadow: 0 6px 30px rgba(0,0,0,.18);
   animation: zoomGlow 3s ease-in-out infinite alternate;
-  box-shadow:0 0 15px rgba(255,182,230,0.3); display:block;
 }
 @keyframes zoomGlow{
-  0%{transform:scale(1); box-shadow:0 0 15px rgba(255,182,230,0.3);}
-  100%{transform:scale(1.05); box-shadow:0 0 45px rgba(183,149,252,0.5);}
+  0%{ transform:scale(1); box-shadow:0 6px 26px rgba(0,0,0,.16) }
+  100%{ transform:scale(1.03); box-shadow:0 10px 40px rgba(0,0,0,.22) }
 }
 
-/* Globos opcionales (con click) – conservados */
-.balloon{position:fixed;width:60px;height:80px;border-radius:50% 50% 45% 45% / 60% 60% 80% 80%;opacity:.18;z-index:0;animation:float 9s infinite ease-in-out,fadeIn 2.3s cubic-bezier(.5,.1,.25,1.2) both;transition:opacity .4s;cursor:pointer;}
-.balloon1{ left:6vw; top:70vh; background: linear-gradient(120deg,#ffb6e6,#ffe8ae); animation-delay: 0s;}
-.balloon2{ left:80vw; top:85vh; background: linear-gradient(120deg,#b795fc,#ffb6e6); animation-delay: 2s;}
-.balloon3{ left:25vw; top:93vh; background: linear-gradient(120deg,#ffe8ae,#b795fc); animation-delay: 1.2s;}
-@keyframes float{0%{transform:translateY(0);}50%{transform:translateY(-40px);}100%{transform:translateY(0);}}
-@keyframes fadeIn{0%{opacity:0; transform:scale(.97) translateY(50px);}100%{opacity:1; transform:scale(1) translateY(0);}}
-
-/* Indicadores varios */
-.scroll-indicator{margin-top:15px;font-size:1.2rem;color:var(--accent-2);font-weight:700;animation:blink 1.5s infinite;}
-@keyframes blink{0%,100%{opacity:1;}50%{opacity:.45;}}
-.scroll-arrow{display:block;font-size:2rem;color:var(--accent-2);animation:bounceArrow 1.4s infinite;}
-@keyframes bounceArrow{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
-
-/* Contadores */
-#countdown{ font-size:1.6rem; font-weight:700; margin:8px 0; }
-#timer{ font-size:2rem; font-weight:800; margin:8px 0; }
-
-/* Títulos intermedios */
-.highlight-container{ font-size:1.8rem; font-weight:800; margin-bottom:20px; }
-
-/* Typewriter */
-.typewriter{
-  font-size:1.5rem; font-weight:800;
-  border-right:.15em solid transparent;
-  white-space:nowrap; overflow:hidden; width:0;
-  animation:type 4s steps(40,end) forwards, blinkCursor .75s step-end infinite;
+/* botonería */
+.btn-container{ display:flex; flex-direction:column; gap:16px; margin-top:20px; }
+.btn-3d{
+  width:100%; padding:16px; border-radius:16px;
+  background: linear-gradient(270deg,#ffb6e6,#ffe8ae,#e6d0fa);
+  background-size: 400% 400%; animation: gradientMove 6s ease infinite alternate;
+  color:#000; font-weight:800; text-decoration:none; text-align:center; font-size:1.05rem;
+  box-shadow: 0 8px 28px rgba(0,0,0,.18), 0 0 0 1px rgba(255,255,255,.35) inset;
+  position:relative; overflow:hidden; transition: transform .22s, box-shadow .28s;
 }
-@keyframes type{ to{ width:100%; } }
-@keyframes blinkCursor{ 50%{ border-color:transparent; } }
+.btn-3d:hover{ transform: translateY(-2px); box-shadow: 0 10px 34px rgba(0,0,0,.22), 0 0 0 1px rgba(255,255,255,.45) inset; }
+body.dark .btn-3d{
+  background: linear-gradient(270deg,#47386e,#232333,#ffe8ae);
+  color:#fff;
+}
 
-/* ==========================================================================
-   MÚSICA (cards + player)
-   ========================================================================== */
-.music-grid{ display:grid; grid-template-columns:1fr; gap:14px; margin-top:12px; }
-@media (min-width:560px){ .music-grid{grid-template-columns:1fr 1fr 1fr;} }
+/* “Confirmar” con aura */
+.btn-3d.confirmar{
+  border: 2px solid #ffe8ae;
+  box-shadow: 0 0 60px 20px rgba(255,232,174,.45), 0 2px 30px rgba(180,122,224,.45);
+  animation: magicConfirm 1.8s ease-in-out infinite alternate;
+}
+@keyframes magicConfirm{
+  0%{ box-shadow: 0 0 56px 18px rgba(255,232,174,.40), 0 2px 26px rgba(180,122,224,.38); }
+  100%{ box-shadow:0 0 80px 28px rgba(255,182,230,.45), 0 2px 36px rgba(255,232,174,.48); }
+}
 
+/* =========================================================
+   EQUALIZER flotante
+   ========================================================= */
+.equalizer{ display:none; gap:4px; position:fixed; right:20px; bottom:20px; z-index:800; }
+.bar{
+  width:6px; height:18px; background:#fff; border-radius:2px;
+  animation:equalize 1s infinite;
+}
+.bar:nth-child(2){ animation-delay:.2s }
+.bar:nth-child(3){ animation-delay:.4s }
+@keyframes equalize{ 0%{height:6px} 50%{height:18px} 100%{height:6px} }
+
+/* =========================================================
+   TIPOGRAFÍA y utilidades
+   ========================================================= */
+.typewriter{ font-size:1.5rem; font-weight:800; overflow:hidden; white-space:nowrap; }
+.info-block p{ font-weight:800; }
+
+.scroll-indicator{ margin-top:14px; font-size:1.1rem; font-weight:800; }
+.scroll-arrow{ display:inline-block; font-size:1.6rem; }
+
+/* Responsive */
+@media (max-width: 720px){
+  section{ margin: 26px 12px; padding: 16px; }
+  .main-title{ font-size:2.2rem }
+  .sub-title{ font-size:2.4rem }
+}
+
+/* =========================================================
+   MÚSICA – Tarjetas + Player (Volumen B)
+   ========================================================= */
+.music-grid{
+  display:grid; gap:14px; margin-top:10px;
+  grid-template-columns: 1fr;
+}
+@media (min-width:560px){
+  .music-grid{ grid-template-columns:1fr 1fr 1fr; }
+}
 .track-card{
-  background: rgba(255,255,255,var(--module-alpha));
+  background: var(--glass-bg-day);
   border-radius:16px; padding:14px;
-  box-shadow:0 4px 16px rgba(180,122,224,.18), 0 0 0 1px rgba(180,122,224,.10);
   display:flex; flex-direction:column; align-items:center; gap:10px;
-  transition:box-shadow .3s, transform .2s, background .3s;
-  color:inherit;
+  box-shadow:
+    0 8px 26px rgba(0,0,0,.12),
+    0 0 0 1px rgba(255,255,255,.35) inset;
+  transition: transform .2s, box-shadow .3s, background .3s;
+  position:relative;
+}
+.track-card::after{
+  content:'';
+  position:absolute; inset:-2px; border-radius:18px; pointer-events:none;
+  box-shadow:
+    0 0 0 2px var(--glass-ring-day),
+    0 0 40px 8px rgba(255,232,174,.32);
+  mix-blend-mode: screen;
 }
 body.dark .track-card{
-  background: rgba(44,44,54,var(--module-alpha));
-  box-shadow:0 10px 24px rgba(20,20,28,.55), 0 0 0 1px rgba(255,232,174,.10);
+  background: var(--glass-bg-dark);
+  box-shadow:
+    0 12px 28px rgba(0,0,0,.35),
+    0 0 0 1px rgba(255,255,255,.12) inset;
+}
+body.dark .track-card::after{
+  box-shadow:
+    0 0 0 2px var(--glass-ring-dark),
+    0 0 50px 10px rgba(255,232,174,.26);
 }
 .track-card.playing{
-  box-shadow:
-    0 12px 28px rgba(180,122,224,.35),
-    0 0 0 4px rgba(255,232,174,.25);
   transform: translateY(-2px);
 }
 
+/* Botón índice ①②③ */
 .track-btn{
   width:64px; height:64px; border-radius:50%;
-  border:2px solid var(--accent-1); background:#fff;
-  font-size:1.35rem; font-weight:800; cursor:pointer;
-  box-shadow:0 3px 12px rgba(0,0,0,.2);
-  color:var(--accent-1);
-  transition: transform .15s, box-shadow .3s, background .3s, color .3s, border-color .3s;
+  border:2px solid var(--lavender); background:#fff; color: var(--lavender);
+  font-size:1.35rem; font-weight:900; cursor:pointer;
+  box-shadow: 0 6px 20px rgba(0,0,0,.18);
+  transition: transform .15s, box-shadow .28s, background .28s, color .28s, border-color .28s;
 }
-body.dark .track-btn{ background:#f5f5f5; color:#111; }
-.track-btn:hover{ transform:scale(1.06); }
+.track-btn:hover{ transform: scale(1.06); }
 .track-btn.active{
-  background:linear-gradient(135deg, var(--accent-2), var(--accent-1), #ffe8ae);
-  color:#fff; border-color:var(--accent-2);
-  box-shadow:0 0 0 4px rgba(255,232,174,.35), 0 12px 26px rgba(180,122,224,.45);
-  animation:btnPulse 1.05s ease-in-out infinite alternate;
+  background: linear-gradient(135deg,var(--pink),var(--lavender),var(--gold));
+  color:#fff; border-color: var(--pink);
+  box-shadow: 0 0 0 4px rgba(255,232,174,.35), 0 12px 26px rgba(180,122,224,.45);
+  animation: btnPulse 1.1s ease-in-out infinite alternate;
 }
-@keyframes btnPulse{0%{transform:scale(1);}100%{transform:scale(1.06);}}
+@keyframes btnPulse{ 0%{ transform:scale(1)} 100%{ transform:scale(1.06)} }
 
-.track-title{ font-weight:800; text-align:center; }
-.track-hint{ font-size:.92rem; opacity:.9; text-align:center; }
+.track-title{ font-weight:800; }
+.track-hint{ font-size:.9rem; opacity:.9; }
 
-/* Mini player */
-.player{ width:100%; max-width:270px; display:flex; flex-direction:column; gap:6px; align-items:center; }
-.time{ font-size:.9rem; opacity:.95; font-weight:600; }
-.progress{ width:100%; height:7px; background:#eceaf4; border-radius:999px; overflow:hidden; position:relative; cursor:pointer; }
+/* Mini-player */
+.player{ width:100%; max-width:280px; display:flex; flex-direction:column; gap:6px; align-items:center; }
+.time{ font-size:.9rem; opacity:.92; }
+.progress{
+  width:100%; height:7px; background:#eceaf4; border-radius:999px; overflow:hidden; position:relative; cursor:pointer;
+}
 .progress .fill{
   height:100%; width:0%;
-  background:linear-gradient(90deg, var(--accent-2), var(--accent-1), #ffe8ae);
-  transition:width .2s;
+  background: linear-gradient(90deg,var(--pink),var(--lavender),var(--gold));
+  transition: width .2s;
 }
-body.dark .progress{ background:#3b3950; }
+body.dark .progress{ background:#3b3950 }
 
-/* Volumen “B” – slider horizontal (mobile friendly) */
-.controls{ display:flex; align-items:center; gap:10px; margin-top:4px; }
+/* Volumen B */
+.controls{ display:flex; align-items:center; gap:8px; margin-top:2px; }
 .mute-btn{
-  background:#fff; border:2px solid var(--accent-1); border-radius:10px;
-  cursor:pointer; padding:6px 10px; font-size:1rem; color:var(--accent-1);
-  font-weight:800; transition: transform .15s, background .3s, color .3s, border-color .3s;
+  background:#fff; border:2px solid var(--lavender); border-radius:12px; cursor:pointer;
+  padding:6px 10px; font-size:1rem; color:var(--lavender);
+  transition: transform .15s, background .28s, color .28s, border-color .28s;
 }
-body.dark .mute-btn{ background:#f5f5f5; color:#111; border-color:#111; }
-.mute-btn.active{ background:var(--accent-1); color:#fff; border-color:var(--accent-1); }
-.vol{ width:130px; }
+.mute-btn.active{ background:var(--lavender); color:#fff; border-color:var(--lavender); }
+.vol{ width:130px }
 
-/* ==========================================================================
-   EQUALIZER FAKE (on/off)
-   ========================================================================== */
-.equalizer{ display:inline-flex; gap:4px; position:fixed; right:20px; bottom:20px; z-index:550; }
-.bar{ width:6px; height:18px; background:#fff; border-radius:2px; animation:equalize 1s infinite; }
-.bar:nth-child(1){ animation-delay:0s; } .bar:nth-child(2){animation-delay:.2s;} .bar:nth-child(3){animation-delay:.4s;}
-@keyframes equalize{0%{height:6px;}50%{height:18px;}100%{height:6px;}}
+/* Forzar blancos en oscuro (los textos que pediste) */
+body.dark .force-white,
+body.dark .force-white *{ color:#fff !important; }
 
-/* ==========================================================================
-   BOTONES GRANDES (CTA)
-   ========================================================================== */
-.btn-container{ display:flex; flex-direction:column; gap:18px; margin-top:25px; }
-.btn-3d,.music-btn{
-  width:100%;
-  background:linear-gradient(270deg, var(--accent-2), #ffe8ae, var(--accent-1));
-  background-size:400% 400%; animation:gradientMove 6s infinite alternate;
-  color:#000; font-weight:800; border-radius:16px; padding:18px; font-size:1.1rem;
-  text-align:center; text-decoration:none; position:relative; overflow:hidden;
-  transition: transform .3s, box-shadow .3s;
-  box-shadow: 0 0 20px 6px rgba(255,232,174,.35), 0 2px 10px rgba(180,122,224,.8);
+/* =========================================================
+   SLIDER
+   ========================================================= */
+.slider-container{ position:relative; max-width:720px; margin: 0 auto; overflow:hidden;
+  border-radius:14px; box-shadow:0 6px 20px rgba(0,0,0,.22); }
+.slider{ display:flex; transition: transform .5s ease-in-out; }
+.slide{ min-width:100%; }
+.slide img{ width:100%; display:block; border-radius:12px; }
+.prev,.next{
+  position:absolute; top:50%; transform:translateY(-50%);
+  background-color:#ffffffcc; color:#b47ae0; font-weight:700; font-size:2rem;
+  border:none; cursor:pointer; padding:8px 14px; border-radius:50%;
+  box-shadow:0 2px 8px rgba(0,0,0,0.2); z-index:10;
 }
-@keyframes gradientMove{0%{background-position:0% 50%}100%{background-position:100% 50%}}
-body.dark .btn-3d, body.dark .music-btn{
-  background:linear-gradient(270deg, #47386e, #232333, #ffe8ae);
-  color:#fff; box-shadow: 0 2px 10px rgba(20,20,28,.65);
+.prev:hover,.next:hover{ background-color:#ffe8ae }
+.prev{ left:10px } .next{ right:10px }
+.dots{ text-align:center; margin-top:10px }
+.dots span{
+  height:12px; width:12px; display:inline-block; margin: 0 4px;
+  background:#ddd; border-radius:50%; cursor:pointer; transition: background-color .28s;
 }
-.btn-3d:hover,.music-btn:hover{ transform: translateY(-2px); }
+.dots .active{ background:#b47ae0 }
 
-/* Sparkling mini confetti en click */
-.sparkle-btn{
-  position:absolute; pointer-events:none; width:8px; height:8px;
-  background: radial-gradient(circle, #fff 80%, rgba(255,255,255,0.13) 100%);
-  border-radius:50%; opacity:.85; animation: sparkle-btn 1.2s infinite alternate;
-}
-@keyframes sparkle-btn{0%{opacity:.6; transform:scale(1);}100%{opacity:1; transform:scale(1.28);}}
-
-/* Confirm button highlight */
-.btn-3d.confirmar{
-  box-shadow: 0 0 60px 20px rgba(255,232,174,.65), 0 2px 30px rgba(180,122,224,.7);
-  border:2px solid #ffe8ae;
-  animation: magicConfirm 1.2s infinite alternate;
-}
-@keyframes magicConfirm{
-  0% { box-shadow: 0 0 60px 20px rgba(255,232,174,.6), 0 2px 30px rgba(180,122,224,.6);}
-  100%{ box-shadow: 0 0 90px 30px rgba(180,122,224,.55), 0 2px 40px rgba(255,232,174,.6);}
-}
-
-/* ==========================================================================
-   TEXTO ESPECÍFICO (futura mamá / secciones)
-   ========================================================================== */
-.future-mom-title{
-  font-family:'Dancing Script',cursive;
-  font-size:2.1rem; font-weight:700; margin:28px 0 22px; line-height:1.15; text-align:center;
-  background:linear-gradient(90deg, var(--day-neon-a), var(--day-neon-b), var(--day-neon-c));
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-  text-shadow:
-    0 0 8px rgba(106,92,255,.35),
-    0 0 10px rgba(255,79,216,.25),
-    0 0 10px rgba(0,212,255,.25);
-  animation: futureGlow 3.2s ease-in-out infinite alternate;
-}
-@keyframes futureGlow{
-  0%{ filter: drop-shadow(0 0 0 rgba(180,122,224,0)); }
-  100%{ filter: drop-shadow(0 0 6px rgba(180,122,224,.35)); }
-}
-body.dark .future-mom-title{
-  background: linear-gradient(90deg, var(--neon-yellow), var(--neon-magenta), var(--neon-cyan));
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-  text-shadow:
-    0 0 9px rgba(255,244,79,.25),
-    0 0 12px rgba(255,79,216,.22),
-    0 0 12px rgba(0,240,255,.22);
-}
-
-/* Subtítulos secciones genéricas */
-.section-title{
-  font-weight:800; font-size:2rem; margin:22px 0 18px; text-align:center;
-  color:inherit; letter-spacing:.3px;
-}
-
-/* ==========================================================================
-   MEDIA QUERIES BREVES
-   ========================================================================== */
-@media (max-width: 700px){
-  section{ padding:12px; }
-  .main-title{ font-size:2.3rem; }
-  .sub-title{ font-size:2.2rem; }
-  .baby-photo{ max-width:95vw; }
-  .floating-info-module{ padding: 16px 10px; }
-}
-
-/* ==========================================================================
-   EXTRA NEÓN – APLICADO A LOS 7 TÍTULOS (DÍA) Y AJUSTE OSCURO
-   ========================================================================== */
-/* Día: aplica neón a… 1) info-title, 2) countdown, 3) timer, 4) partyTitle,
-   5) genderRevealTitle, 6) typewriter (gracias), 7) gifFinal (mensaje final) */
-body:not(.dark) .floating-info-title,
-body:not(.dark) #countdown,
-body:not(.dark) #timer,
-body:not(.dark) #partyTitle,
-body:not(.dark) #genderRevealTitle,
-body:not(.dark) .typewriter,
-body:not(.dark) #gifFinal{
-  /* Solo color, brillo viene de clases / sombras definidas arriba */
-  /* Para reforzar, damos clase .neon-day por JS; aquí fallback */
-  background: linear-gradient(90deg, var(--day-neon-a), var(--day-neon-b), var(--day-neon-c));
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-  text-shadow:
-    0 0 8px rgba(106,92,255,.35),
-    0 0 10px rgba(255,79,216,.25),
-    0 0 10px rgba(0,212,255,.25);
-}
-body:not(.dark) #timer{
-  text-shadow:
-    0 0 10px rgba(106,92,255,.40),
-    0 0 12px rgba(255,79,216,.28),
-    0 0 12px rgba(0,212,255,.28);
-}
-
-/* Oscuro: asegurar neón también para Gender Reveal title (tu pendiente) */
-body.dark #genderRevealTitle{
-  background: linear-gradient(90deg, var(--neon-yellow), var(--neon-magenta), var(--neon-cyan));
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-  filter: drop-shadow(0 0 10px rgba(255,244,79,.28));
-}
-
-/* ==========================================================================
+/* =========================================================
    UTILIDADES
-   ========================================================================== */
-.hidden{ display:none !important; }
-.center{ display:flex; justify-content:center; align-items:center; }
+   ========================================================= */
+.center{ display:flex; align-items:center; justify-content:center }
+.mt-8{ margin-top:8px } .mt-12{ margin-top:12px } .mt-16{ margin-top:16px }
+.mb-8{ margin-bottom:8px } .mb-12{ margin-bottom:12px } .mb-16{ margin-bottom:16px }
+.hidden{ display:none !important }
 
-/* ==========================================================================
+/* =========================================================
    FIN CSS
-   ========================================================================== */
+   ========================================================= */
 </style>
 </head>
 <body>
 
-<!-- =========================================================
-     LOADER (único visible al entrar)
-     ========================================================= -->
-<div id="loader" aria-live="polite" aria-busy="true">
-  <p id="loaderText" class="force-white">Cargando invitación...</p>
-  <div class="loader-note" aria-hidden="true">🎵 🎶 🎵</div>
+<!-- ====== LOADER ÚNICO ====== -->
+<div id="loader">
+  <p id="loaderText" class="neon-target">Cargando invitación...</p>
+  <div class="loader-note">🎵 🎶 🎵</div>
 </div>
 
-<!-- =========================================================
-     CAPAS DE FONDO
-     ========================================================= -->
-<canvas id="starsCanvas" aria-hidden="true"></canvas>
+<!-- ====== CAPAS DE FONDO (ocultas al inicio) ====== -->
+<div class="bg-stars hidden-on-load" id="bgStars"><canvas id="starsCanvas"></canvas></div>
+<div class="bg-sheen hidden-on-load" id="bgSheen"></div>
 
-<!-- =========================================================
-     SHELL: TODO EL CONTENIDO (se muestra tras loader)
-     ========================================================= -->
-<div class="app-shell" id="app-shell">
+<!-- ====== CONTROLES FLOTANTES (ocultos al inicio) ====== -->
+<div class="floating-controls hidden-on-load" id="floatingControls">
+  <button class="fc-btn" id="theme-btn" title="Modo oscuro/claro">🌙</button>
+  <button class="fc-btn" id="lang-btn"  title="Idioma">🇲🇽</button>
+  <button class="fc-btn" id="music-btn" title="Música">🎵</button>
 
-  <!-- Botones flotantes lado derecho -->
-  <div class="floating-controls">
-    <button class="fc-btn" id="theme-btn" title="Modo oscuro/claro">🌙</button>
-    <button class="fc-btn" id="lang-btn" title="Idioma">🇲🇽</button>
-    <button class="fc-btn" id="music-btn" title="Música">🎵</button>
-
-    <!-- Toggle brillo de neones -->
-    <button class="glow-toggle" id="glow-btn" title="Brillo de neón">✨ Glow+</button>
-  </div>
-
-  <!-- Módulo explicativo -->
-  <div class="floating-info-module">
-    <div class="floating-info-title neon-day force-white" id="infoTitle">👋 Personaliza la invitación</div>
-    <ul class="floating-info-list">
-      <li class="force-white"><span class="icon">🌙</span> <span id="hintTheme">Cambia el modo de luz, por si prefieres la invitación clarita o oscura.</span></li>
-      <li class="force-white"><span class="icon">🇲🇽</span><span class="icon">🇺🇸</span> <span id="hintLang">Elige tu idioma favorito: español o inglés.</span></li>
-      <li class="force-white"><span class="icon">🎵</span> <span id="hintMusic">Ponle música de fondo para ambientar el momento.</span></li>
-    </ul>
-    <div class="floating-info-note force-white" id="infoNote">¡Haz clic en los botones de abajo a la izquierda y disfruta la experiencia como tú quieras!</div>
-  </div>
-
-  <!-- Globos decorativos (click pop) -->
-  <div class="balloon balloon1" onclick="popBalloon(this)"></div>
-  <div class="balloon balloon2" onclick="popBalloon(this)"></div>
-  <div class="balloon balloon3" onclick="popBalloon(this)"></div>
-  <audio id="popBalloonSound" src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/pop.mp3"></audio>
-
-  <!-- Equalizer fake -->
-  <div class="equalizer" id="equalizer" style="display:none;">
-    <div class="bar"></div><div class="bar"></div><div class="bar"></div>
-  </div>
-
-  <main id="main-content">
-    <!-- QR + Música -->
-    <section>
-      <div class="qr-container" style="display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:12px;margin-bottom:14px;">
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://dannzanetti.github.io/invitacion-aitana/" alt="QR Invitación" style="width:90px;height:90px;border-radius:12px;box-shadow:0 2px 14px rgba(180,122,224,.2);"/>
-        <a href="https://api.whatsapp.com/send?text=¡Te%20invito%20al%20Baby%20Shower%20de%20Aitana!%20https://dannzanetti.github.io/invitacion-aitana/" target="_blank" class="btn-3d" id="qrBtn" style="font-size:1rem;width:auto;padding:8px 14px;display:inline-block;margin-top:4px;">💬 Compartir por WhatsApp</a>
-      </div>
-
-      <!-- Música: 3 pistas -->
-      <div id="listenMusic" class="force-white" style="margin-bottom:10px;">🎵 Haz clic en un botón para escuchar música 🎶</div>
-
-      <div class="music-grid" id="musicGrid">
-        <!-- Jump -->
-        <div class="track-card" data-key="jump">
-          <button class="track-btn" data-src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/jump.mp3" data-key="jump" title="🎵 Toca para reproducir / pausar">①</button>
-          <div class="track-title force-white" id="song-jump">The Outfield — All The Love In The World</div>
-          <div class="track-hint force-white" id="hint-jump">🎵 Toca para reproducir / pausar</div>
-          <div class="player">
-            <div class="progress" data-key="jump" id="progress-jump"><div class="fill" id="fill-jump"></div></div>
-            <div class="time force-white"><span id="elapsed-jump">0:00</span> / <span id="duration-jump">0:00</span></div>
-            <div class="controls">
-              <button class="mute-btn" data-key="jump" id="mute-jump" title="Silenciar/Activar sonido">🔊</button>
-              <input class="vol" type="range" min="0" max="100" value="80" id="vol-jump" title="Volumen" />
-            </div>
-          </div>
-        </div>
-        <!-- Coldplay -->
-        <div class="track-card" data-key="coldplay">
-          <button class="track-btn" data-src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/coldplay.mp3" data-key="coldplay" title="🎵 Toca para reproducir / pausar">②</button>
-          <div class="track-title force-white" id="song-coldplay">Coldplay — A Sky Full Of Stars</div>
-          <div class="track-hint force-white" id="hint-coldplay">🎵 Toca para reproducir / pausar</div>
-          <div class="player">
-            <div class="progress" data-key="coldplay" id="progress-coldplay"><div class="fill" id="fill-coldplay"></div></div>
-            <div class="time force-white"><span id="elapsed-coldplay">0:00</span> / <span id="duration-coldplay">0:00</span></div>
-            <div class="controls">
-              <button class="mute-btn" data-key="coldplay" id="mute-coldplay" title="Silenciar/Activar sonido">🔊</button>
-              <input class="vol" type="range" min="0" max="100" value="80" id="vol-coldplay" title="Volumen" />
-            </div>
-          </div>
-        </div>
-        <!-- ROSÉ & Bruno Mars -->
-        <div class="track-card" data-key="bruno">
-          <button class="track-btn" data-src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/bruno.mp3" data-key="bruno" title="🎵 Toca para reproducir / pausar">③</button>
-          <div class="track-title force-white" id="song-bruno">ROSÉ & Bruno Mars — APT.</div>
-          <div class="track-hint force-white" id="hint-bruno">🎵 Toca para reproducir / pausar</div>
-          <div class="player">
-            <div class="progress" data-key="bruno" id="progress-bruno"><div class="fill" id="fill-bruno"></div></div>
-            <div class="time force-white"><span id="elapsed-bruno">0:00</span> / <span id="duration-bruno">0:00</span></div>
-            <div class="controls">
-              <button class="mute-btn" data-key="bruno" id="mute-bruno" title="Silenciar/Activar sonido">🔊</button>
-              <input class="vol" type="range" min="0" max="100" value="80" id="vol-bruno" title="Volumen" />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Reproductor único (audio real) -->
-      <audio id="music" preload="none"></audio>
-      <audio id="popSound">
-        <source src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/pop.mp3" type="audio/mpeg">
-      </audio>
-    </section>
-
-    <!-- Hero con títulos -->
-    <section style="position:relative;">
-      <div class="halo-title"></div>
-      <h1 class="main-title">🎀 Baby Shower 🎀</h1>
-      <h2 class="sub-title">🎀 AITANA 🎀</h2>
-      <img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/Baby.png" alt="Baby" class="baby-photo"/>
-      <p id="futureMom" class="future-mom-title">La futura Mamá, Fer</p>
-      <img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/0.JPG" alt="La futura Mamá, Fer" class="baby-photo" style="margin-top:12px;max-width:480px;">
-    </section>
-
-    <!-- Countdown -->
-    <section>
-      <div id="countdown" class="neon-day">🎈 ¡Faltan X días para el gran día! 🎈</div>
-      <div id="timer" class="neon-day neon-day-strong">00d : 00h : 00m : 00s</div>
-    </section>
-
-    <!-- Info básica -->
-    <section class="info-block">
-      <p id="infoDate"   class="force-white">📅 <strong>Sábado 20 de Septiembre</strong></p>
-      <p id="infoTime"   class="force-white">⏰ <strong>2:00 PM – 11:00 PM</strong></p>
-      <p id="infoPlace"  class="force-white">🏘️ <strong>Residencial Sendero Santa Fe</strong></p>
-      <p id="infoRSVP"   class="force-white">⚠️ <strong>Confirma antes del 14 de septiembre</strong></p>
-    </section>
-
-    <!-- Te esperamos con -->
-    <section>
-      <div class="highlight-container neon-day" id="partyTitle">¡Te esperamos con!</div>
-      <div style="margin-top:20px;">
-        <p id="food"   class="force-white">🌮 Tacos de guisado</p>
-        <p id="bar"    class="force-white">🍸 Barra libre:</p>
-        <p id="drinks" class="force-white">🍻 Cervezas | 🍹 Tequila | 🥃 Ron | 🥂 Whisky</p>
-        <p id="fun"    class="force-white">🎲 Juegos | 🎖️ Rifas | 💃 Baile</p>
-      </div>
-    </section>
-
-    <!-- Botonera -->
-    <section>
-      <div class="btn-container">
-        <a href="https://waze.com/ul/h9g3qhubmq" target="_blank" class="btn-3d" id="waze">📍 Cómo llegar con Waze</a>
-        <a href="https://maps.app.goo.gl/aJot9z4Qja81DHsw8?g_st=aw" target="_blank" class="btn-3d" id="gmaps">📍 Cómo llegar con Google Maps</a>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSd-vY-AAhe7GGVQdxJmZvxr-5m6rQh7PgrfKwXY0Dn1-ksgRw/viewform" target="_blank" class="btn-3d confirmar" id="confirmar-btn">✅ Confirmar asistencia</a>
-        <a href="https://mesaderegalos.liverpool.com.mx/milistaderegalos/51734815" target="_blank" class="btn-3d" id="liverpool">🎁 Mesa de regalos Liverpool</a>
-        <a href="https://www.amazon.com.mx/baby-reg/waldodanielalvarez-martinez-diciembre-2025-ciudaddemexico/187ABTMWV8E8D" target="_blank" class="btn-3d" id="amazon">📦 Mesa de regalos Amazon</a>
-      </div>
-    </section>
-
-    <!-- Slider fotos -->
-    <section>
-      <h2 id="genderRevealTitle" class="section-title neon-day">¡Así vivimos el Gender Reveal! 🎉💗</h2>
-
-      <style>
-        .slider-container{position:relative;max-width:720px;margin:0 auto;overflow:hidden;border-radius:14px;box-shadow:0 6px 20px rgba(180,122,224,0.2);}
-        .slider{display:flex;transition:transform .5s ease-in-out;}
-        .slide{min-width:100%;box-sizing:border-box;}
-        .slide img{width:100%;height:auto;display:block;border-radius:12px;}
-        .prev,.next{
-          position:absolute;top:50%;transform:translateY(-50%);
-          background-color:#ffffffcc;color:#b47ae0;font-weight:bold;font-size:2rem;border:none;cursor:pointer;padding:8px 14px;border-radius:50%;
-          box-shadow:0 2px 8px rgba(0,0,0,0.2);z-index:10;
-        }
-        .prev:hover,.next:hover{background-color:#ffe8ae;}
-        .prev{left:10px;}.next{right:10px;}
-        .dots{text-align:center;margin-top:12px;}
-        .dots span{height:12px;width:12px;margin:0 4px;background-color:#ddd;border-radius:50%;display:inline-block;cursor:pointer;transition:background-color .3s;}
-        .dots .active{background-color:#b47ae0;}
-      </style>
-
-      <div class="slider-container">
-        <div class="slider" id="photoSlider">
-          <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/1.JPG"  alt="Foto 1"></div>
-          <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/2.JPG"  alt="Foto 2"></div>
-          <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/3.JPG"  alt="Foto 3"></div>
-          <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/4.JPG"  alt="Foto 4"></div>
-          <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/5.JPG"  alt="Foto 5"></div>
-          <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/6.JPG"  alt="Foto 6"></div>
-          <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/7.JPG"  alt="Foto 7"></div>
-          <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/8.JPG"  alt="Foto 8"></div>
-          <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/9.JPG"  alt="Foto 9"></div>
-          <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/10.JPG" alt="Foto 10"></div>
-          <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/11.JPG" alt="Foto 11"></div>
-          <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/12.JPG" alt="Foto 12"></div>
-          <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/13.JPG" alt="Foto 13"></div>
-          <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/14.JPG" alt="Foto 14"></div>
-          <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/15.JPG" alt="Foto 15"></div>
-          <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/16.JPG" alt="Foto 16"></div>
-          <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/17.JPG" alt="Foto 17"></div>
-          <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/18.JPG" alt="Foto 18"></div>
-          <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/19.JPG" alt="Foto 19"></div>
-          <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/20.JPG" alt="Foto 20"></div>
-          <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/21.JPG" alt="Foto 21"></div>
-        </div>
-        <button class="prev" onclick="prevSlide()">❮</button>
-        <button class="next" onclick="nextSlide()">❯</button>
-        <div class="dots" id="dotsContainer"></div>
-      </div>
-    </section>
-
-    <!-- Mensaje final -->
-    <section>
-      <p class="typewriter neon-day">💕 ¡Gracias por acompañarnos! 💕</p>
-      <div class="gif-container" style="display:flex;justify-content:center;align-items:center;margin-top:30px;position:relative;">
-        <img id="finalGif" src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExeWV0NDMza3c2eXVsM2VrMnNhdHcyMG0yN2Z5YzN5aWV2bHJpdjk1OSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/QMkPpxPDYY0fu/giphy.gif" alt="GIF Final" style="width:180px;z-index:2;position:relative;cursor:pointer;transition:box-shadow .2s;">
-      </div>
-      <p id="gifFinal" class="neon-day" style="margin-top:20px;font-size:1.4rem;font-weight:800;">✨ ¡Será un día mágico para celebrar juntos! ✨</p>
-    </section>
-
-    <!-- Calendarios -->
-    <section>
-      <div style="display:flex;justify-content:space-between;gap:10px;">
-        <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Baby+Shower+Aitana&dates=20250920T200000Z/20250921T050000Z&details=Baby+Shower+de+Aitana&location=Residencial+Sendero+Santa+Fe" target="_blank" class="btn-3d" id="calendarG" style="width:48%;">📅 Google Calendar</a>
-        <a href="https://dannzanetti.github.io/invitacion-aitana/babyshower.ics" class="btn-3d" id="calendarA" style="width:48%;">🍎 Apple Calendar</a>
-      </div>
-    </section>
-  </main>
+  <!-- Intensidad de glow -->
+  <button class="fc-mini" id="glow-plus"  title="Más brillo (neón)"><span>✨</span><strong>+</strong></button>
+  <button class="fc-mini" id="glow-minus" title="Menos brillo (neón)"><span>✨</span><strong>−</strong></button>
 </div>
+
+<!-- ====== MÓDULO INFORMATIVO (sin iconos dobles) ====== -->
+<div class="floating-info-module hidden-on-load" id="infoModule">
+  <div class="floating-info-title neon-target force-white" id="infoTitle">👋 Personaliza la invitación</div>
+  <ul class="floating-info-list">
+    <li class="force-white">
+      <span class="icon">🌙</span>
+      <span id="hintTheme">Cambia el modo de luz, por si prefieres la invitación clarita o oscura.</span>
+    </li>
+    <li class="force-white">
+      <span class="icon">🇲🇽 🇺🇸</span>
+      <span id="hintLang">Elige tu idioma favorito: español o inglés.</span>
+    </li>
+    <li class="force-white">
+      <span class="icon">🎵</span>
+      <span id="hintMusic">Ponle música de fondo para ambientar el momento.</span>
+    </li>
+  </ul>
+  <div class="floating-info-note force-white" id="infoNote">
+    ¡Haz clic en los botones de abajo a la izquierda y disfruta la experiencia como tú quieras!
+  </div>
+</div>
+
+<!-- ====== EQUALIZER ====== -->
+<div class="equalizer hidden-on-load" id="equalizer"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
+
+<!-- ====== CONTENIDO PRINCIPAL ====== -->
+<main class="hidden-on-load" id="main-content">
+
+  <!-- Sección QR + Música -->
+  <section id="secStart">
+    <div class="halo-title"></div>
+
+    <!-- QR + WhatsApp -->
+    <div class="qr-container">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://dannzanetti.github.io/invitacion-aitana/" alt="QR Invitación" style="width:100px;height:100px;border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,.16);" />
+      <a href="https://api.whatsapp.com/send?text=¡Te%20invito%20al%20Baby%20Shower%20de%20Aitana!%20https://dannzanetti.github.io/invitacion-aitana/"
+         target="_blank" class="btn-3d mt-8" id="qrBtn"
+         style="font-size:1rem;width:auto;padding:10px 16px;display:inline-block;">
+        💬 Compartir por WhatsApp
+      </a>
+    </div>
+
+    <!-- Música: 3 pistas -->
+    <div id="listenMusic" class="mt-12 force-white">🎵 Haz clic en un botón para escuchar música 🎶</div>
+
+    <div class="music-grid" id="musicGrid">
+      <!-- Jump -->
+      <div class="track-card" data-key="jump">
+        <button class="track-btn" data-src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/jump.mp3" data-key="jump" title="🎵 Toca para reproducir / pausar">①</button>
+        <div class="track-title force-white" id="song-jump">The Outfield — All The Love In The World</div>
+        <div class="track-hint force-white" id="hint-jump">🎵 Toca para reproducir / pausar</div>
+        <div class="player">
+          <div class="progress" data-key="jump" id="progress-jump"><div class="fill" id="fill-jump"></div></div>
+          <div class="time force-white"><span id="elapsed-jump">0:00</span> / <span id="duration-jump">0:00</span></div>
+          <div class="controls">
+            <button class="mute-btn" data-key="jump" id="mute-jump" title="Silenciar/Activar sonido">🔊</button>
+            <input class="vol" type="range" min="0" max="100" value="80" id="vol-jump" title="Volumen">
+          </div>
+        </div>
+      </div>
+
+      <!-- Coldplay -->
+      <div class="track-card" data-key="coldplay">
+        <button class="track-btn" data-src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/coldplay.mp3" data-key="coldplay" title="🎵 Toca para reproducir / pausar">②</button>
+        <div class="track-title force-white" id="song-coldplay">Coldplay — A Sky Full Of Stars</div>
+        <div class="track-hint force-white" id="hint-coldplay">🎵 Toca para reproducir / pausar</div>
+        <div class="player">
+          <div class="progress" data-key="coldplay" id="progress-coldplay"><div class="fill" id="fill-coldplay"></div></div>
+          <div class="time force-white"><span id="elapsed-coldplay">0:00</span> / <span id="duration-coldplay">0:00</span></div>
+          <div class="controls">
+            <button class="mute-btn" data-key="coldplay" id="mute-coldplay" title="Silenciar/Activar sonido">🔊</button>
+            <input class="vol" type="range" min="0" max="100" value="80" id="vol-coldplay" title="Volumen">
+          </div>
+        </div>
+      </div>
+
+      <!-- ROSÉ & Bruno Mars -->
+      <div class="track-card" data-key="bruno">
+        <button class="track-btn" data-src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/bruno.mp3" data-key="bruno" title="🎵 Toca para reproducir / pausar">③</button>
+        <div class="track-title force-white" id="song-bruno">ROSÉ & Bruno Mars — APT.</div>
+        <div class="track-hint force-white" id="hint-bruno">🎵 Toca para reproducir / pausar</div>
+        <div class="player">
+          <div class="progress" data-key="bruno" id="progress-bruno"><div class="fill" id="fill-bruno"></div></div>
+          <div class="time force-white"><span id="elapsed-bruno">0:00</span> / <span id="duration-bruno">0:00</span></div>
+          <div class="controls">
+            <button class="mute-btn" data-key="bruno" id="mute-bruno" title="Silenciar/Activar sonido">🔊</button>
+            <input class="vol" type="range" min="0" max="100" value="80" id="vol-bruno" title="Volumen">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reproductor único -->
+    <audio id="music" preload="none"></audio>
+  </section>
+
+  <!-- Títulos principales e imagen -->
+  <section style="position:relative;">
+    <div class="halo-title"></div>
+    <h1 class="main-title neon-target">🎀 Baby Shower 🎀</h1>
+    <h2 class="sub-title neon-target">🎀 AITANA 🎀</h2>
+
+    <img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/Baby.png" alt="Baby" class="baby-photo"/>
+
+    <p id="futureMom" class="future-mom-title neon-target">La futura Mamá, Fer</p>
+    <img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/0.JPG" alt="La futura Mamá, Fer" class="baby-photo" style="max-width:480px;">
+  </section>
+
+  <!-- Countdown -->
+  <section>
+    <div id="countdown" class="neon-target force-white">🎈 ¡Faltan X días para el gran día! 🎈</div>
+    <div id="timer" class="neon-target force-white">00d : 00h : 00m : 00s</div>
+  </section>
+
+  <!-- Info principal -->
+  <section class="info-block">
+    <div class="highlight-container neon-target" id="partyTitle">¡Te esperamos con!</div>
+
+    <div style="margin-top:16px;">
+      <p id="infoDate"  class="force-white">📅 <strong>Sábado 20 de Septiembre</strong></p>
+      <p id="infoTime"  class="force-white">⏰ <strong>2:00 PM – 11:00 PM</strong></p>
+      <p id="infoPlace" class="force-white">🏘️ <strong>Residencial Sendero Santa Fe</strong></p>
+      <p id="infoRSVP"  class="force-white">⚠️ <strong>Confirma antes del 14 de septiembre</strong></p>
+
+      <p id="food"   class="force-white mt-12">🌮 Tacos de guisado</p>
+      <p id="bar"    class="force-white">🍸 Barra libre:</p>
+      <p id="drinks" class="force-white">🍻 Cervezas | 🍹 Tequila | 🥃 Ron | 🥂 Whisky</p>
+      <p id="fun"    class="force-white">🎲 Juegos | 🎖️ Rifas | 💃 Baile</p>
+    </div>
+  </section>
+
+  <!-- Botones de navegación / regalos / confirmar -->
+  <section>
+    <div class="btn-container">
+      <a href="https://waze.com/ul/h9g3qhubmq" target="_blank" class="btn-3d" id="waze">📍 Cómo llegar con Waze</a>
+      <a href="https://maps.app.goo.gl/aJot9z4Qja81DHsw8?g_st=aw" target="_blank" class="btn-3d" id="gmaps">📍 Cómo llegar con Google Maps</a>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSd-vY-AAhe7GGVQdxJmZvxr-5m6rQh7PgrfKwXY0Dn1-ksgRw/viewform" target="_blank" class="btn-3d confirmar" id="confirmar-btn">✅ Confirmar asistencia</a>
+      <a href="https://mesaderegalos.liverpool.com.mx/milistaderegalos/51734815" target="_blank" class="btn-3d" id="liverpool">🎁 Mesa de regalos Liverpool</a>
+      <a href="https://www.amazon.com.mx/baby-reg/waldodanielalvarez-martinez-diciembre-2025-ciudaddemexico/187ABTMWV8E8D" target="_blank" class="btn-3d" id="amazon">📦 Mesa de regalos Amazon</a>
+
+      <!-- *** Calendarios movidos aquí, debajo de Amazon *** -->
+      <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Baby+Shower+Aitana&dates=20250920T200000Z/20250921T050000Z&details=Baby+Shower+de+Aitana&location=Residencial+Sendero+Santa+Fe"
+         target="_blank" class="btn-3d" id="calendarG">📅 Google Calendar</a>
+      <a href="https://dannzanetti.github.io/invitacion-aitana/babyshower.ics" class="btn-3d" id="calendarA">🍎 Apple Calendar</a>
+    </div>
+  </section>
+
+  <!-- Slider Gender Reveal -->
+  <section>
+    <h2 id="genderRevealTitle" class="section-title neon-target force-white">¡Así vivimos el Gender Reveal! 🎉💗</h2>
+
+    <div class="slider-container">
+      <div class="slider" id="photoSlider">
+        <!-- Fotos -->
+        <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/1.JPG"  alt="Foto 1"></div>
+        <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/2.JPG"  alt="Foto 2"></div>
+        <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/3.JPG"  alt="Foto 3"></div>
+        <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/4.JPG"  alt="Foto 4"></div>
+        <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/5.JPG"  alt="Foto 5"></div>
+        <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/6.JPG"  alt="Foto 6"></div>
+        <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/7.JPG"  alt="Foto 7"></div>
+        <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/8.JPG"  alt="Foto 8"></div>
+        <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/9.JPG"  alt="Foto 9"></div>
+        <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/10.JPG" alt="Foto 10"></div>
+        <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/11.JPG" alt="Foto 11"></div>
+        <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/12.JPG" alt="Foto 12"></div>
+        <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/13.JPG" alt="Foto 13"></div>
+        <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/14.JPG" alt="Foto 14"></div>
+        <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/15.JPG" alt="Foto 15"></div>
+        <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/16.JPG" alt="Foto 16"></div>
+        <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/17.JPG" alt="Foto 17"></div>
+        <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/18.JPG" alt="Foto 18"></div>
+        <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/19.JPG" alt="Foto 19"></div>
+        <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/20.JPG" alt="Foto 20"></div>
+        <div class="slide"><img src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/21.JPG" alt="Foto 21"></div>
+      </div>
+      <button class="prev" onclick="prevSlide()">❮</button>
+      <button class="next" onclick="nextSlide()">❯</button>
+      <div class="dots" id="dotsContainer"></div>
+    </div>
+  </section>
+
+  <!-- Cierre -->
+  <section>
+    <p class="typewriter neon-target" id="thanksTitle">💕 ¡Gracias por acompañarnos! 💕</p>
+    <div class="center">
+      <img id="finalGif" src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExeWV0NDMza3c2eXVsM2VrMnNhdHcyMG0yN2Z5YzN5aWV2bHJpdjk1OSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/QMkPpxPDYY0fu/giphy.gif" alt="GIF Final" style="width:180px;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.2); cursor:pointer;" />
+    </div>
+    <p id="gifFinal" class="mt-12 neon-target">✨ ¡Será un día mágico para celebrar juntos! ✨</p>
+  </section>
+
+</main>
+
+<!-- ====== AUDIOS VARIOS ====== -->
+<audio id="popBalloonSound" class="hidden-on-load" src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/pop.mp3"></audio>
+<audio id="popSound" class="hidden-on-load">
+  <source src="https://raw.githubusercontent.com/dannzanetti/invitacion-aitana/main/pop.mp3" type="audio/mpeg">
+</audio>
 
 <script>
 /* =========================================================
-   i18n
+   UTILIDADES JS
+   ========================================================= */
+const $ = (sel, ctx=document) => ctx.querySelector(sel);
+const $$ = (sel, ctx=document) => Array.from(ctx.querySelectorAll(sel));
+const byId = (id) => document.getElementById(id);
+
+/* Persistencia de glow */
+function getGlow(){ return parseInt(localStorage.getItem('glowIntensity') || '2', 10); }
+function setGlow(v){ localStorage.setItem('glowIntensity', String(v)); document.documentElement.style.setProperty('--glow-intensity', v); }
+
+/* =========================================================
+   TRADUCCIONES
    ========================================================= */
 const translations = {
   es: {
+    loader: "Cargando invitación...",
+    infoTitle: "👋 Personaliza la invitación",
+    hintTheme: "Cambia el modo de luz, por si prefieres la invitación clarita o oscura.",
+    hintLang:  "Elige tu idioma favorito: español o inglés.",
+    hintMusic: "Ponle música de fondo para ambientar el momento.",
+    infoNote: "¡Haz clic en los botones de abajo a la izquierda y disfruta la experiencia como tú quieras!",
+
     mainTitle:'🎀 Baby Shower 🎀',
     subTitle:'🎀 AITANA 🎀',
+
     qrBtn:'💬 Compartir por WhatsApp',
     listenMusic:'🎵 Haz clic en un botón para escuchar música 🎶',
-    musicBtn:'▶️ Música ON/OFF',
-    scroll:'¡Sigue bajando para ver todos los detalles!',
+
     countdown:'🎈 ¡Faltan X días para el gran día! 🎈',
     today:'🎉 ¡Hoy es el gran día! 🎉',
     timer:'00d : 00h : 00m : 00s',
+
     infoDate:'📅 <strong>Sábado 20 de Septiembre</strong>',
     infoTime:'⏰ <strong>2:00 PM – 11:00 PM</strong>',
     infoPlace:'🏘️ <strong>Residencial Sendero Santa Fe</strong>',
     infoRSVP:'⚠️ <strong>Confirma antes del 14 de septiembre</strong>',
+
     partyTitle:'¡Te esperamos con!',
     food:'🌮 Tacos de guisado',
     bar:'🍸 Barra libre:',
     drinks:'🍻 Cervezas | 🍹 Tequila | 🥃 Ron | 🥂 Whisky',
     fun:'🎲 Juegos | 🎖️ Rifas | 💃 Baile',
+
     waze:'📍 Cómo llegar con Waze',
     gmaps:'📍 Cómo llegar con Google Maps',
     confirmBtn:'✅ Confirmar asistencia',
@@ -883,26 +812,18 @@ const translations = {
     amazon:'📦 Mesa de regalos Amazon',
     calendarG:'📅 Google Calendar',
     calendarA:'🍎 Apple Calendar',
+
     thanks:'💕 ¡Gracias por acompañarnos! 💕',
     gifFinal:'✨ ¡Será un día mágico para celebrar juntos! ✨',
+
     esEn:'🇲🇽',
     confirmMsg:'¡Gracias por confirmar tu asistencia! 🎉',
     joyMsg:'¡Gracias por tu alegría! 💜',
-    loading:'Cargando invitación...',
-    floatingInfoTitle:"👋 Personaliza la invitación",
-    floatingInfoList:[
-      "🌙 Cambia el modo de luz, por si prefieres la invitación clarita o oscura.",
-      "🇲🇽 🇺🇸 Elige tu idioma favorito: español o inglés.",
-      "🎵 Ponle música de fondo para ambientar el momento."
-    ],
-    floatingInfoNote:"¡Haz clic en los botones de abajo a la izquierda y disfruta la experiencia como tú quieras!",
-    futureMom:"La futura Mamá, Fer",
-    genderRevealTitle:"¡Así vivimos el Gender Reveal! 🎉💗",
-    playPause:"🎵 Toca para reproducir / pausar",
-    muteTitle:"Silenciar/Activar sonido",
-    volumeTitle:"Volumen",
-    glowOn:"✨ Glow+",
-    glowOff:"✨ Glow−",
+
+    playPause:'🎵 Toca para reproducir / pausar',
+    muteTitle:'Silenciar/Activar sonido',
+    volumeTitle:'Volumen',
+
     songs:{
       jump:{artist:"The Outfield",title:"All The Love In The World"},
       coldplay:{artist:"Coldplay",title:"A Sky Full Of Stars"},
@@ -910,24 +831,34 @@ const translations = {
     }
   },
   en: {
+    loader: "Loading invitation...",
+    infoTitle: "👋 Customize the invitation",
+    hintTheme: "Change the light mode if you prefer the invitation in light or dark style.",
+    hintLang:  "Choose your favorite language: Spanish or English.",
+    hintMusic: "Add background music to set the mood for the moment.",
+    infoNote: "Click the buttons at the bottom left and enjoy the experience your way!",
+
     mainTitle:"🎀 Baby Shower 🎀",
     subTitle:"🎀 AITANA 🎀",
+
     qrBtn:"💬 Share by WhatsApp",
     listenMusic:"🎵 Click a button to play music 🎶",
-    musicBtn:"▶️ Music ON/OFF",
-    scroll:"Scroll down for all the details!",
+
     countdown:"🎈 X days left for the big day! 🎈",
     today:"🎉 Today is the big day! 🎉",
     timer:"00d : 00h : 00m : 00s",
+
     infoDate:"📅 <strong>Saturday, September 20</strong>",
     infoTime:"⏰ <strong>2:00 PM – 11:00 PM</strong>",
     infoPlace:"🏘️ <strong>Residencial Sendero Santa Fe</strong>",
     infoRSVP:"⚠️ <strong>Confirm before September 14</strong>",
+
     partyTitle:"We'll be waiting with:",
     food:"🌮 Guisado tacos",
     bar:"🍸 Open bar:",
     drinks:"🍻 Beer | 🍹 Tequila | 🥃 Rum | 🥂 Whisky",
     fun:"🎲 Games | 🎖️ Raffles | 💃 Dancing",
+
     waze:"📍 Waze Directions",
     gmaps:"📍 Google Maps Directions",
     confirmBtn:"✅ Confirm attendance",
@@ -935,26 +866,18 @@ const translations = {
     amazon:"📦 Amazon Gift Table",
     calendarG:"📅 Google Calendar",
     calendarA:"🍎 Apple Calendar",
+
     thanks:"💕 Thank you for joining us! 💕",
     gifFinal:"✨ It'll be a magical day to celebrate together! ✨",
+
     esEn:"🇺🇸",
     confirmMsg:"Thanks for confirming! 🎉",
     joyMsg:"Thanks for your joy! 💜",
-    loading:"Loading invitation...",
-    floatingInfoTitle:"👋 Customize the invitation",
-    floatingInfoList:[
-      "🌙 Change the light mode if you prefer the invitation in light or dark style.",
-      "🇲🇽 🇺🇸 Choose your favorite language: Spanish or English.",
-      "🎵 Add background music to set the mood for the moment."
-    ],
-    floatingInfoNote:"Click the buttons at the bottom left and enjoy the experience your way!",
-    futureMom:"The future mom, Fer",
-    genderRevealTitle:"This is how we enjoyed the Gender Reveal! 🎉💗",
-    playPause:"🎵 Tap to play / pause",
-    muteTitle:"Mute/Unmute",
-    volumeTitle:"Volume",
-    glowOn:"✨ Glow+",
-    glowOff:"✨ Glow−",
+
+    playPause:'🎵 Tap to play / pause',
+    muteTitle:'Mute/Unmute',
+    volumeTitle:'Volume',
+
     songs:{
       jump:{artist:"The Outfield",title:"All The Love In The World"},
       coldplay:{artist:"Coldplay",title:"A Sky Full Of Stars"},
@@ -962,134 +885,198 @@ const translations = {
     }
   }
 };
-
 let lang = localStorage.getItem('lang') || 'es';
 
 /* =========================================================
-   HELPERS
-   ========================================================= */
-const q  = (sel)=>document.querySelector(sel);
-const qa = (sel)=>document.querySelectorAll(sel);
-const gid = (id)=>document.getElementById(id);
-
-/* =========================================================
-   RENDER LENGUAJE
+   APLICAR IDIOMA
    ========================================================= */
 function renderLanguage(){
   const t = translations[lang];
-  const setText = (sel,txt)=>{ const el = typeof sel==='string'? q(sel):sel; if(el && txt!=null) el.innerText = txt; };
-  const setHTML = (id,html)=>{ const el = gid(id); if(el && html!=null) el.innerHTML = html; };
+  const setText = (sel, txt) => { const el = typeof sel==='string' ? $(sel) : sel; if(el && txt!=null) el.innerText = txt; };
+  const setHTML = (id, html) => { const el = byId(id); if(el && html!=null) el.innerHTML = html; };
 
-  setText('.main-title',t.mainTitle);
-  setText('.sub-title',t.subTitle);
+  // Loader + botones idioma
+  setText('#loaderText', t.loader);
+  $('#lang-btn').innerText = t.esEn;
 
-  const langBtn = gid('lang-btn'); if(langBtn) langBtn.innerText = t.esEn || langBtn.innerText;
-  const loaderText = gid('loaderText'); if(loaderText) loaderText.innerText = t.loading || loaderText.innerText;
+  // Módulo informativo (sin emojis embebidos extra)
+  setText('#infoTitle', t.infoTitle);
+  setText('#hintTheme', t.hintTheme);
+  setText('#hintLang',  t.hintLang);
+  setText('#hintMusic', t.hintMusic);
+  setText('#infoNote',  t.infoNote);
 
-  const qrBtn = gid('qrBtn'); if(qrBtn) qrBtn.innerText = t.qrBtn || qrBtn.innerText;
-  setText('#listenMusic',t.listenMusic);
+  // Títulos principales
+  setText('.main-title', t.mainTitle);
+  setText('.sub-title', t.subTitle);
 
-  gid('infoTitle').innerText = t.floatingInfoTitle;
-  gid('hintTheme').innerText = t.floatingInfoList[0];
-  gid('hintLang').innerText  = t.floatingInfoList[1];
-  gid('hintMusic').innerText = t.floatingInfoList[2];
-  gid('infoNote').innerText  = t.floatingInfoNote;
+  // QR / Música
+  setText('#qrBtn', t.qrBtn);
+  setText('#listenMusic', t.listenMusic);
+
+  // Countdown & timer
+  setText('#countdown', t.countdown);
+  setText('#timer', t.timer);
+
+  // Info
+  setHTML('infoDate',  t.infoDate);
+  setHTML('infoTime',  t.infoTime);
+  setHTML('infoPlace', t.infoPlace);
+  setHTML('infoRSVP',  t.infoRSVP);
+
+  // Partes
+  setText('#partyTitle', t.partyTitle);
+  setText('#food',   t.food);
+  setText('#bar',    t.bar);
+  setText('#drinks', t.drinks);
+  setText('#fun',    t.fun);
+
+  // Botones de enlaces
+  setText('#waze', t.waze);
+  setText('#gmaps', t.gmaps);
+  setText('#confirmar-btn', t.confirmBtn);
+  setText('#liverpool', t.liverpool);
+  setText('#amazon', t.amazon);
+  setText('#calendarG', t.calendarG);
+  setText('#calendarA', t.calendarA);
+
+  // Mensajes finales
+  setText('#thanksTitle', t.thanks);
+  setText('#gifFinal', t.gifFinal);
 
   // Música
   ['jump','coldplay','bruno'].forEach(k=>{
-    gid(`song-${k}`).innerText = `${t.songs[k].artist} — ${t.songs[k].title}`;
-    gid(`hint-${k}`).innerText = t.playPause;
-    const btn = q(`.track-btn[data-key="${k}"]`);
-    const mute= gid(`mute-${k}`);
-    const vol = gid(`vol-${k}`);
-    if(btn) btn.title = t.playPause;
+    setText('#song-'+k, `${t.songs[k].artist} — ${t.songs[k].title}`);
+    setText('#hint-'+k, t.playPause);
+    const btn = $(`.track-btn[data-key="${k}"]`);
+    const mute= byId(`mute-${k}`);
+    const vol = byId(`vol-${k}`);
+    if(btn)  btn.title  = t.playPause;
     if(mute) mute.title = t.muteTitle;
     if(vol)  vol.title  = t.volumeTitle;
   });
 
-  // Secciones
-  setText('#countdown',t.countdown);
-  setText('#timer',t.timer);
-  setHTML('infoDate',t.infoDate);
-  setHTML('infoTime',t.infoTime);
-  setHTML('infoPlace',t.infoPlace);
-  setHTML('infoRSVP',t.infoRSVP);
-  setText('#partyTitle',t.partyTitle);
-  setText('#food',t.food);
-  setText('#bar',t.bar);
-  setText('#drinks',t.drinks);
-  setText('#fun',t.fun);
-  setText('#waze',t.waze);
-  setText('#gmaps',t.gmaps);
-  setText('#confirmar-btn',t.confirmBtn);
-  setText('#liverpool',t.liverpool);
-  setText('#amazon',t.amazon);
-  setText('#calendarG',t.calendarG);
-  setText('#calendarA',t.calendarA);
-  setText('.typewriter',t.thanks);
-  setText('#gifFinal',t.gifFinal);
-  setText('#futureMom',t.futureMom);
-  setText('#genderRevealTitle',t.genderRevealTitle);
-
-  // Toggle glow label
-  const gb = gid('glow-btn');
-  if(gb){
-    const isDim = localStorage.getItem('glowDim') === '1';
-    gb.textContent = isDim ? t.glowOff : t.glowOn;
+  // Forzar blancos en modo oscuro
+  if(document.body.classList.contains('dark')){
+    $$('.force-white').forEach(el=> el.classList.add('force-white'));
   }
 }
 
 /* =========================================================
-   THEME + LANG TOGGLES
+   THEME & LANG TOGGLES
    ========================================================= */
 function toggleTheme(){
   document.body.classList.toggle('dark');
   localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
-  gid('theme-btn').innerText = document.body.classList.contains('dark') ? '☀️' : '🌙';
-  // Forzar blancos donde pediste (ya tienen .force-white)
+  $('#theme-btn').innerText = document.body.classList.contains('dark') ? '☀️' : '🌙';
+  // Reaplico blancos si oscuro
+  if(document.body.classList.contains('dark')){
+    $$('.force-white').forEach(el=> el.classList.add('force-white'));
+  }
 }
 function toggleLang(){
-  lang = lang==='es' ? 'en' : 'es';
+  lang = (lang==='es' ? 'en' : 'es');
   localStorage.setItem('lang', lang);
-  gid('lang-btn').innerText = translations[lang].esEn;
   renderLanguage();
 }
 
 /* =========================================================
-   GLOW TOGGLE (bajar un poco el brillo de neón)
+   STARS CANVAS (twinkle)
    ========================================================= */
-function toggleGlow(){
-  const dim = localStorage.getItem('glowDim') === '1';
-  if(dim){
-    // activar brillo normal
-    document.documentElement.style.setProperty('--day-neon-a','#6a5cff');
-    document.documentElement.style.setProperty('--day-neon-b','#ff4fd8');
-    document.documentElement.style.setProperty('--day-neon-c','#00d4ff');
-    document.documentElement.style.setProperty('--neon-yellow','#fff44f');
-    document.documentElement.style.setProperty('--neon-magenta','#ff4fd8');
-    document.documentElement.style.setProperty('--neon-cyan','#00f0ff');
-    localStorage.setItem('glowDim','0');
-  } else {
-    // bajar brillo (más suave)
-    document.documentElement.style.setProperty('--day-neon-a','#7b71ff');
-    document.documentElement.style.setProperty('--day-neon-b','#ff7de4');
-    document.documentElement.style.setProperty('--day-neon-c','#44e6ff');
-    document.documentElement.style.setProperty('--neon-yellow','#fff882');
-    document.documentElement.style.setProperty('--neon-magenta','#ff7de4');
-    document.documentElement.style.setProperty('--neon-cyan','#44e6ff');
-    localStorage.setItem('glowDim','1');
+function initStars(){
+  const canvas = byId('starsCanvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let w, h, stars;
+  const DPR = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+
+  function resize(){
+    w = canvas.clientWidth;
+    h = canvas.clientHeight;
+    canvas.width  = Math.floor(w * DPR);
+    canvas.height = Math.floor(h * DPR);
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    makeStars();
   }
-  // actualizar etiqueta
-  const t = translations[lang];
-  const gb = gid('glow-btn');
-  gb.textContent = localStorage.getItem('glowDim') === '1' ? t.glowOff : t.glowOn;
+  function makeStars(){
+    const count = Math.floor((w*h)/14000); // densidad ligera
+    stars = new Array(count).fill(0).map(()=>({
+      x: Math.random()*w,
+      y: Math.random()*h,
+      r: Math.random()*1.2 + .2,
+      a: Math.random()*1,
+      sp: (Math.random()*0.02)+0.006
+    }));
+  }
+  function step(){
+    ctx.clearRect(0,0,w,h);
+    for(const s of stars){
+      s.a += s.sp;
+      const glow = (Math.sin(s.a)+1)/2; // 0..1
+      const o = 0.25 + glow*0.75;
+      ctx.beginPath();
+      ctx.fillStyle = `rgba(255,255,220,${o})`;
+      ctx.shadowColor = `rgba(255,255,220,${o*.8})`;
+      ctx.shadowBlur = 6 + glow*14;
+      ctx.arc(s.x, s.y, s.r + glow*1.1, 0, Math.PI*2);
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    }
+    requestAnimationFrame(step);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+  requestAnimationFrame(step);
 }
 
 /* =========================================================
-   MÚSICA (reproductor único con 3 pistas — Volumen B)
+   INTERSECTION OBSERVER
    ========================================================= */
-const audio = gid('music');
-const eq    = gid('equalizer');
+function setupObserver(){
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); }});
+  }, {threshold: .2});
+  $$('section').forEach(s=> obs.observe(s));
+}
+
+/* =========================================================
+   SLIDER
+   ========================================================= */
+let currentIndex = 0;
+function sliderInit(){
+  const slides = $$('.slide');
+  const slider = byId('photoSlider');
+  const dotsContainer = byId('dotsContainer');
+  if(!slides.length || !slider || !dotsContainer) return;
+  dotsContainer.innerHTML = '';
+  slides.forEach((_, i)=>{
+    const dot = document.createElement('span');
+    dot.addEventListener('click', ()=> goToSlide(i));
+    dotsContainer.appendChild(dot);
+  });
+  updateSlider();
+  setInterval(()=> nextSlide(), 4000);
+}
+function updateSlider(){
+  const slides = $$('.slide');
+  const slider = byId('photoSlider');
+  const dots = $$('#dotsContainer span');
+  if(!slides.length || !slider || !dots.length) return;
+  slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+  dots.forEach(d=> d.classList.remove('active'));
+  dots[currentIndex].classList.add('active');
+}
+function nextSlide(){ const slides = $$('.slide'); currentIndex=(currentIndex+1)%slides.length; updateSlider(); }
+function prevSlide(){ const slides = $$('.slide'); currentIndex=(currentIndex-1+slides.length)%slides.length; updateSlider(); }
+function goToSlide(i){ currentIndex = i; updateSlider(); }
+window.prevSlide = prevSlide;
+window.nextSlide = nextSlide;
+
+/* =========================================================
+   MÚSICA – Player único para 3 pistas
+   ========================================================= */
+const audioEl = byId('music');
+const eqEl = byId('equalizer');
 let currentKey = null;
 
 function formatTime(sec){
@@ -1100,18 +1087,18 @@ function formatTime(sec){
 }
 function resetAllPlayers(){
   ['jump','coldplay','bruno'].forEach(k=>{
-    const card = q(`.track-card[data-key="${k}"]`);
-    const btn  = q(`.track-btn[data-key="${k}"]`);
-    const fill = gid(`fill-${k}`);
-    const elap = gid(`elapsed-${k}`);
-    const dur  = gid(`duration-${k}`);
-    const mute = gid(`mute-${k}`);
-    if(card) card.classList.remove('playing');
-    if(btn) btn.classList.remove('active');
-    if(fill) fill.style.width = '0%';
-    if(elap) elap.innerText = '0:00';
+    const card = $(`.track-card[data-key="${k}"]`);
+    const btn  = $(`.track-btn[data-key="${k}"]`);
+    const fill = byId(`fill-${k}`);
+    const elap = byId(`elapsed-${k}`);
+    const dur  = byId(`duration-${k}`);
+    const mute = byId(`mute-${k}`);
+    card && card.classList.remove('playing');
+    btn  && btn.classList.remove('active');
+    fill && (fill.style.width = '0%');
+    elap && (elap.innerText = '0:00');
     if(dur && k!==currentKey) dur.innerText = '0:00';
-    if(mute) mute.classList.remove('active');
+    mute && mute.classList.remove('active');
   });
 }
 function getSavedVolume(){
@@ -1121,14 +1108,14 @@ function getSavedVolume(){
 }
 function setSavedVolume(v){ localStorage.setItem('musicVolume', String(v)); }
 function syncVolumeUI(){
-  const volPercent = Math.round(audio.volume*100);
+  const volPercent = Math.round(audioEl.volume*100);
   ['jump','coldplay','bruno'].forEach(k=>{
-    const slider = gid(`vol-${k}`);
-    const muteBtn= gid(`mute-${k}`);
+    const slider = byId(`vol-${k}`);
+    const muteBtn= byId(`mute-${k}`);
     if(slider) slider.value = String(volPercent);
     if(muteBtn){
-      if(audio.muted) muteBtn.classList.add('active'); else muteBtn.classList.remove('active');
-      muteBtn.textContent = audio.muted ? '🔇' : '🔊';
+      if(audioEl.muted) muteBtn.classList.add('active'); else muteBtn.classList.remove('active');
+      muteBtn.textContent = audioEl.muted ? '🔇' : '🔊';
     }
   });
 }
@@ -1136,311 +1123,200 @@ function playTrackByKey(key, src){
   if(currentKey !== key){
     resetAllPlayers();
     currentKey = key;
-    audio.src = src;
-    audio.volume = getSavedVolume();
-    audio.muted = false;
-    audio.play().catch(()=>{ /* Autoplay policy */ });
-    const btn  = q(`.track-btn[data-key="${key}"]`);
-    const card = q(`.track-card[data-key="${key}"]`);
-    if(btn) btn.classList.add('active');
-    if(card) card.classList.add('playing');
-    eq.style.display = 'inline-flex';
+    audioEl.src = src;
+    audioEl.volume = getSavedVolume();
+    audioEl.muted = false;
+    audioEl.play();
+    const btn  = $(`.track-btn[data-key="${key}"]`);
+    const card = $(`.track-card[data-key="${key}"]`);
+    btn  && btn.classList.add('active');
+    card && card.classList.add('playing');
+    eqEl.style.display = 'inline-flex';
     syncVolumeUI();
     return;
   }
-  // misma pista: alternar
-  if(audio.paused){ audio.play(); eq.style.display='inline-flex'; }
-  else { audio.pause(); eq.style.display='none'; }
+  // misma pista -> toggle
+  if(audioEl.paused){ audioEl.play(); eqEl.style.display='inline-flex'; }
+  else{ audioEl.pause(); eqEl.style.display='none'; }
 }
 function toggleMusic(){
-  if(!audio.src) return;
-  if(audio.paused){ audio.play(); eq.style.display='inline-flex'; }
-  else { audio.pause(); eq.style.display='none'; }
+  if(!audioEl.src) return;
+  if(audioEl.paused){ audioEl.play(); eqEl.style.display='inline-flex'; }
+  else{ audioEl.pause(); eqEl.style.display='none'; }
 }
-audio.addEventListener('loadedmetadata', ()=>{
+
+/* Eventos audio */
+audioEl.addEventListener('loadedmetadata', ()=>{
   if(!currentKey) return;
-  const dur = gid(`duration-${currentKey}`);
-  if(dur) dur.innerText = formatTime(audio.duration);
+  const dur = byId(`duration-${currentKey}`);
+  dur && (dur.innerText = formatTime(audioEl.duration));
 });
-audio.addEventListener('timeupdate', ()=>{
+audioEl.addEventListener('timeupdate', ()=>{
   if(!currentKey) return;
-  const fill = gid(`fill-${currentKey}`);
-  const elap = gid(`elapsed-${currentKey}`);
-  if(fill && audio.duration){
-    const pct = (audio.currentTime / audio.duration) * 100;
+  const fill = byId(`fill-${currentKey}`);
+  const elap = byId(`elapsed-${currentKey}`);
+  if(fill && audioEl.duration){
+    const pct = (audioEl.currentTime / audioEl.duration) * 100;
     fill.style.width = pct + '%';
   }
-  if(elap) elap.innerText = formatTime(audio.currentTime);
+  elap && (elap.innerText = formatTime(audioEl.currentTime));
 });
-audio.addEventListener('play', ()=>{
+audioEl.addEventListener('play', ()=>{
   if(currentKey){
-    const btn = q(`.track-btn[data-key="${currentKey}"]`);
-    const card = q(`.track-card[data-key="${currentKey}"]`);
-    if(btn) btn.classList.add('active');
-    if(card) card.classList.add('playing');
-    eq.style.display = 'inline-flex';
+    const btn = $(`.track-btn[data-key="${currentKey}"]`);
+    const card= $(`.track-card[data-key="${currentKey}"]`);
+    btn && btn.classList.add('active');
+    card && card.classList.add('playing');
+    eqEl.style.display='inline-flex';
   }
 });
-audio.addEventListener('pause', ()=>{ eq.style.display='none'; });
-audio.addEventListener('ended', ()=>{
-  eq.style.display='none';
-  const btn = q(`.track-btn[data-key="${currentKey}"]`);
-  const card = q(`.track-card[data-key="${currentKey}"]`);
-  if(btn) btn.classList.remove('active');
-  if(card) card.classList.remove('playing');
+audioEl.addEventListener('pause', ()=>{ eqEl.style.display='none'; });
+audioEl.addEventListener('ended', ()=>{
+  eqEl.style.display='none';
+  const btn = $(`.track-btn[data-key="${currentKey}"]`);
+  const card= $(`.track-card[data-key="${currentKey}"]`);
+  btn && btn.classList.remove('active');
+  card&& card.classList.remove('playing');
 });
-
-/* =========================================================
-   STARS BACKGROUND (twinkle)
-   ========================================================= */
-(function(){
-  const canvas = gid('starsCanvas');
-  const ctx = canvas.getContext('2d');
-  let W, H, stars;
-
-  function resize(){
-    W = canvas.width = window.innerWidth;
-    H = canvas.height = window.innerHeight;
-    makeStars();
-  }
-  function makeStars(){
-    const count = Math.floor((W*H)/9000); // densidad razonable
-    stars = new Array(count).fill(0).map(()=>({
-      x: Math.random()*W,
-      y: Math.random()*H,
-      r: Math.random()*1.5 + .2,
-      a: Math.random()*0.7 + 0.1,      // alpha base
-      s: Math.random()*0.035 + 0.015,  // velocidad de flicker
-      p: Math.random()*Math.PI*2       // fase
-    }));
-  }
-  function draw(){
-    ctx.clearRect(0,0,W,H);
-    // “nube” muy tenue para dar profundidad
-    const grd = ctx.createRadialGradient(W*0.2,H*0.3,80, W*0.2,H*0.3, W*0.8);
-    grd.addColorStop(0, 'rgba(255,255,255,.025)');
-    grd.addColorStop(1, 'rgba(255,255,255,0)');
-    ctx.fillStyle = grd;
-    ctx.fillRect(0,0,W,H);
-
-    stars.forEach(st=>{
-      st.p += st.s;
-      const flicker = (Math.sin(st.p)+1)/2; // 0..1
-      const alpha = st.a*0.3 + flicker*0.7*st.a;
-
-      ctx.beginPath();
-      ctx.arc(st.x, st.y, st.r, 0, Math.PI*2);
-      ctx.fillStyle = 'rgba(255,255,255,'+alpha.toFixed(3)+')';
-      ctx.shadowColor = 'rgba(255,255,255,'+Math.min(1, alpha+0.2)+')';
-      ctx.shadowBlur = 6;
-      ctx.fill();
-      ctx.shadowBlur = 0;
-    });
-
-    requestAnimationFrame(draw);
-  }
-  window.addEventListener('resize', resize);
-  resize();
-  draw();
-})();
-
-/* =========================================================
-   SLIDER
-   ========================================================= */
-let currentIndex = 0;
-let slider, slides, dotsContainer, dots;
-function initSlider(){
-  slides = document.querySelectorAll('.slide');
-  slider = gid('photoSlider');
-  dotsContainer = gid('dotsContainer');
-  dotsContainer.innerHTML = '';
-  slides.forEach((_, i) => {
-    const dot = document.createElement('span');
-    dot.onclick = () => goToSlide(i);
-    dotsContainer.appendChild(dot);
-  });
-  dots = dotsContainer.querySelectorAll('span');
-  updateSlider();
-  setInterval(()=> nextSlide(), 4000);
-}
-function updateSlider(){
-  if(!slider || !slides) return;
-  slider.style.transform = `translateX(-${currentIndex * 100}%)`;
-  dots.forEach(d=>d.classList.remove('active'));
-  if(dots[currentIndex]) dots[currentIndex].classList.add('active');
-}
-function nextSlide(){ currentIndex = (currentIndex + 1) % slides.length; updateSlider(); }
-function prevSlide(){ currentIndex = (currentIndex - 1 + slides.length) % slides.length; updateSlider(); }
-function goToSlide(index){ currentIndex = index; updateSlider(); }
 
 /* =========================================================
    COUNTDOWN
    ========================================================= */
-const countdownEl = gid('countdown');
-const timerEl     = gid('timer');
-const eventDate   = new Date('2025-09-20T14:00:00');
-
+const countdownEl = byId('countdown');
+const timerEl = byId('timer');
+const eventDate = new Date('2025-09-20T14:00:00');
 function updateCountdown(){
-  const t = translations[lang];
   const now = new Date();
   const diff = eventDate - now;
+  const t = translations[lang];
+
   if(diff<=0){
-    countdownEl.textContent = t.today;
-    timerEl.textContent = t.timer;
+    countdownEl.innerText = t.today;
+    timerEl.innerText = t.timer;
     return;
   }
-  const d=Math.floor(diff/(1000*60*60*24));
-  const h=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
-  const m=Math.floor((diff%(1000*60*60))/(1000*60));
-  const s=Math.floor((diff%(1000*60))/1000);
-  countdownEl.textContent = t.countdown.replace('X',d);
-  timerEl.textContent = `${d}d : ${h}h : ${m}m : ${s}s`;
+  const d = Math.floor(diff/(1000*60*60*24));
+  const h = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+  const m = Math.floor((diff%(1000*60*60))/(1000*60));
+  const s = Math.floor((diff%(1000*60))/1000);
+
+  countdownEl.innerText = t.countdown.replace('X', d);
+  timerEl.innerText = `${d}d : ${h}h : ${m}m : ${s}s`;
 }
 
 /* =========================================================
-   INTERACTION: botones grandes, globos, gif
+   INIT
    ========================================================= */
-function miniBurst(btn, e){
-  for(let i=0;i<15;i++){
-    const c=document.createElement('div');
-    c.className='sparkle-btn';
-    c.style.left=(e.offsetX || btn.offsetWidth/2)+(Math.random()*40-20)+'px';
-    c.style.top =(e.offsetY || btn.offsetHeight/2)+(Math.random()*24-12)+'px';
-    c.style.animationDelay=(Math.random()*1)+'s';
-    btn.appendChild(c);
-    setTimeout(()=>c.remove(),900);
-  }
-}
-function popBalloon(balloon){
-  balloon.style.opacity = 0;
-  gid('popBalloonSound').currentTime=0;
-  gid('popBalloonSound').play().catch(()=>{});
-  setTimeout(()=>{balloon.style.display='none';},600);
-}
-function initBigButtons(){
-  qa('.btn-3d, .music-btn').forEach(btn=>{
-    btn.addEventListener('click', (e)=>{
-      miniBurst(btn, e);
-    });
+document.addEventListener('DOMContentLoaded', ()=>{
+  // Estado inicial theme
+  const savedTheme = localStorage.getItem('theme');
+  if(savedTheme === 'dark'){ document.body.classList.add('dark'); }
+  $('#theme-btn').innerText = document.body.classList.contains('dark') ? '☀️' : '🌙';
+
+  // Glow persisted
+  setGlow( Math.max(0, Math.min(3, getGlow())) );
+
+  // Idioma
+  $('#lang-btn').innerText = translations[lang].esEn;
+  renderLanguage();
+
+  // Bind flotantes
+  $('#theme-btn').addEventListener('click', toggleTheme);
+  $('#lang-btn').addEventListener('click', toggleLang);
+  $('#music-btn').addEventListener('click', toggleMusic);
+
+  // Glow +/- sin texto
+  $('#glow-plus').addEventListener('click', ()=>{
+    const v = Math.min(3, getGlow()+1);
+    setGlow(v);
   });
-}
-function initMusicCards(){
-  // handlers pistas
-  qa('.track-btn').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      playTrackByKey(btn.dataset.key, btn.dataset.src);
-    });
+  $('#glow-minus').addEventListener('click', ()=>{
+    const v = Math.max(0, getGlow()-1);
+    setGlow(v);
   });
-  // volumen + mute
+
+  // Música: listeners de pistas
+  $$('.track-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=> playTrackByKey(btn.dataset.key, btn.dataset.src));
+  });
+
+  // Volumen + mute
   ['jump','coldplay','bruno'].forEach(k=>{
-    const slider = gid(`vol-${k}`);
-    const muteBtn= gid(`mute-${k}`);
+    const slider = byId(`vol-${k}`);
+    const muteBtn= byId(`mute-${k}`);
+
     if(slider){
       slider.value = String(Math.round(getSavedVolume()*100));
       slider.addEventListener('input', ()=>{
         if(currentKey !== k) return;
-        audio.muted = false;
+        audioEl.muted = false;
         const vol = Math.max(0, Math.min(1, slider.value/100));
-        audio.volume = vol; setSavedVolume(vol); syncVolumeUI();
+        audioEl.volume = vol;
+        setSavedVolume(vol);
+        syncVolumeUI();
       }, {passive:true});
     }
     if(muteBtn){
       muteBtn.addEventListener('click', ()=>{
         if(currentKey !== k) return;
-        audio.muted = !audio.muted; syncVolumeUI();
-      });
-    }
-    // progreso click
-    const bar = gid(`progress-${k}`);
-    if(bar){
-      bar.addEventListener('click', (e)=>{
-        if(currentKey !== k || !audio.duration) return;
-        const rect = bar.getBoundingClientRect();
-        const ratio = (e.clientX - rect.left) / rect.width;
-        audio.currentTime = Math.max(0, Math.min(audio.duration * ratio, audio.duration));
+        audioEl.muted = !audioEl.muted;
+        syncVolumeUI();
       });
     }
   });
-}
 
-/* GIF final */
-gid('finalGif').addEventListener('click',function(){
-  this.classList.add('active');
-  setTimeout(()=>{this.classList.remove('active');},1200);
-  setTimeout(()=>{alert(translations[lang].joyMsg);},600);
-});
+  // Seek progreso solo en pista activa
+  $$('.progress').forEach(bar=>{
+    bar.addEventListener('click', (e)=>{
+      const key = bar.dataset.key;
+      if(currentKey !== key || !audioEl.duration) return;
+      const rect = bar.getBoundingClientRect();
+      const ratio = (e.clientX - rect.left) / rect.width;
+      audioEl.currentTime = Math.max(0, Math.min(audioEl.duration * ratio, audioEl.duration));
+    });
+  });
 
-/* Confirmar CTA */
-gid('confirmar-btn').addEventListener('click', function(){
-  setTimeout(()=>{ alert(translations[lang].confirmMsg); }, 120);
-});
-
-/* =========================================================
-   APP READY
-   ========================================================= */
-document.addEventListener('DOMContentLoaded', ()=>{
-  // Estado previo
-  const savedTheme = localStorage.getItem('theme');
-  if(savedTheme === 'dark'){
-    document.body.classList.add('dark');
-    gid('theme-btn').innerText = '☀️';
-  } else if(!savedTheme){
-    // auto oscuro por hora si no eligió
+  // Auto-dark por hora, si no hay preferencia guardada
+  if(!savedTheme){
     const hour = new Date().getHours();
     if(hour >= 19 || hour < 6){
       document.body.classList.add('dark');
       localStorage.setItem('theme','dark');
-      gid('theme-btn').innerText = '☀️';
+      $('#theme-btn').innerText = '☀️';
     }
-  } else {
-    gid('theme-btn').innerText = '🌙';
   }
 
-  // Glow dim persist
-  const dim = localStorage.getItem('glowDim') === '1';
-  if(dim){
-    document.documentElement.style.setProperty('--day-neon-a','#7b71ff');
-    document.documentElement.style.setProperty('--day-neon-b','#ff7de4');
-    document.documentElement.style.setProperty('--day-neon-c','#44e6ff');
-    document.documentElement.style.setProperty('--neon-yellow','#fff882');
-    document.documentElement.style.setProperty('--neon-magenta','#ff7de4');
-    document.documentElement.style.setProperty('--neon-cyan','#44e6ff');
-  }
-
-  // Bind toggles
-  gid('theme-btn').onclick = toggleTheme;
-  gid('lang-btn').onclick  = toggleLang;
-  gid('music-btn').onclick = toggleMusic;
-  gid('glow-btn').onclick  = toggleGlow;
-
-  // Render UI texto
-  renderLanguage();
-
-  // Slider
-  initSlider();
-
-  // Música
-  initMusicCards();
-
-  // Botones grandes
-  initBigButtons();
-
-  // Intersection Observer secciones
-  const sections = document.querySelectorAll('section');
-  const observer = new IntersectionObserver(entries=>{
-    entries.forEach(entry=>{ if(entry.isIntersecting){ entry.target.classList.add('visible'); } });
-  },{threshold:0.2});
-  sections.forEach(s=>observer.observe(s));
-
-  // Countdown
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
-
-  // Mostrar app tras loader
+  // INICIAR SOLO DESPUÉS DEL LOADER
   setTimeout(()=>{
-    gid('loader').style.display='none';
-    gid('app-shell').style.display='block';
-  }, 1800);
+    // Ocultar loader
+    byId('loader').style.display = 'none';
+
+    // Mostrar UI
+    $$('.hidden-on-load').forEach(el=> el.classList.remove('hidden-on-load'));
+
+    // Fondo estrellas
+    initStars();
+
+    // Observer + Slider + Countdown
+    setupObserver();
+    sliderInit();
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  }, 2200);
+});
+
+/* =========================================================
+   CONFIRMAR (confetti ligero sin ensuciar)
+   ========================================================= */
+byId('confirmar-btn').addEventListener('click', ()=>{
+  alert(translations[lang].confirmMsg);
+});
+
+/* =========================================================
+   GIF final
+   ========================================================= */
+byId('finalGif').addEventListener('click', ()=>{
+  alert(translations[lang].joyMsg);
 });
 </script>
 </body>
